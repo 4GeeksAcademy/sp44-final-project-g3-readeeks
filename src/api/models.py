@@ -2,12 +2,12 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
     last_name = db.Column(db.String(100), unique=False, nullable=False)
     document_type = db.Column(db.Enum, unique=False, nullable=False)
-    document_num = db.Column(db.String(20), unique=True, nullable=False)
+    document_number = db.Column(db.String(20), unique=True, nullable=False)
     address_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con tabla address (address.id)
     phone = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -15,57 +15,202 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<User {self.name + " " + self.last_name}>'
+        return f'<Users {self.name + " " + self.last_name}>'
 
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
             "last_name": self.last_name,
+            "document_type": self.document_type,
+            "document_number": self.document_number,
             "adress_id": self.address_id,
             "phone": self.phone,
-            "email": self.email,
-            "favorites_id": self.favorites_id,
-            "history": self.history
+            "email": self.email
         }
     
-class Favorites(db.Model):
+class Address(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con User (user.id)
-    item_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con Item (item.id)
+    street = db.Column(db.String(100), unique=False, nullable=False)
+    number = db.Column(db.Integer, unique=False, nullable=False)
+    floor = db.Column(db.Integer, unique=False, nullable=False)
+    flat_number = db.Column(db.String(5), unique=True, nullable=False)
+    zip_code = db.Column(db.Integer, unique=True, nullable=False)
+    state = db.Column(db.String(20), unique=True, nullable=False)
+    city = db.Column(db.String(20), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<Address {self.street}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
-            "item_id": self.item_id
+            "street": self.street,
+            "number": self.number,
+            "floor": self.floor,
+            "flat_number": self.flat_number,
+            "zip_code": self.zip_code,
+            "state": self.state,
+            "city": self.city
         }
     
-class Item(db.Model):
+class FavoriteUsers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, unique=True, nullable=False) # Relaciona con User (user.id)
-    book_id = db.Column(db.Integer, unique=True, nullable=False) # Relaciona con Book (book.id)
-    item_title = db.Column(db.String(200), unique=False, nullable=False)
+    user_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con Users (users.id)
+
+    def __repr__(self):
+        return f'<FavoriteUsers {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id
+        }
+    
+class FavoriteListings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    listing_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con Listings (listings.id)
+
+    def __repr__(self):
+        return f'<FavoriteListings {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "listing_id": self.listing_id
+        }
+    
+class Reviews(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    reviewer_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Users (users.id)
+    receiver_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Users (users.id)
+    comment = db.Column(db.String(1000), unique=False, nullable=True)
+    punctuation = db.Column(db.Enum, unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Reviews {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "reviewer_id": self.reviewer_id,
+            "receiver_id": self.receiver_id,
+            "comment": self.comment,
+            "punctuation": self.punctuation
+        }
+    
+class Lintings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    seller_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Users (users.id)
+    book_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Books (books.id)
+    album_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con Album (album.id)
+    listing_title = db.Column(db.String(200), unique=False, nullable=False)
     favorite_counter = db.Column(db.Integer, unique=False, nullable=False)
     sale_price = db.Column(db.Float, unique=False, nullable=False)
     description = db.Column(db.String(1000), unique=False, nullable=True)
     status = db.Column(db.Enum(), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Item {self.item_title}>'
+        return f'<Listings {self.listing_title}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
+            "seller_id": self.seller_id,
             "book_id": self.book_id,
-            "item_title": self.item_title,
+            "album_id": self.album_id,
+            "listing_title": self.listing_title,
             "favorite_counter": self.favorite_counter,
             "sale_price": self.sale_price,
             "description": self.description,
             "status": self.status
         }
+
+class Album(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    listing_id = db.Column(db.Integer, unique=True, nullable=False)
+    url = db.Column(db.String(200), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Album {self.id}>'
     
+    def serialize(self):
+        return {
+            "id": self.id,
+            "listing_id": self.listing_id,
+            "url": self.url
+        }
+
 class Books(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    category_id = db.Column(db.Integer, unique=True, nullable=False)
+    title = db.Column(db.String(50), unique=False, nullable=False)
+    author = db.Column(db.String(50), unique=False, nullable=False)
+    publisher = db.Column(db.String(50), unique=False, nullable=False)
+    published_date = db.Column(db.String(50), unique=False, nullable=False)
+    isbn = db.Column(db.String(20), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<Books {self.title}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "author": self.author,
+            "publisher": self.publisher,
+            "published_date": self.published_date,
+            "isbn": self.isbn
+        }
+    
+class BookCategories(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Books (books.id)
+    category_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Categories (categories.id)
+
+    def __repr__(self):
+        return f'<BookCategories {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "book_id": self.book_id,
+            "category_id": self.category_id
+        }
+    
+class Categories(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    description = db.Column(db.String(500), unique=False, nullable=True)
+
+    def __repr__(self):
+        return f'<Categories {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description
+        }
+    
+class Transactions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    seller_id = db.Column(db.Integer, unique=False, nullable=False) # Relacionado con Users (users.id)
+    buyer_id = db.Column(db.Integer, unique=False, nullable=False) # Relacionado con Users (users.id)
+    listing_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Listings (listings.id)
+    date = db.Column(db.DateTime, unique=False, nullable=False)
+    total = db.Column(db.Float, unique=False, nullable=False)
+    status = db.Column(db.Enum(), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Transactions {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "seller_id": self.seller_id,
+            "buyer_id": self.buyer_id,
+            "listing_id": self.listing_id,
+            "date": self.date,
+            "total": self.total,
+            "status": self.status
+        }
