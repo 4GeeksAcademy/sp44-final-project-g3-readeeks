@@ -17,16 +17,19 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/users', methods=['POST', 'GET'])
+@api.route('/users', methods=['POST', 'GET']) #ok Makey
 def handle_users():
-    if request.method == 'GET' :
+    if request.method == 'GET' :  
         users = db.session.execute(db.select(User).order_by(User.name)).scalars()
         results = [item.serialize() for item in users]
         response_body = {"message": " esto devuelve el GET del endpoint /users",
                          "results": results,
                          "status": "ok"}
 
-        return response_body, 200
+        if response_body:
+            return response_body, 200
+        else:
+            return "Not Found", 404
     
     if request.method == 'POST' : #signup
         request_body = request.get_json()
@@ -45,12 +48,17 @@ def handle_users():
         print(request_body)
         response_body = {"message": "Adding new user",
                          "status": "ok",
-                         "new user": request_body}
+                         "new_user": request_body}
         
-        return response_body, 200
+       
+        if response_body:
+            return response_body, 200
+        else:
+            return "Not Found", 404
 
 
-@api.route('/users/<int:id>', methods= ['GET', 'PUT', 'DELETE'])
+       
+@api.route('/users/<int:id>', methods= ['GET', 'PUT', 'DELETE']) #Chachi
 def handle_user(id):
 
     if request.method == 'GET' :
@@ -59,6 +67,7 @@ def handle_user(id):
         response_body = {"status": "ok",
                          "results": user.serialize()
                          }
+        
         return response_body, 200
         
     if request.method == 'PUT' :
@@ -66,7 +75,7 @@ def handle_user(id):
         user = db.get_or_404(User, id)    
         user.name = request_body["nombre"]
         user.last_name = request_body["apellidos"]
-        user.document_type_enum = request_body["tipo identificacion"]
+        user.document_type_enum = request_body["tipo documento"]
         user.document_type = request_body["tipo"]
         user.document_number = request_body["numero de identificacion"]
         user.address = request_body["direccion"]
@@ -79,8 +88,10 @@ def handle_user(id):
         response_body = {"message": "Update user",
                          "status": "ok",
                          "user": request_body}
-        
-        return response_body, 200
+                
+        return request_body , 200
+
+       
     
     if request.method == 'DELETE' :
         user = db.get_or_404(User, id)
@@ -91,6 +102,8 @@ def handle_user(id):
                          "user_deleting": id}
         
         return response_body, 200
+
+       
 
 
 
@@ -118,7 +131,7 @@ def handle_items():
         print(request_body)
         response_body = {"message": "Adding new item",
                          "status": "ok",
-                         "new user": request_body}
+                         "new_item": request_body}
         
         return response_body, 200
 
@@ -137,13 +150,13 @@ def handle_address():
     
     if request.method == 'POST' : #signup
         request_body = request.get_json()
-        user = User(street = request_body["calle"],
-                    number = request_body["numero"],
-                    floor = request_body["tipo de documento"],
-                    letter = request_body["letra"],
-                    zipcode = request_body["codigo postal"],
+        user = User(street = request_body["Calle"],
+                    number = request_body["Numero"],
+                    floor = request_body["Planta"],
+                    letter = request_body["Letra"],
+                    zipcode = request_body["Codigo postal"],
                     state = request_body["Poblacion"],
-                    city = request_body["ciudad"],
+                    city = request_body["Ciudad"],
                     )
         db.session.add(user)
         db.session.commit()
@@ -180,7 +193,7 @@ def handle_books():
         print(request_body)
         response_body = {"message": "Adding new Book",
                          "status": "ok",
-                         "new user": request_body}
+                         "new_user": request_body}
         
         return response_body, 200
     
@@ -211,6 +224,82 @@ def handle_transaccion():
         print(request_body)
         response_body = {"message": "Adding new Book",
                          "status": "ok",
-                         "new user": request_body}
+                         "new_user": request_body}
         
         return response_body, 200    
+
+
+
+@api.route('/favoriteusers', methods=['POST', 'GET'])
+def handle_favUsers():
+    if request.method == 'GET' :
+        favorite = db.session.execute(db.select(FavoriteUser).order_by(FavoriteUser.followed_id)).scalars()
+        results = [item.serialize() for item in favorite]
+       
+        return results, 200
+    
+    if request.method == 'POST' : 
+        request_body = request.get_json()
+        user = User( follower = request_body["seguidor"],
+                    followed = request_body["seguidos"]
+                    )
+        db.session.add(user)
+        db.session.commit()
+        print(request_body)
+        response_body = {"message": "Adding new Favorite User",
+                         "status": "ok",
+                         "new_Fav_User": request_body}
+        
+        return response_body, 200  
+
+
+    
+@api.route('/favoritelisting', methods=['POST', 'GET'])
+def handle_favListing():
+    if request.method == 'GET' :
+        favorite = db.session.execute(db.select(FavoriteListings).order_by(FavoriteListings.listing_id)).scalars()
+        results = [item.serialize() for item in favorite]
+       
+        return results, 200
+    
+    if request.method == 'POST' : 
+        request_body = request.get_json()
+        user = User( item = request_body["articulo favorito"],
+                    )
+                    
+        db.session.add(user)
+        db.session.commit()
+        print(request_body)
+        response_body = {"message": "Adding new Favorite Item",
+                         "status": "ok",
+                         "new_Fav_Item": request_body}
+        
+        return response_body, 200      
+    
+
+
+@api.route('/review', methods=['POST', 'GET'])
+def handle_review():
+    if request.method == 'GET' :
+        reviews = db.session.execute(db.select(Reviews).order_by(Reviews.id)).scalars()
+        results = [item.serialize() for item in reviews]
+       
+        return results, 200
+    
+    if request.method == 'POST' : 
+        request_body = request.get_json()
+        user = User( reviewer = request_body["reseñador"],
+                    receiver = request_body["receptor"],
+                    comment = request_body["comentario"],
+                    punctuation = request_body["puntuacion"]
+                    )
+                    
+        db.session.add(user)
+        db.session.commit()
+        print(request_body)
+        response_body = {"message": "Adding new Favorite Item",
+                         "status": "ok",
+                         "new_Fav_Item": request_body}
+        
+        return response_body, 200      
+    
