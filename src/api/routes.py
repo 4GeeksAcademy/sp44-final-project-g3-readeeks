@@ -8,14 +8,6 @@ from api.utils import generate_sitemap, APIException
 api = Blueprint('api', __name__)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
 
 @api.route('/users', methods=['POST', 'GET']) #ok Makey
 def handle_users():
@@ -107,12 +99,12 @@ def handle_user(id):
 
 
 
-@api.route('/items', methods=['POST', 'GET'])
+@api.route('/listings', methods=['POST', 'GET']) 
 def handle_items():
     if request.method == 'GET' :
         items = db.session.execute(db.select(Listings).order_by(Listings.listing_title)).scalars()
         results = [item.serialize() for item in items]
-        response_body = {"message": " esto devuelve el GET del endpoint /items",
+        response_body = {"message": " esto devuelve el GET del endpoint /listings",
                          "results": results,
                          "status": "ok"}
 
@@ -125,6 +117,7 @@ def handle_items():
                     description = request_body["descripcion"],
                     document_number = request_body["document_number"],
                     status_enum = request_body["estado"],
+                    status = request_body["status"]
                     )
         db.session.add(user)
         db.session.commit()
@@ -134,15 +127,58 @@ def handle_items():
                          "new_item": request_body}
         
         return response_body, 200
+    
+
+@api.route('/listings/<int:id>', methods= ['GET', 'PUT', 'DELETE']) #falta probarlo
+def handle_listing(id):
+
+    if request.method == 'GET' :
+        listing = db.get_or_404(Listings, id)
+        print(listing)
+        response_body = {"status": "ok",
+                         "results": Listings.serialize()
+                         }
+        
+        return response_body, 200
+        
+
+    if request.method == 'PUT' :
+        request_body = request.get_json()
+        listing = db.get_or_404(Listings, id)    
+        Listings.listing_title = request_body["titulo"]
+        Listings.sale_price = request_body["precio"]
+        Listings.description = request_body["descripcion"]
+        Listings.status = request_body["status"]
+        Listings.status_enum = request_body["estado"]
+       
+       
+        db.session.commit()
+
+        response_body = {"message": "Update listing",
+                         "status": "ok",
+                         "user": request_body}
+                
+        return request_body , 200
+
+       
+    
+    if request.method == 'DELETE' :
+        listing = db.get_or_404(Listings, id)
+        db.session.delete(listing)
+        db.session.commit()
+        response_body = {"message": "DELETE listing",
+                         "status": "ok",
+                         "user_deleting": id}
+        
+        return response_body, 200
 
 
-
-@api.route('/location', methods=['POST', 'GET'])
+@api.route('/address', methods=['POST', 'GET', 'PUT', 'DELETE']) #Falta PUT Y DELETE
 def handle_address():
     if request.method == 'GET' :
         location = db.session.execute(db.select(Address).order_by(Address.id)).scalars()
         results = [item.serialize() for item in location]
-        response_body = {"message": " esto devuelve el GET del endpoint /location",
+        response_body = {"message": " esto devuelve el GET del endpoint /address",
                          "results": results,
                          "status": "ok"}
 
@@ -169,7 +205,7 @@ def handle_address():
     
 
 
-@api.route('/books', methods=['POST', 'GET'])
+@api.route('/books', methods=['POST', 'GET', 'PUT', 'DELETE']) #Falta PUT Y DELETE
 def handle_books():
     if request.method == 'GET' :
         book = db.session.execute(db.select(Books).order_by(Books.title)).scalars()
@@ -197,6 +233,48 @@ def handle_books():
         
         return response_body, 200
     
+
+
+@api.route('/bookCategory', methods=['GET'])
+def handle_booksCategory():
+    if request.method == 'GET' :
+        category = db.session.execute(db.select(BookCategories).order_by(BookCategories.category_id)).scalars()
+        results = [item.serialize() for item in category]
+        response_body = {"message": " esto devuelve el GET del endpoint /bookCategory",
+                         "results": results,
+                         "status": "ok"}
+
+        return response_body, 200
+    
+
+
+@api.route('/category', methods=['POST', 'GET', 'PUT', 'DELETE']) #Falta PUT Y DELETE
+def handle_categorys():
+    if request.method == 'GET' :
+        categorys = db.session.execute(db.select(Categories).order_by(Categories.title)).scalars()
+        results = [item.serialize() for item in categorys]
+        response_body = {"message": " esto devuelve el GET del endpoint /categorys",
+                         "results": results,
+                         "status": "ok"}
+
+        return response_body, 200
+    
+    if request.method == 'POST' : #signup
+        request_body = request.get_json()
+        user = User(name = request_body["nombre categoria"],
+                    description = request_body["descripcion"],
+                 
+                    )
+        db.session.add(user)
+        db.session.commit()
+        print(request_body)
+        response_body = {"message": "Adding new Category",
+                         "status": "ok",
+                         "new_user": request_body}
+        
+        return response_body, 200
+
+
 
 
 @api.route('/transaccion', methods=['POST', 'GET'])
@@ -230,7 +308,7 @@ def handle_transaccion():
 
 
 
-@api.route('/favoriteusers', methods=['POST', 'GET'])
+@api.route('/favoriteusers', methods=['POST', 'GET','DELETE']) #Falta delete
 def handle_favUsers():
     if request.method == 'GET' :
         favorite = db.session.execute(db.select(FavoriteUser).order_by(FavoriteUser.followed_id)).scalars()
@@ -254,7 +332,7 @@ def handle_favUsers():
 
 
     
-@api.route('/favoritelisting', methods=['POST', 'GET'])
+@api.route('/favoritelisting', methods=['POST', 'GET','DELETE']) #Falta delete
 def handle_favListing():
     if request.method == 'GET' :
         favorite = db.session.execute(db.select(FavoriteListings).order_by(FavoriteListings.listing_id)).scalars()
@@ -278,7 +356,7 @@ def handle_favListing():
     
 
 
-@api.route('/review', methods=['POST', 'GET'])
+@api.route('/review', methods=['POST', 'GET', 'DELETE']) #falta delete
 def handle_review():
     if request.method == 'GET' :
         reviews = db.session.execute(db.select(Reviews).order_by(Reviews.id)).scalars()
@@ -303,3 +381,27 @@ def handle_review():
         
         return response_body, 200      
     
+
+
+@api.route('/album', methods=['POST', 'GET', 'PUT', 'DELETE']) #Falta PUT Y DELETE
+def handle_album():
+    if request.method == 'GET' :
+        photos = db.session.execute(db.select(Album).order_by(Album.id)).scalars()
+        results = [item.serialize() for item in photos]
+       
+        return results, 200
+    
+    if request.method == 'POST' : 
+        request_body = request.get_json()
+        user = User( url = request_body["fotos"],
+                    
+                    )
+                    
+        db.session.add(user)
+        db.session.commit()
+        print(request_body)
+        response_body = {"message": "Adding new Photo",
+                         "status": "ok",
+                         "new_Fav_Item": request_body}
+        
+        return response_body, 200      
