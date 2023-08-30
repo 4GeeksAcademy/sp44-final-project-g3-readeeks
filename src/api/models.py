@@ -9,11 +9,13 @@ class User(db.Model):
     document_type_enum = db.Enum('DNI', 'NIE', 'Passport', name='document_type_enum')
     document_type = db.Column(document_type_enum, nullable=False)
     document_number = db.Column(db.String(20), unique=True, nullable=False)
-    address_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con tabla address (address.id)
     phone = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    # Relacion con tabla Address:
+    address_id = db.Column(db.Integer, db.ForeignKey('address.id'), nullable=False)
+    address = db.relationship('Address', primaryjoin='User.address_id == Address.id', uselist=False)
 
     def __repr__(self):
         return f'<User {self.name + " " + self.last_name}>'
@@ -25,7 +27,7 @@ class User(db.Model):
             "last_name": self.last_name,
             "document_type": self.document_type,
             "document_number": self.document_number,
-            "adress_id": self.address_id,
+            "address": self.address.serialize() if self.address else None,
             "phone": self.phone,
             "email": self.email
         }
@@ -57,8 +59,11 @@ class Address(db.Model):
     
 class FavoriteUser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    follower_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con User (user.id)
-    followed_id = db.Column(db.Integer, unique=True, nullable=True)
+    # Relaciones con tabla User:
+    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    follower = db.relationship('User', primaryjoin='FavoriteUser.follower_id == User.id', uselist=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    followed = db.relationship('User', primaryjoin='FavoriteUser.followed_id == User.id', uselist=True)
 
     def __repr__(self):
         return f'<FavoriteUser {self.id}>'
@@ -66,13 +71,15 @@ class FavoriteUser(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "Followerid": self.user_id,
-            "Followedid": self.user_id
+            "follower": [follower.serialize() for follower in self.follower],
+            "followed": [followed.serialize() for followed in self.followed]
         }
     
 class FavoriteListings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    listing_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con Listings (listings.id)
+    # Relacion con tabla Listings
+    listing_id = db.Column(db.Integer, db.ForeignKey('listings.id'), nullable=False)
+    listing = db.relationship('Listings', primaryjoin='FavoriteListings.listing_id == Listings.id', uselist=True)
 
     def __repr__(self):
         return f'<FavoriteListings {self.id}>'
@@ -80,16 +87,19 @@ class FavoriteListings(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "listing_id": self.listing_id
+            "favorite_listing": [listing.serialize() for listing in self.listing]
         }
     
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    reviewer_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con User (user.id)
-    receiver_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con User (user.id)
     comment = db.Column(db.String(1000), unique=False, nullable=True)
     punctuation_enum = db.Enum('1', '2', '3', '4', '5', name='punctuation_enum')
     punctuation = db.Column(punctuation_enum, nullable=False)
+    # Relaciones con tabla User:
+    reviewer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    reviewer = db.relationship('User', primaryjoin='Reviews.reviewer_id == User.id', uselist=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver = db.relationship('User', primaryjoin='Reviews.receiver_id == User.id', uselist=False)
 
     def __repr__(self):
         return f'<Reviews {self.id}>'
@@ -97,23 +107,29 @@ class Reviews(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "reviewer_id": self.reviewer_id,
-            "receiver_id": self.receiver_id,
+            "reviewer": self.reviewer.serialize() if self.reviewer else None,
+            "receiver": self.receiver.serialize() if self.receiver else None,
             "comment": self.comment,
             "punctuation": self.punctuation
         }
     
 class Listings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    seller_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con User (user.id)
-    book_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Books (books.id)
-    album_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con Album (album.id)
     listing_title = db.Column(db.String(200), unique=False, nullable=False)
     favorite_counter = db.Column(db.Integer, unique=False, nullable=False)
     sale_price = db.Column(db.Float, unique=False, nullable=False)
     description = db.Column(db.String(1000), unique=False, nullable=True)
     status_enum = db.Enum('Activo', 'Reservado', 'Vendido', 'Cancelado', name='status_enum')
     status = db.Column(status_enum, nullable=False)
+    # Relacion con tabla User:
+    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    seller = db.relationship('User', primaryjoin='Listings.seller_id == User.id', uselist=False)
+    # Relacion con tabla Books:
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    book = db.relationship('Books', primaryjoin='Listings.book_id == Books.id', uselist=False)
+    # Relacion con tabla Album:
+    album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=False)
+    album = db.relationship('Album', primaryjoin='Listings.album_id == Album.id', uselist=False)
 
     def __repr__(self):
         return f'<Listings {self.listing_title}>'
@@ -121,9 +137,9 @@ class Listings(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "seller_id": self.seller_id,
-            "book_id": self.book_id,
-            "album_id": self.album_id,
+            "seller": self.seller.serialize() if self.seller else None,
+            "book": self.book.serialize() if self.book else None,
+            "album": self.album.serialize() if self.album else None,
             "listing_title": self.listing_title,
             "favorite_counter": self.favorite_counter,
             "sale_price": self.sale_price,
@@ -169,8 +185,12 @@ class Books(db.Model):
     
 class BookCategories(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Books (books.id)
-    category_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Categories (categories.id)
+    # Relacion con tabla Books:
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    book = db.relationship('Books', primaryjoin='BookCategories.book_id == Books.id', uselist=False)
+    # Relacion con tabla Categories:
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+    category = db.relationship('Categories', primaryjoin='BookCategories.category_id == Categories.id', uselist=True)
 
     def __repr__(self):
         return f'<BookCategories {self.id}>'
@@ -178,8 +198,8 @@ class BookCategories(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "book_id": self.book_id,
-            "category_id": self.category_id
+            "book": self.book.serialize() if self.book else None,
+            "category": [category.serialize() for category in self.category]
         }
     
 class Categories(db.Model):
@@ -199,13 +219,18 @@ class Categories(db.Model):
     
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    seller_id = db.Column(db.Integer, unique=False, nullable=False) # Relacionado con User (user.id)
-    buyer_id = db.Column(db.Integer, unique=False, nullable=False) # Relacionado con User (user.id)
-    listing_id = db.Column(db.Integer, unique=True, nullable=False) # Relacionado con Listings (listings.id)
     date = db.Column(db.DateTime, unique=False, nullable=False)
     total = db.Column(db.Float, unique=False, nullable=False)
     transaction_status_enum = db.Enum('Completada', 'Cancelada', 'Suspendida', 'Procesando', 'Error', name='transaction_status_enum')
     status = db.Column(transaction_status_enum, nullable=False)
+    # Relaciones con tabla User:
+    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    seller = db.relationship('User', primaryjoin='Transactions.seller_id == User.id', uselist=False)
+    buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    buyer = db.relationship('User', primaryjoin='Transactions.buyer_id == User.id', uselist=False)
+    # Relacion con tabla Listings:
+    listing_id = db.Column(db.Integer, db.ForeignKey('listings.id'), nullable=False)
+    listing = db.relationship('Listings', primaryjoin='Transactions.listing_id == Listings.id', uselist=False)
 
     def __repr__(self):
         return f'<Transactions {self.id}>'
@@ -213,9 +238,9 @@ class Transactions(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "seller_id": self.seller_id,
-            "buyer_id": self.buyer_id,
-            "listing_id": self.listing_id,
+            "seller": self.seller.serialize() if self.seller else None,
+            "buyer": self.buyer.serialize() if self.buyer else None,
+            "listing": self.listing.serialize() if self.listing else None,
             "date": self.date,
             "total": self.total,
             "status": self.status
