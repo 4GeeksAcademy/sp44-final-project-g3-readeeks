@@ -57,7 +57,8 @@ class Address(db.Model):
     
 class FavoriteUser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con User (user.id)
+    follower_id = db.Column(db.Integer, unique=True, nullable=True) # Relacionado con User (user.id)
+    followed_id = db.Column(db.Integer, unique=True, nullable=True)
 
     def __repr__(self):
         return f'<FavoriteUser {self.id}>'
@@ -65,7 +66,8 @@ class FavoriteUser(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id
+            "Followerid": self.user_id,
+            "Followedid": self.user_id
         }
     
 class FavoriteListings(db.Model):
