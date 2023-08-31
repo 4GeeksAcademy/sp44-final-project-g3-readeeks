@@ -157,6 +157,35 @@ def get_favorite_users(id):
     return response_body, 200
 
 
+@api.route('/users/<int:id>/favoriteusers', methods=['POST'])
+def post_favorite_users(id):
+
+    user = User.query.get_or_404(id)
+    
+    follower = user
+
+    request_body = request.get_json()
+
+    followed_id = request_body["Seguir"]
+    followed = User.query.get_or_404(followed_id)
+
+    new_followed = FavoriteUser(
+        follower=follower,
+        followed=followed
+    )
+
+    db.session.add(new_followed)
+    db.session.commit()
+    
+    response_body = {
+        "message": "New followed added",
+        "status": "ok",
+        "new_followed": new_followed.serialize()
+    }
+        
+    return response_body, 200
+
+
 
 
 
