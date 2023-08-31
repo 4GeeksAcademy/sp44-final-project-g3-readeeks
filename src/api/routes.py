@@ -69,7 +69,7 @@ def post_users():
     else:
         return "Not Found", 404
 
-# Users_ID methods ///////////////////////////////////////////////////////  
+# Users ID methods ///////////////////////////////////////////////////////  
 
 @api.route('/users/<int:id>', methods=['GET']) # Ok
 def get_users_id(id):
@@ -127,19 +127,30 @@ def put_users_id(id):
 def delete_users_id(id):
 
     user = db.get_or_404(User, id)
+    
+    if user.address:  
+        db.session.delete(user)  
+        db.session.delete(user.address)  
+        db.session.commit()
 
-    db.session.delete(user)
-    db.session.commit()
+        response_body = {
+            "message": "Deleted user and associated address",
+            "status": "ok",
+            "user": id
+        }
+    else:
+        db.session.delete(user)  
+        db.session.commit()
 
-    response_body = {
-        "message": "Deleted user",
-        "status": "ok",
-        "user": id
+        response_body = {
+            "message": "Deleted user",
+            "status": "ok",
+            "user": id
         }
    
     return response_body , 200
 
-#FavoriteUser methods //////////////////////////////////////////////////
+#FavoriteUsers methods //////////////////////////////////////////////////
 
 @api.route('/users/<int:id>/favoriteusers', methods=['GET'])
 def get_favorite_users(id):
