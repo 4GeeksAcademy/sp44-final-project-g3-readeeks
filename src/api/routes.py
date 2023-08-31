@@ -70,3 +70,72 @@ def post_users():
 
 ######################################################################################################################################################
        
+@api.route('/users/<int:id>', methods=['GET']) # Ok
+def get_users_id(id):
+
+    user = db.get_or_404(User, id)
+
+    response_body = {
+        "status": "ok",
+        "results": user.serialize()
+    }
+
+    return response_body, 200
+
+
+@api.route('/users/<int:id>', methods=['PUT']) # Ok
+def put_users_id(id):
+
+    request_body = request.get_json()
+
+    user = db.get_or_404(User, id)
+
+    address_data = request_body.get("Direccion", {})
+    address = Address(
+        city=address_data.get("Ciudad"),
+        flat_number=address_data.get("Piso"),
+        floor=address_data.get("Planta"),
+        number=address_data.get("Numero"),
+        state=address_data.get("Provincia"),
+        street=address_data.get("Calle"),
+        zip_code=address_data.get("Codigo Postal")
+        )
+
+    user.name = request_body["Nombre"]
+    user.last_name = request_body["Apellidos"]
+    user.document_type = request_body["Tipo de documento"]
+    user.document_number = request_body["Numero de identificacion"]
+    user.address = address
+    user.phone = request_body["Telefono"]
+    user.email = request_body["Email"]
+    user.password = request_body["Contraseña"]
+    user.is_active = request_body["Activo"]
+       
+    db.session.commit()
+
+    response_body = {
+        "message": "Update user",
+        "status": "ok",
+        "user": request_body
+        }
+                
+    return request_body , 200
+
+
+@api.route('/users/<int:id>', methods= ['DELETE']) # Ok
+def delete_users_id(id):
+
+    user = db.get_or_404(User, id)
+
+    db.session.delete(user)
+    db.session.commit()
+
+    response_body = {
+        "message": "Deleted user",
+        "status": "ok",
+        "user": id
+        }
+   
+    return response_body , 200
+
+
