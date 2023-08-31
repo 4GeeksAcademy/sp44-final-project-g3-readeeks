@@ -161,7 +161,6 @@ def get_favorite_users(id):
 def post_favorite_users(id):
 
     user = User.query.get_or_404(id)
-    
     follower = user
 
     request_body = request.get_json()
@@ -186,7 +185,34 @@ def post_favorite_users(id):
     return response_body, 200
 
 
+@api.route('/users/<int:id>/favoriteusers', methods=['DELETE'])
+def delete_favorite_users(id):
 
+    user = User.query.get_or_404(id) 
+    follower = user
 
+    request_body = request.get_json()
 
+    followed_id = request_body["Seguido"]
+    followed = User.query.get_or_404(followed_id)
 
+    favorite_user_id = FavoriteUser.query.filter_by(follower=follower, followed=followed).first()
+
+    if favorite_user_id:
+        db.session.delete(favorite_user_id)
+        db.session.commit()
+        
+        response_body = {
+            "message": "Follow relationship deleted",
+            "status": "ok"
+        }
+
+        return response_body, 200
+    
+    else:
+        response_body = {
+            "message": "Follow relationship not found",
+            "status": "error"
+        }
+
+        return response_body, 404
