@@ -61,18 +61,19 @@ class FavoriteUser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # Relaciones con tabla User:
     follower_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    follower = db.relationship('User', primaryjoin='FavoriteUser.follower_id == User.id', uselist=True)
     followed_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    followed = db.relationship('User', primaryjoin='FavoriteUser.followed_id == User.id', uselist=True)
 
+    follower = db.relationship('User', foreign_keys=[follower_id])
+    followed = db.relationship('User', foreign_keys=[followed_id])
+    
     def __repr__(self):
         return f'<FavoriteUser {self.id}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "follower": [follower.serialize() for follower in self.follower],
-            "followed": [followed.serialize() for followed in self.followed]
+            "follower": self.follower.serialize(),
+            "followed": self.followed.serialize()
         }
     
 class FavoriteListings(db.Model):

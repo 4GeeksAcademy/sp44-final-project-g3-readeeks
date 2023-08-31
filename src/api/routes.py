@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
 
+# Users methods /////////////////////////////////////////////////////////////
 
 @api.route('/users', methods=['GET']) # Ok
 def get_users():
@@ -68,8 +69,8 @@ def post_users():
     else:
         return "Not Found", 404
 
-######################################################################################################################################################
-       
+# Users_ID methods ///////////////////////////////////////////////////////  
+
 @api.route('/users/<int:id>', methods=['GET']) # Ok
 def get_users_id(id):
 
@@ -137,5 +138,26 @@ def delete_users_id(id):
         }
    
     return response_body , 200
+
+#FavoriteUser methods //////////////////////////////////////////////////
+
+@api.route('/users/<int:id>/favoriteusers', methods=['GET'])
+def get_favorite_users(id):
+
+    favorite_users = db.session.execute(db.select(FavoriteUser).where(FavoriteUser.follower_id == id)).scalars()
+
+    results = [item.serialize() for item in favorite_users]
+    followeds = [followed["followed"]["id"] for followed in results]
+
+    response_body = {
+        "message": "Following",
+        "user_id": followeds
+    }
+
+    return response_body, 200
+
+
+
+
 
 
