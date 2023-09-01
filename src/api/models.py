@@ -81,6 +81,11 @@ class FavoriteListings(db.Model):
     # Relacion con tabla Listings
     listing_id = db.Column(db.Integer, db.ForeignKey('listings.id'), nullable=False)
     listing = db.relationship('Listings', primaryjoin='FavoriteListings.listing_id == Listings.id', uselist=True)
+    # Relacion con tabla User
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    user = db.relationship('User', primaryjoin='FavoriteListings.user_id == User.id', uselist=False)
+
+
 
     def __repr__(self):
         return f'<FavoriteListings {self.id}>'

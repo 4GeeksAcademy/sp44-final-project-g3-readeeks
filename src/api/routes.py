@@ -344,9 +344,38 @@ def get_users_reviews(id):
     return response_body, 200
 
 
-# @api.route('/users/<int:id>/reviews', methods=['POST'])
-# def post_users_reviews(id):
+@api.route('/users/<int:id_reviewer>/reviews/<int:id_receiver>', methods=['POST'])
+def post_users_reviews(id_reviewer, id_receiver):
 
+    user_reviewer = User.query.get_or_404(id_reviewer)
+    reviewer = user_reviewer.id
 
+    user_receiver = User.query.get_or_404(id_receiver)
+    receiver = user_receiver.id
 
-#     return
+    request_body = request.get_json()
+
+    new_review = Reviews(
+        comment = request_body["Comentario"],
+        punctuation = request_body["Puntuacion"],
+        reviewer_id = reviewer,
+        receiver_id = receiver
+    )
+
+    db.session.add(new_review)
+    db.session.commit()
+    
+    response_body = {
+        "message": "New review added",
+        "status": "ok",
+        "review": new_review.serialize()
+    }
+    
+    return response_body, 200
+
+@api.route('/users/<int:id>/favoriteslisting/', methods=['GET'])
+def get_favorite_items(id):
+
+    
+
+    return
