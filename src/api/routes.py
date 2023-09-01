@@ -227,3 +227,99 @@ def delete_favorite_users(id):
         }
 
         return response_body, 404
+    
+
+# Listings methods //////////////////////////////////////////////////////////////
+
+@api.route('/listings', methods=['GET']) # Ok
+def get_listings():
+      
+    items = db.session.execute(db.select(Listings).order_by(Listings.listing_title)).scalars()
+    results = [item.serialize() for item in items]
+
+    response_body = {
+        "message": "All items",
+        "results": results,
+        "status": "ok"
+        }
+
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not found", 404
+
+# @api.route('/<int:id>/listings', methods=['POST'])
+# def post_listings(id):
+    
+#     user = User.query.get_or_404(id)
+#     seller_id = user
+    
+#     request_body = request.get_json()
+
+#     listing_title = request_body.get("Titulo del item")
+#     sale_price = request_body.get("Precio de venta")
+#     description = request_body.get("Descripcion")
+#     status = request_body.get("Status")
+
+#     book_id = request_body.get("book_id", None)
+#     album_id = request_body.get("album_id", None)
+
+#     favorite_counter = 0
+
+#     new_item = Listings(
+#         listing_title=listing_title,
+#         favorite_counter=favorite_counter,
+#         sale_price=sale_price,
+#         description=description,
+#         status=status,
+#         seller_id=seller_id,
+#         book_id=book_id,
+#         album_id=album_id
+#     )
+
+#     db.session.add(new_item)
+#     db.session.commit()
+
+#     response_body = {
+#         "message": "New item added",
+#         "status": "ok",
+#         "new_item": new_item.serialize()
+#     }
+
+#     return response_body, 200
+
+
+# Review methods //////////////////////////////////////////////////
+
+@api.route('/users/<int:id>/reviews', methods=['GET']) # Ok
+def get_users_reviews(id):
+
+    reviews_user = db.session.execute(db.select(Reviews).where(Reviews.receiver_id == id)).scalars()
+
+    result = [
+        {
+            "reviewer": {
+                "id": review.reviewer.id,
+            },
+            "comment": review.comment,
+            "punctuation": review.punctuation,
+            "receiver": {
+                "id": review.receiver.id,               
+            }
+        }
+        for review in reviews_user
+    ]
+
+    response_body = {
+        "Reviews": result
+    }
+
+    return response_body, 200
+
+
+@api.route('/users/<int:id>/reviews', methods=['POST'])
+def post_users_reviews(id):
+
+
+
+    return

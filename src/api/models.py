@@ -126,10 +126,10 @@ class Listings(db.Model):
     seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     seller = db.relationship('User', primaryjoin='Listings.seller_id == User.id', uselist=False)
     # Relacion con tabla Books:
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=True)
     book = db.relationship('Books', primaryjoin='Listings.book_id == Books.id', uselist=False)
     # Relacion con tabla Album:
-    album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=False)
+    album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=True)
     album = db.relationship('Album', primaryjoin='Listings.album_id == Album.id', uselist=False)
 
     def __repr__(self):
