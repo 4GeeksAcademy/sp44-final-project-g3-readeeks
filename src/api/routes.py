@@ -373,9 +373,48 @@ def post_users_reviews(id_reviewer, id_receiver):
     
     return response_body, 200
 
-@api.route('/users/<int:id>/favoriteslisting/', methods=['GET'])
+@api.route('/users/<int:id>/favoritelisting/', methods=['GET'])
 def get_favorite_items(id):
 
+    favorite_items = db.session.execute(db.select(FavoriteListings).where(FavoriteListings.user_id == id)).scalars()
+
+    items = [item.listing_id for item in favorite_items]
+
+    response_body = {
+        "message": "Estos son tus artículos favoritos",
+        "articulos": items  
+    }
+
+    return response_body
+
+@api.route('/users/<int:user_id>/favoritelisting/<int:listing_id>', methods=['POST'])
+def post_favorite_items(user_id, listing_id):
+
+    user = User.query.get_or_404(user_id)
+    listing = Listings.query.get_or_404(listing_id)
     
 
-    return
+    new_favoritelisting = FavoriteListings(
+        listing_id=listing.id,
+        user_id=user.id
+    )
+
+    db.session.add(new_favoritelisting)
+    db.session.commit()
+
+    response_body = {
+        "message": "New favorite item added",
+        "Item": new_favoritelisting.serialize()
+    }
+
+    return response_body, 200
+
+
+
+
+# @api.route('/favoritepost/<int:post_id>/<int:user_id>/', methods=['POST'])
+# def post_postid_user_id(post_id, user_id):
+#     pass
+#     #validar si ya lo tiene como favorito
+    
+
