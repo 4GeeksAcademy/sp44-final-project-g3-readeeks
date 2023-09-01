@@ -152,8 +152,8 @@ def delete_users_id(id):
 
 #FavoriteUsers methods //////////////////////////////////////////////////
 
-@api.route('/users/<int:id>/favoriteusers', methods=['GET'])
-def get_favorite_users(id):
+@api.route('/users/<int:id>/favoriteusers', methods=['GET']) # Ok
+def get_favorite_users(id): 
 
     favorite_users = db.session.execute(db.select(FavoriteUser).where(FavoriteUser.follower_id == id)).scalars()
 
@@ -168,7 +168,7 @@ def get_favorite_users(id):
     return response_body, 200
 
 
-@api.route('/users/<int:id>/favoriteusers', methods=['POST'])
+@api.route('/users/<int:id>/favoriteusers', methods=['POST']) # Ok
 def post_favorite_users(id):
 
     user = User.query.get_or_404(id)
@@ -196,7 +196,7 @@ def post_favorite_users(id):
     return response_body, 200
 
 
-@api.route('/users/<int:id>/favoriteusers', methods=['DELETE'])
+@api.route('/users/<int:id>/favoriteusers', methods=['DELETE']) # Ok
 def delete_favorite_users(id):
 
     user = User.query.get_or_404(id) 
@@ -248,45 +248,72 @@ def get_listings():
     else:
         return "Not found", 404
 
-# @api.route('/<int:id>/listings', methods=['POST'])
-# def post_listings(id):
+@api.route('users/<int:id>/listings', methods=['POST']) # Ok
+def post_listings(id):
     
-#     user = User.query.get_or_404(id)
-#     seller_id = user
+    user = User.query.get_or_404(id)
+    seller_id = user.id
     
-#     request_body = request.get_json()
+    request_body = request.get_json()
 
-#     listing_title = request_body.get("Titulo del item")
-#     sale_price = request_body.get("Precio de venta")
-#     description = request_body.get("Descripcion")
-#     status = request_body.get("Status")
+    listing_title = request_body.get("Titulo del item")
+    sale_price = request_body.get("Precio de venta")
+    description = request_body.get("Descripcion")
+    status = request_body.get("Status")
 
-#     book_id = request_body.get("book_id", None)
-#     album_id = request_body.get("album_id", None)
+    book_id = request_body.get("book_id", None)
+    album_id = request_body.get("album_id", None)
 
-#     favorite_counter = 0
+    favorite_counter = 0
 
-#     new_item = Listings(
-#         listing_title=listing_title,
-#         favorite_counter=favorite_counter,
-#         sale_price=sale_price,
-#         description=description,
-#         status=status,
-#         seller_id=seller_id,
-#         book_id=book_id,
-#         album_id=album_id
-#     )
+    new_item = Listings(
+        listing_title=listing_title,
+        favorite_counter=favorite_counter,
+        sale_price=sale_price,
+        description=description,
+        status=status,
+        seller_id=seller_id,
+        book_id=book_id,
+        album_id=album_id
+    )
 
-#     db.session.add(new_item)
-#     db.session.commit()
+    db.session.add(new_item)
+    db.session.commit()
 
-#     response_body = {
-#         "message": "New item added",
-#         "status": "ok",
-#         "new_item": new_item.serialize()
-#     }
+    response_body = {
+        "message": "New item added",
+        "status": "ok",
+        "new_item": new_item.serialize()
+    }
 
-#     return response_body, 200
+    return response_body, 200
+
+@api.route('/listings/<int:id_listing>', methods=['DELETE']) # Ok
+def delete_listings(id_listing):
+
+    # user = User.query.get_or_404(id)
+    # user_id = user.id
+
+    listing = Listings.query.get_or_404(id_listing)
+    
+    if listing:
+        db.session.delete(listing)
+        db.session.commit()
+        
+        response_body = {
+            "message": "Listing deleted",
+            "status": "ok"
+        }
+
+        return response_body, 200
+    
+    else:
+        response_body = {
+            "message": "Listing not found",
+            "status": "error"
+        }
+
+        return response_body, 404
 
 
 # Review methods //////////////////////////////////////////////////
@@ -317,9 +344,9 @@ def get_users_reviews(id):
     return response_body, 200
 
 
-@api.route('/users/<int:id>/reviews', methods=['POST'])
-def post_users_reviews(id):
+# @api.route('/users/<int:id>/reviews', methods=['POST'])
+# def post_users_reviews(id):
 
 
 
-    return
+#     return

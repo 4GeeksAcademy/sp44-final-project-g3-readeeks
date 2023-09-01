@@ -40,7 +40,7 @@ class Address(db.Model):
     flat_number = db.Column(db.String(5), unique=False, nullable=False)
     zip_code = db.Column(db.Integer, unique=False, nullable=False)
     state = db.Column(db.String(20), unique=False, nullable=False)
-    city = db.Column(db.String(20), unique=False, nullable=False)
+    city = db.Column(db.String(50), unique=False, nullable=False)
 
     def __repr__(self):
         return f'<Address {self.street}>'
