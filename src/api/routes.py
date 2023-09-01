@@ -391,23 +391,36 @@ def get_favorite_items(id):
 def post_favorite_items(user_id, listing_id):
 
     user = User.query.get_or_404(user_id)
+    user_favoritelisting = user.id
+
     listing = Listings.query.get_or_404(listing_id)
-    
+    listing_favoritelisting = listing.id
 
     new_favoritelisting = FavoriteListings(
-        listing_id=listing.id,
-        user_id=user.id
+        listing_id=listing_favoritelisting,
+        user_id=user_favoritelisting
     )
 
     db.session.add(new_favoritelisting)
     db.session.commit()
 
     response_body = {
-        "message": "New favorite item added",
+        "message": "Nuevo artículo favorito añadido",
         "Item": new_favoritelisting.serialize()
     }
 
     return response_body, 200
+
+
+
+
+    
+
+
+
+
+
+
 
 
 
