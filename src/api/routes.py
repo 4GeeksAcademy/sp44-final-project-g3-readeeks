@@ -377,8 +377,9 @@ def post_users_reviews(id_reviewer, id_receiver):
     
     return response_body, 200
 
+# FavoriteListings methods //////////////////////////////////////////////////////////////////////////////////////////////
 
-@api.route('/users/<int:id>/favoritelisting/', methods=['GET'])#OK
+@api.route('/users/<int:id>/favoritelistings/', methods=['GET'])#OK
 def get_favorite_items(id):
 
     favorite_items = db.session.execute(db.select(FavoriteListings).where(FavoriteListings.user_id == id)).scalars()
@@ -393,7 +394,7 @@ def get_favorite_items(id):
     return response_body
 
 
-@api.route('/users/<int:user_id>/favoritelisting/<int:listing_id>', methods=['POST'])#OK
+@api.route('/users/<int:user_id>/favoritelistings/<int:listing_id>', methods=['POST']) #Ok
 def post_favorite_items(user_id, listing_id):
     
 
@@ -418,48 +419,77 @@ def post_favorite_items(user_id, listing_id):
 
     #return response_body, 200
 
-    ########################################
+    ######################################## NO SE PUEDE PONER SOLO USER_ID Y LISTING_ID PORQUE SI PONES UN ID QUE NO EXISTE TE DA ERROR 500 DE ESTA FORMA TE DA UN NOT FOUND
 
-     user = User.query.get_or_404(user_id)
-     listing = Listings.query.get_or_404(listing_id)
+    user = User.query.get_or_404(user_id)    
+    user_favoritelisting = user.id
 
-     existing_favorite = FavoriteListings.query.filter_by(user_id=user_id, listing_id=listing_id).first()
+    listing = Listings.query.get_or_404(listing_id)
+    listing_favoritelisting = listing.id
 
-     if existing_favorite:
+    existing_favorite = FavoriteListings.query.filter_by(user_id=user_id, listing_id=listing_id).first()
+
+    if existing_favorite:
         response_body = {
             "message": "Este articulo ya esta en tu lista de favoritos."
         }
         return response_body, 400  
 
-     new_favorite_listing = FavoriteListings(
-        listing_id=listing_id,
-        user_id=user_id
+    new_favorite_listing = FavoriteListings(
+        listing_id=listing_favoritelisting,
+        user_id=user_favoritelisting
     )
 
-     db.session.add(new_favorite_listing)
+    db.session.add(new_favorite_listing)
+    db.session.commit()
     
-     try:
-        db.session.commit()
-     except IntegrityError:
-        db.session.rollback()
-        response_body = {
-            "message": "Ha ocurrido un error al agregar el articulo a tu lista de favoritos."
-        }
-        return response_body, 500  
-
-     response_body = {
+    response_body = {
         "message": "Nuevo articulo favorito añadido",
         "Item": new_favorite_listing.serialize()
     }
 
-     return response_body, 200
+    
+    return response_body, 200
+    
+
+@api.route("/users/7int:user_id>/favoritelistings/<int:listing_id>", methods=['DELETE']) # Ok # ESTA LÍNEA NO ESTABA HECHA
+def delete_userid_listingid(user_id, listing_id):
+
+    user = User.query.get_or_404(user_id)  
+    
+    listing = Listings.query.get_or_404(listing_id)
+    
+    delete_favorite = FavoriteListings.query.filter_by(user_id=user.id, listing_id=listing.id).first()
+
+    if delete_favorite:
+        db.session.delete(delete_favorite)
+        db.session.commit()
+
+        response_body = {
+            "message": "Favorite deleted",
+            "status": "ok"
+        }
+
+        return response_body, 200
+
+    else:
+
+        response_body = {
+            "message": "Favorite not found",
+            "status": "Error"
+        }
+
+        return response_body, 404
 
 
-@api.route('/books', methods=['GET']) #OK
+# Books methods ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+@api.route('/books', methods=['GET']) # Ok
 def get_books():
       
-    items = db.session.execute(db.select(Books).order_by(Books.title)).scalars()
-    results = [item.serialize() for item in items]
+    books = db.session.execute(db.select(Books).order_by(Books.title)).scalars()
+    results = [item.serialize() for item in books]
 
     response_body = {
         "message": "All books",
@@ -473,19 +503,25 @@ def get_books():
         return "Not found", 404
 
 
-@api.route('/books', methods=['POST']) #ok
+@api.route('/books', methods=['POST']) # Ok #faltaba el existencia
 def post_books():
-    
     
     request_body = request.get_json()
 
     book_title = request_body.get("Titulo del libro")
     author = request_body.get("Autor")
     publisher = request_body.get("Editorial")
-    age = request_body.get("Año")
-    isbn = request_body.get("Isbn")
+    age = request_body.get("Fecha publicacion")
+    isbn = request_body.get("ISBN")
 
-  
+    existing_book = Books.query.filter_by(isbn=isbn).first()
+
+    if existing_book:
+        response_body = {
+            "message": "Este libro ya esta en tu lista de libros"
+        }
+        
+        return response_body, 200
 
     new_book = Books(
         title= book_title,
