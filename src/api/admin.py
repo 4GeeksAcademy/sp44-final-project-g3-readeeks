@@ -19,6 +19,9 @@ def setup_admin(app):
     admin.add_view(ModelView(FavoriteUser, db.session))
     admin.add_view(ModelView(Reviews, db.session))
     admin.add_view(ModelView(FavoriteListings, db.session))
+    admin.add_view(ModelView(BookCategories, db.session))
+    admin.add_view(ModelView(Categories, db.session))
+
 
 
 

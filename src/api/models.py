@@ -91,7 +91,9 @@ class FavoriteListings(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "favorite_listing": [listing.serialize() for listing in self.listing]
+            #"favorite_listing": [listing.serialize() for listing in self.listing]
+            "favorite_listing": self.listing.serialize() if self.listing else None
+
         }
     
 class Reviews(db.Model):
@@ -173,6 +175,7 @@ class Books(db.Model):
     publisher = db.Column(db.String(50), unique=False, nullable=False)
     published_date = db.Column(db.String(50), unique=False, nullable=False)
     isbn = db.Column(db.String(20), unique=True, nullable=False)
+
 
     def __repr__(self):
         return f'<Books {self.title}>'
