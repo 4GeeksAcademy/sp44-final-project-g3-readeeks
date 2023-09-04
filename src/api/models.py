@@ -155,7 +155,6 @@ class Listings(db.Model):
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    listing_id = db.Column(db.Integer, unique=True, nullable=False)
     url = db.Column(db.String(200), unique=False, nullable=False)
 
     def __repr__(self):
@@ -164,7 +163,6 @@ class Album(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "listing_id": self.listing_id,
             "url": self.url
         }
 
@@ -226,7 +224,7 @@ class Categories(db.Model):
     
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, unique=False, nullable=False)
+    date = db.Column(db.String(50), unique=False, nullable=False)
     total = db.Column(db.Float, unique=False, nullable=False)
     transaction_status_enum = db.Enum('Completada', 'Cancelada', 'Suspendida', 'Procesando', 'Error', name='transaction_status_enum')
     status = db.Column(transaction_status_enum, nullable=False)
