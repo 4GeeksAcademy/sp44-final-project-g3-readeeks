@@ -574,34 +574,44 @@ def post_transactions(buyer_id, listing_id):
     listing = Listings.query.get_or_404(listing_id)
     seller = User.query.get_or_404(listing.seller_id)
 
-    request_data = request.get_json()
+    if buyer.id != seller.id:
+
+        request_data = request.get_json()
 
     
-    date_str = request_data.get("date")
-    date = datetime.strptime(date_str, '%Y-%m-%d').date()  
+        date_str = request_data.get("date")
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()  
 
-    total = request_data.get("total")
-    status = request_data.get("status")
+        total = request_data.get("total")
+        status = request_data.get("status")
 
-    new_transaction = Transactions(
-            date=date,
-            total=total,
-            status=status,
-            seller=seller,
-            buyer=buyer,
-            listing=listing
-        )
+        new_transaction = Transactions(
+                date=date,
+                total=total,
+                status=status,
+                seller=seller,
+                buyer=buyer,
+                listing=listing
+            )
 
-    db.session.add(new_transaction)
-    db.session.commit()
+        db.session.add(new_transaction)
+        db.session.commit()
 
-    response_body = {
-            "message": "New transaction added",
-            "status": "ok",
-            "transaction": new_transaction.serialize()
+        response_body = {
+                "message": "New transaction added",
+                "status": "ok",
+                "transaction": new_transaction.serialize()
+            }
+    
+        return response_body, 200
+    
+    else:
+
+        response_body = {
+            "message": "El comprador y el vendedor no pueden ser el mismo, crack"
         }
-    
-    return response_body, 200
+
+        return response_body, 403
 
 @api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['DELETE']) # Ok
 def delete_transactions(buyer_id, listing_id):
@@ -609,6 +619,8 @@ def delete_transactions(buyer_id, listing_id):
     buyer = User.query.get_or_404(buyer_id)
     listing = Listings.query.get_or_404(listing_id)
     seller = User.query.get_or_404(listing.seller_id)
+
+    
 
     delete_transactions = Transactions.query.filter_by(buyer_id=buyer.id, listing_id=listing.id, seller_id=seller.id).first()
 
@@ -620,7 +632,7 @@ def delete_transactions(buyer_id, listing_id):
             "message": "Transaction deleted",
             "status": "ok",
             "ID": listing.id
-        }
+            }
 
         return response_body, 200
 
@@ -629,6 +641,7 @@ def delete_transactions(buyer_id, listing_id):
         response_body = {
             "message": "Transaction not found",
             "status": "Error"
-        }
+            }
 
         return response_body, 404
+   
