@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d5d926089dfc
+Revision ID: 620c634edaf5
 Revises: 
-Create Date: 2023-09-06 17:44:59.768312
+Create Date: 2023-09-06 18:04:13.696559
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd5d926089dfc'
+revision = '620c634edaf5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -36,11 +36,13 @@ def upgrade():
     )
     op.create_table('books',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('title', sa.String(length=50), nullable=False),
-    sa.Column('author', sa.String(length=50), nullable=False),
-    sa.Column('publisher', sa.String(length=50), nullable=False),
-    sa.Column('published_date', sa.String(length=50), nullable=False),
-    sa.Column('isbn', sa.String(length=20), nullable=False),
+    sa.Column('title', sa.String(length=50), nullable=True),
+    sa.Column('author', sa.String(length=50), nullable=True),
+    sa.Column('publisher', sa.String(length=50), nullable=True),
+    sa.Column('published_date', sa.String(length=50), nullable=True),
+    sa.Column('isbn', sa.String(length=20), nullable=True),
+    sa.Column('category1', sa.String(length=20), nullable=True),
+    sa.Column('category2', sa.String(length=20), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('isbn')
     )
@@ -104,7 +106,7 @@ def upgrade():
     )
     op.create_table('transactions',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('date', sa.String(length=50), nullable=False),
+    sa.Column('date', sa.Date(), nullable=False),
     sa.Column('total', sa.Float(), nullable=False),
     sa.Column('status', sa.Enum('Completada', 'Cancelada', 'Suspendida', 'Procesando', 'Error', name='transaction_status_enum'), nullable=False),
     sa.Column('seller_id', sa.Integer(), nullable=False),

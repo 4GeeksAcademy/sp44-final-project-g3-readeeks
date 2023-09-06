@@ -4,6 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Address, FavoriteUser, FavoriteListings, Reviews, Listings, Album, Books, Transactions
 from api.utils import generate_sitemap, APIException
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -566,7 +567,7 @@ def get_transactions():
         return "Not Found", 404
     
 
-@api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['POST']) # Ok
+@api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['POST'])
 def post_transactions(buyer_id, listing_id):
 
     buyer = User.query.get_or_404(buyer_id)
@@ -575,7 +576,10 @@ def post_transactions(buyer_id, listing_id):
 
     request_data = request.get_json()
 
-    date = request_data.get("date")
+    
+    date_str = request_data.get("date")
+    date = datetime.strptime(date_str, '%Y-%m-%d').date()  
+
     total = request_data.get("total")
     status = request_data.get("status")
 

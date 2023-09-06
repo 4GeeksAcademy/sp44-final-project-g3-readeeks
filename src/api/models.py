@@ -225,7 +225,7 @@ class Books(db.Model):
     
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.String(50), unique=False, nullable=False)
+    date = db.Column(db.Date, nullable=False)
     total = db.Column(db.Float, unique=False, nullable=False)
     transaction_status_enum = db.Enum('Completada', 'Cancelada', 'Suspendida', 'Procesando', 'Error', name='transaction_status_enum')
     status = db.Column(transaction_status_enum, nullable=False)
@@ -247,7 +247,7 @@ class Transactions(db.Model):
             "seller": self.seller.serialize() if self.seller else None,
             "buyer": self.buyer.serialize() if self.buyer else None,
             "listing": self.listing.serialize() if self.listing else None,
-            "date": self.date,
+            "date": self.date.strftime('%Y-%m-%d'),
             "total": self.total,
             "status": self.status
         }
