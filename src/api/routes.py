@@ -454,7 +454,7 @@ def post_favorite_items(user_id, listing_id):
     return response_body, 200
     
 
-@api.route("/users/<int:user_id>/favoritelistings/<int:listing_id>", methods=['DELETE']) # Ok # ESTA LÍNEA NO ESTABA HECHA
+@api.route("/users/<int:user_id>/favoritelistings/<int:listing_id>", methods=['DELETE']) # Ok
 def delete_userid_listingid(user_id, listing_id):
 
     user = User.query.get_or_404(user_id)  
@@ -523,98 +523,65 @@ def get_transactions():
         return "Not Found", 404
     
 
+@api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['POST']) # Ok
+def post_transactions(buyer_id, listing_id):
 
-#ESTE NO ESTA BIENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-@api.route('/<int:user_id>/transactions/<int:listing_id>', methods=['POST']) #ESTE NO ESTA BIEN
-def post_transactions(user_id, listing_id):
-
-    buyer = User.query.get_or_404(user_id)
-
+    buyer = User.query.get_or_404(buyer_id)
     listing = Listings.query.get_or_404(listing_id)
+    seller = User.query.get_or_404(listing.seller_id)
 
-    request_body = request.get_json()
+    request_data = request.get_json()
+
+    date = request_data.get("date")
+    total = request_data.get("total")
+    status = request_data.get("status")
 
     new_transaction = Transactions(
-        listing_id=listing,
-        buyer_id=buyer,
-        date=request_body["Fecha de venta"],
-        total=request_body["Total"],
-        status=request_body["Estado"],
-        seller_id=listing.seller_id
-    )
+            date=date,
+            total=total,
+            status=status,
+            seller=seller,
+            buyer=buyer,
+            listing=listing
+        )
 
     db.session.add(new_transaction)
     db.session.commit()
 
     response_body = {
-        "message": "Nueva transacción",
-        "transacción": new_transaction.serialize()
-    }
-
+            "message": "New transaction added",
+            "status": "ok",
+            "transaction": new_transaction.serialize()
+        }
+    
     return response_body, 200
 
+@api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['DELETE']) # Ok
+def delete_transactions(buyer_id, listing_id):
 
-# @api.route('/books', methods=['POST']) # Ok 
-# def post_books():
-    
-#     request_body = request.get_json()
+    buyer = User.query.get_or_404(buyer_id)
+    listing = Listings.query.get_or_404(listing_id)
+    seller = User.query.get_or_404(listing.seller_id)
 
-#     book_title = request_body.get("Titulo del libro")
-#     author = request_body.get("Autor")
-#     publisher = request_body.get("Editorial")
-#     age = request_body.get("Fecha publicacion")
-#     isbn = request_body.get("ISBN")
+    delete_transactions = Transactions.query.filter_by(buyer_id=buyer.id, listing_id=listing.id, seller_id=seller.id).first()
 
-#     existing_book = Books.query.filter_by(isbn=isbn).first()
+    if delete_transactions:
+        db.session.delete(delete_transactions)
+        db.session.commit()
 
-#     if existing_book:
-#         response_body = {
-#             "message": "Este libro ya esta en tu lista de libros"
-#         }
-        
-#         return response_body, 200
+        response_body = {
+            "message": "Transaction deleted",
+            "status": "ok",
+            "ID": listing.id
+        }
 
-#     new_book = Books(
-#         title= book_title,
-#         author= author,
-#         publisher= publisher,
-#         published_date= age,
-#         isbn= isbn,
-#         )
+        return response_body, 200
 
-#     db.session.add(new_book)
-#     db.session.commit()
+    else:
 
-#     response_body = {
-#         "message": "New book added",
-#         "status": "ok",
-#         "new_item": new_book.serialize()
-#     }
+        response_body = {
+            "message": "Transaction not found",
+            "status": "Error"
+        }
 
-#     return response_body, 200    
-
-# @api.route('/books/<int:id>', methods=['DELETE']) # Ok
-# def delete_books(id):
-   
-#    book = Books.query.get_or_404(id)
-
-#    if book:
-#        db.session.delete(book)
-#        db.session.commit()
-
-#        response_body = {
-#            "message": "Book deleted",
-#            "status": "ok"
-#        }
-
-#        return response_body, 200
-   
-#    else:
-#        response_body = {
-#            "message": "Book not found",
-#            "status": "error"
-#        }
-
-#        return response_body, 404
-
-
+        return response_body, 404
