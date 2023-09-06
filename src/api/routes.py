@@ -313,6 +313,49 @@ def post_listings(id):
 
     return response_body, 200
 
+@api.route('/users/<int:user_id>/listings/<int:listing_id>', methods=['PUT']) # Ok
+def put_listings(user_id, listing_id):
+
+    user = User.query.get_or_404(user_id)
+    listing = Listings.query.get_or_404(listing_id)
+
+    put_listing = Listings.query.filter_by(seller_id=user.id, id=listing.id).first()
+
+    if put_listing:
+
+        request_body = request.get_json()
+
+        album_data = request_body.get("Album", {})
+        album_url = album_data.get("La url")
+        
+        if album_url:
+            put_listing.album.url = album_url
+
+        put_listing.listing_title = request_body.get("Titulo", put_listing.listing_title)
+        put_listing.sale_price = request_body.get("Precio venta", put_listing.sale_price)
+        put_listing.description = request_body.get("Descripcion", put_listing.description)
+        put_listing.status = request_body.get("Estado", put_listing.status)
+        
+       
+        db.session.commit()
+
+        response_body = {
+            "message": "Update listing",
+            "status": "ok",
+            "listing": request_body
+        }
+
+        return request_body, 200
+
+    else:
+
+        response_body = {
+            "message": "Listing not found",
+            "status": "ok",
+        }
+
+        return response_body, 404
+
 
 @api.route('/listings/<int:id_listing>', methods=['DELETE']) # Ok
 def delete_listings(id_listing):
