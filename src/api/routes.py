@@ -2,8 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Address, FavoriteUser, FavoriteListings, Reviews, Listings, Album, Books, BookCategories, Categories, Transactions
+from api.models import db, User, Address, FavoriteUser, FavoriteListings, Reviews, Listings, Album, Books, Transactions
 from api.utils import generate_sitemap, APIException
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -264,11 +265,33 @@ def post_listings(id):
     description = request_body.get("Descripcion")
     status = request_body.get("Status")
 
-    book_id = request_body.get("book_id", None)
-    album_id = request_body.get("album_id", None)
+    album_data = request_body.get("album", {})  
+    album = Album(
+        url=album_data.get("La url")
+    )   
+    
+    db.session.add(album)
+    db.session.commit()
+
+    album_id = album.id
+
+    book_data = request_body.get("book", {})
+    book = Books(
+        title = book_data.get("Titulo"),
+        author = book_data.get("Autor"),
+        publisher = book_data.get("Editorial"),
+        published_date = book_data.get("Fecha publicacion"),
+        isbn = book_data.get("ISBN")
+        #category1
+        #category2
+    )
+
+    db.session.add(book)
+    db.session.commit()
+
+    book_id = book.id
 
     favorite_counter = 0
-
     new_item = Listings(
         listing_title=listing_title,
         favorite_counter=favorite_counter,
@@ -291,6 +314,49 @@ def post_listings(id):
 
     return response_body, 200
 
+@api.route('/users/<int:user_id>/listings/<int:listing_id>', methods=['PUT']) # Ok
+def put_listings(user_id, listing_id):
+
+    user = User.query.get_or_404(user_id)
+    listing = Listings.query.get_or_404(listing_id)
+
+    put_listing = Listings.query.filter_by(seller_id=user.id, id=listing.id).first()
+
+    if put_listing:
+
+        request_body = request.get_json()
+
+        album_data = request_body.get("Album", {})
+        album_url = album_data.get("La url")
+        
+        if album_url:
+            put_listing.album.url = album_url
+
+        put_listing.listing_title = request_body.get("Titulo", put_listing.listing_title)
+        put_listing.sale_price = request_body.get("Precio venta", put_listing.sale_price)
+        put_listing.description = request_body.get("Descripcion", put_listing.description)
+        put_listing.status = request_body.get("Estado", put_listing.status)
+        
+       
+        db.session.commit()
+
+        response_body = {
+            "message": "Update listing",
+            "status": "ok",
+            "listing": request_body
+        }
+
+        return request_body, 200
+
+    else:
+
+        response_body = {
+            "message": "Listing not found",
+            "status": "ok",
+        }
+
+        return response_body, 404
+
 
 @api.route('/listings/<int:id_listing>', methods=['DELETE']) # Ok
 def delete_listings(id_listing):
@@ -300,8 +366,12 @@ def delete_listings(id_listing):
 
     listing = Listings.query.get_or_404(id_listing)
     
-    if listing:
+    album_id = listing.album_id
+    album_id_in_album = Album.query.get_or_404(album_id)
+    
+    if listing and album_id_in_album:
         db.session.delete(listing)
+        db.session.delete(album_id_in_album)
         db.session.commit()
         
         response_body = {
@@ -377,8 +447,9 @@ def post_users_reviews(id_reviewer, id_receiver):
     
     return response_body, 200
 
+# FavoriteListings methods //////////////////////////////////////////////////////////////////////////////////////////////
 
-@api.route('/users/<int:id>/favoritelisting/', methods=['GET'])#OK
+@api.route('/users/<int:id>/favoritelistings/', methods=['GET'])#OK
 def get_favorite_items(id):
 
     favorite_items = db.session.execute(db.select(FavoriteListings).where(FavoriteListings.user_id == id)).scalars()
@@ -393,73 +464,78 @@ def get_favorite_items(id):
     return response_body
 
 
-@api.route('/users/<int:user_id>/favoritelisting/<int:listing_id>', methods=['POST'])#OK
+@api.route('/users/<int:user_id>/favoritelistings/<int:listing_id>', methods=['POST']) #Ok
 def post_favorite_items(user_id, listing_id):
     
+    user = User.query.get_or_404(user_id)    
+    user_favoritelisting = user.id
 
-    #user = User.query.get_or_404(user_id)    
-    #user_favoritelisting = user.id
+    listing = Listings.query.get_or_404(listing_id)
+    listing_favoritelisting = listing.id
 
-    #listing = Listings.query.get_or_404(listing_id)
-    #listing_favoritelisting = listing.id
+    existing_favorite = FavoriteListings.query.filter_by(user_id=user_id, listing_id=listing_id).first()
 
-    #new_favoritelisting = FavoriteListings(
-        #listing_id=listing_favoritelisting,
-        #user_id=user_favoritelisting
-    #)
-
-    #db.session.add(new_favoritelisting)
-    #db.session.commit()
-
-    #response_body = {
-     #   "message": "Nuevo artículo favorito añadido",
-      #  "Item": new_favoritelisting.serialize()
-    #}
-
-    #return response_body, 200
-
-    ########################################
-
-     user = User.query.get_or_404(user_id)
-     listing = Listings.query.get_or_404(listing_id)
-
-     existing_favorite = FavoriteListings.query.filter_by(user_id=user_id, listing_id=listing_id).first()
-
-     if existing_favorite:
+    if existing_favorite:
         response_body = {
             "message": "Este articulo ya esta en tu lista de favoritos."
         }
         return response_body, 400  
 
-     new_favorite_listing = FavoriteListings(
-        listing_id=listing_id,
-        user_id=user_id
+    new_favorite_listing = FavoriteListings(
+        listing_id=listing_favoritelisting,
+        user_id=user_favoritelisting
     )
 
-     db.session.add(new_favorite_listing)
+    db.session.add(new_favorite_listing)
+    db.session.commit()
     
-     try:
-        db.session.commit()
-     except IntegrityError:
-        db.session.rollback()
-        response_body = {
-            "message": "Ha ocurrido un error al agregar el articulo a tu lista de favoritos."
-        }
-        return response_body, 500  
-
-     response_body = {
+    response_body = {
         "message": "Nuevo articulo favorito añadido",
         "Item": new_favorite_listing.serialize()
     }
 
-     return response_body, 200
+    
+    return response_body, 200
+    
+
+@api.route("/users/<int:user_id>/favoritelistings/<int:listing_id>", methods=['DELETE']) # Ok
+def delete_userid_listingid(user_id, listing_id):
+
+    user = User.query.get_or_404(user_id)  
+    
+    listing = Listings.query.get_or_404(listing_id)
+    
+    delete_favorite = FavoriteListings.query.filter_by(user_id=user.id, listing_id=listing.id).first()
+
+    if delete_favorite:
+        db.session.delete(delete_favorite)
+        db.session.commit()
+
+        response_body = {
+            "message": "Favorite deleted",
+            "status": "ok"
+        }
+
+        return response_body, 200
+
+    else:
+
+        response_body = {
+            "message": "Favorite not found",
+            "status": "Error"
+        }
+
+        return response_body, 404
 
 
-@api.route('/books', methods=['GET']) #OK
+# Books methods ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+@api.route('/books', methods=['GET']) # Ok
 def get_books():
       
-    items = db.session.execute(db.select(Books).order_by(Books.title)).scalars()
-    results = [item.serialize() for item in items]
+    books = db.session.execute(db.select(Books).order_by(Books.title)).scalars()
+    results = [item.serialize() for item in books]
 
     response_body = {
         "message": "All books",
@@ -473,126 +549,99 @@ def get_books():
         return "Not found", 404
 
 
-@api.route('/books', methods=['POST']) #ok
-def post_books():
-    
-    
-    request_body = request.get_json()
+@api.route('/transactions', methods=['GET']) # Ok
+def get_transactions():
 
-    book_title = request_body.get("Titulo del libro")
-    author = request_body.get("Autor")
-    publisher = request_body.get("Editorial")
-    age = request_body.get("Año")
-    isbn = request_body.get("Isbn")
-
-  
-
-    new_book = Books(
-        title= book_title,
-        author= author,
-        publisher= publisher,
-        published_date= age,
-        isbn= isbn,
-        )
-
-    db.session.add(new_book)
-    db.session.commit()
+    transactions = db.session.execute(db.select(Transactions).order_by(Transactions.id)).scalars()
+    results = [item.serialize() for item in transactions]
 
     response_body = {
-        "message": "New book added",
-        "status": "ok",
-        "new_item": new_book.serialize()
-    }
+                    "message": "All users",
+                    "results": results,
+                    "status": "ok"
+                    }
 
-    return response_body, 200    
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not Found", 404
+    
 
+@api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['POST'])
+def post_transactions(buyer_id, listing_id):
 
+    buyer = User.query.get_or_404(buyer_id)
+    listing = Listings.query.get_or_404(listing_id)
+    seller = User.query.get_or_404(listing.seller_id)
 
-@api.route('/books/<int:book_id>/bookscategory', methods=['GET'])
-def get_book_categories(book_id):
-    try:
-        book = Books.query.get_or_404(book_id)
+    if buyer.id != seller.id:
 
-        categories = [book_category.category.serialize() for book_category in book.book_categories]
+        request_data = request.get_json()
 
-        return jsonify(categories), 200
-    except Exception as e:
-        return jsonify({"message": "Error al obtener las categorias del libro", "error": str(e)}), 500
+    
+        date_str = request_data.get("date")
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()  
 
+        total = request_data.get("total")
+        status = request_data.get("status")
 
-@api.route('/books/<int:book_id>/bookscategory/<int:category_id>', methods=['POST'])
-def add_category_to_book(book_id, category_id):
-    try:
-        # Verificar si el libro y la categoría existen
-        book = Books.query.get_or_404(book_id)
-        category = Categories.query.get_or_404(category_id)
+        new_transaction = Transactions(
+                date=date,
+                total=total,
+                status=status,
+                seller=seller,
+                buyer=buyer,
+                listing=listing
+            )
 
-        # Verificar si la categoría ya está asignada al libro
-        if category in book.categories:
-            return jsonify({"message": "La categoría ya está asignada al libro."}), 400
-
-        # Agregar la categoría al libro
-        book.categories.append(category)
+        db.session.add(new_transaction)
         db.session.commit()
 
         response_body = {
-            "message": "Categoría añadida al libro exitosamente.",
-            "book_id": book_id,
-            "category_id": category_id,
-            "status": "ok"
+                "message": "New transaction added",
+                "status": "ok",
+                "transaction": new_transaction.serialize()
+            }
+    
+        return response_body, 200
+    
+    else:
+
+        response_body = {
+            "message": "El comprador y el vendedor no pueden ser el mismo, crack"
         }
+
+        return response_body, 403
+
+@api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['DELETE']) # Ok
+def delete_transactions(buyer_id, listing_id):
+
+    buyer = User.query.get_or_404(buyer_id)
+    listing = Listings.query.get_or_404(listing_id)
+    seller = User.query.get_or_404(listing.seller_id)
+
+    
+
+    delete_transactions = Transactions.query.filter_by(buyer_id=buyer.id, listing_id=listing.id, seller_id=seller.id).first()
+
+    if delete_transactions:
+        db.session.delete(delete_transactions)
+        db.session.commit()
+
+        response_body = {
+            "message": "Transaction deleted",
+            "status": "ok",
+            "ID": listing.id
+            }
 
         return response_body, 200
 
-    except Exception as e:
-        return jsonify({"message": "Error al añadir la categoría al libro", "error": str(e)}), 500
+    else:
 
+        response_body = {
+            "message": "Transaction not found",
+            "status": "Error"
+            }
 
-
-
-@api.route('/categories', methods=['GET']) # ok
-def get_categories():
-    categories = Categories.query.all()
-    serialized_categories = [category.serialize() for category in categories]
-    
-    response_body = {
-        "message": "All categories",
-        "results": serialized_categories,
-        "status": "ok"
-    }
-    
-    return response_body, 200
-
-
-
-@api.route('/categories', methods=['POST']) # ok
-def create_category():
-    data = request.get_json()
-    
-    if 'name' not in data:
-        return jsonify({'message': 'El campo "name" es requerido'}), 400
-    
-    name = data['name']
-    description = data.get('description', '')
-    
-    new_category = Categories(name=name, description=description)
-    
-    db.session.add(new_category)
-    db.session.commit()
-    
-    response_body = {
-        "message": "Categoría creada exitosamente",
-        "category": new_category.serialize(),
-        "status": "ok"
-    }
-    
-    return response_body, 201
-
-
-
-
-# @api.route('/favoritepost/<int:post_id>/<int:user_id>/', methods=['POST'])
-# def post_postid_user_id(post_id, user_id):
-#     pass
-#     #validar si ya lo tiene como favorito
-    
+        return response_body, 404
+   

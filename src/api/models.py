@@ -155,7 +155,6 @@ class Listings(db.Model):
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    listing_id = db.Column(db.Integer, unique=True, nullable=False)
     url = db.Column(db.String(200), unique=False, nullable=False)
 
     def __repr__(self):
@@ -164,18 +163,18 @@ class Album(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "listing_id": self.listing_id,
             "url": self.url
         }
 
 class Books(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), unique=False, nullable=False)
-    author = db.Column(db.String(50), unique=False, nullable=False)
-    publisher = db.Column(db.String(50), unique=False, nullable=False)
-    published_date = db.Column(db.String(50), unique=False, nullable=False)
-    isbn = db.Column(db.String(20), unique=True, nullable=False)
-
+    title = db.Column(db.String(50), unique=False, nullable=True)
+    author = db.Column(db.String(50), unique=False, nullable=True)
+    publisher = db.Column(db.String(50), unique=False, nullable=True)
+    published_date = db.Column(db.String(50), unique=False, nullable=True)
+    isbn = db.Column(db.String(20), unique=True, nullable=True)
+    category1 = db.Column(db.String(20), unique=False, nullable=True)
+    category2 = db.Column(db.String(20), unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Books {self.title}>'
@@ -190,43 +189,43 @@ class Books(db.Model):
             "isbn": self.isbn
         }
     
-class BookCategories(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # Relacion con tabla Books:
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
-    book = db.relationship('Books', primaryjoin='BookCategories.book_id == Books.id', uselist=False)
-    # Relacion con tabla Categories:
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
-    category = db.relationship('Categories', primaryjoin='BookCategories.category_id == Categories.id', uselist=True)
+# class BookCategories(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     # Relacion con tabla Books:
+#     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+#     book = db.relationship('Books', primaryjoin='BookCategories.book_id == Books.id', uselist=False)
+#     # Relacion con tabla Categories:
+#     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+#     category = db.relationship('Categories', primaryjoin='BookCategories.category_id == Categories.id', uselist=True)
 
-    def __repr__(self):
-        return f'<BookCategories {self.id}>'
+#     def __repr__(self):
+#         return f'<BookCategories {self.id}>'
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "book": self.book.serialize() if self.book else None,
-            "category": [category.serialize() for category in self.category]
-        }
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "book": self.book.serialize() if self.book else None,
+#             "category": [category.serialize() for category in self.category]
+#         }
     
-class Categories(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True, nullable=False)
-    description = db.Column(db.String(500), unique=False, nullable=True)
+# class Categories(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(50), unique=True, nullable=False)
+#     description = db.Column(db.String(500), unique=False, nullable=True)
 
-    def __repr__(self):
-        return f'<Categories {self.name}>'
+#     def __repr__(self):
+#         return f'<Categories {self.name}>'
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "description": self.description
-        }
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "name": self.name,
+#             "description": self.description
+#         }
     
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, unique=False, nullable=False)
+    date = db.Column(db.Date, nullable=False)
     total = db.Column(db.Float, unique=False, nullable=False)
     transaction_status_enum = db.Enum('Completada', 'Cancelada', 'Suspendida', 'Procesando', 'Error', name='transaction_status_enum')
     status = db.Column(transaction_status_enum, nullable=False)
@@ -248,7 +247,7 @@ class Transactions(db.Model):
             "seller": self.seller.serialize() if self.seller else None,
             "buyer": self.buyer.serialize() if self.buyer else None,
             "listing": self.listing.serialize() if self.listing else None,
-            "date": self.date,
+            "date": self.date.strftime('%Y-%m-%d'),
             "total": self.total,
             "status": self.status
         }
