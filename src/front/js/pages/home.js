@@ -7,8 +7,10 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
+		<div className=" home text-center mt-5">
+			<h1>ReeDeekS</h1>
+			<h2> Con Reedeeks, Conectamos Pasiones </h2>
+			<h3>Renueva, Descubre y Selecciona con Reedeeks</h3>
 			<p>
 				<img src={rigoImageUrl} />
 			</p>
@@ -24,3 +26,6 @@ export const Home = () => {
 		</div>
 	);
 };
+
+
+
