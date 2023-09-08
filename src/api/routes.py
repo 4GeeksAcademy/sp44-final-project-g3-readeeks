@@ -2,406 +2,646 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Address, FavoriteUser, FavoriteListings, Reviews, Listings, Album, Books, BookCategories, Categories, Transactions
+from api.models import db, User, Address, FavoriteUser, FavoriteListings, Reviews, Listings, Album, Books, Transactions
 from api.utils import generate_sitemap, APIException
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
+# Users methods /////////////////////////////////////////////////////////////
 
+@api.route('/users', methods=['GET']) # Ok
+def get_users():
+      
+    users = db.session.execute(db.select(User).order_by(User.name)).scalars()
+    results = [item.serialize() for item in users]
 
-@api.route('/users', methods=['POST', 'GET']) #ok Makey
-def handle_users():
-    if request.method == 'GET' :  
-        users = db.session.execute(db.select(User).order_by(User.name)).scalars()
-        results = [item.serialize() for item in users]
-        response_body = {"message": " esto devuelve el GET del endpoint /users",
-                         "results": results,
-                         "status": "ok"}
+    response_body = {
+                    "message": "All users",
+                    "results": results,
+                    "status": "ok"
+                    }
 
-        if response_body:
-            return response_body, 200
-        else:
-            return "Not Found", 404
-    
-    if request.method == 'POST' : #signup
-        request_body = request.get_json()
-        user = User(name = request_body["nombre"],
-                    last_name = request_body["apellidos"],
-                    document_type_enum = request_body["tipo de documento"],
-                    document_type = request_body["tipo"],
-                    document_number = request_body["numero de identificacion"],
-                    address = request_body["direccion"],
-                    phone = request_body["telefono"],
-                    email = request_body["email"],
-                    password = request_body["password"]
-                    )
-        db.session.add(user)
-        db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new user",
-                         "status": "ok",
-                         "new_user": request_body}
-        
-       
-        if response_body:
-            return response_body, 200
-        else:
-            return "Not Found", 404
-
-
-       
-@api.route('/users/<int:id>', methods= ['GET', 'PUT', 'DELETE']) #Chachi
-def handle_user(id):
-
-    if request.method == 'GET' :
-        user = db.get_or_404(User, id)
-        print(user)
-        response_body = {"status": "ok",
-                         "results": user.serialize()
-                         }
-        
+    if response_body:
         return response_body, 200
-        
-    if request.method == 'PUT' :
-        request_body = request.get_json()
-        user = db.get_or_404(User, id)    
-        user.name = request_body["nombre"]
-        user.last_name = request_body["apellidos"]
-        user.document_type_enum = request_body["tipo documento"]
-        user.document_type = request_body["tipo"]
-        user.document_number = request_body["numero de identificacion"]
-        user.address = request_body["direccion"]
-        user.phone = request_body["telefono"]
-        user.email = request_body["email"]
-        user.password = request_body["password"]
-       
-        db.session.commit()
+    else:
+        return "Not Found", 404
+    
 
-        response_body = {"message": "Update user",
-                         "status": "ok",
-                         "user": request_body}
+@api.route('/users', methods=['POST']) # Ok
+def post_users():
+    
+    request_body = request.get_json()
+
+    address_data = request_body.get("Direccion", {})
+    address = Address(
+        city=address_data.get("Ciudad"),
+        flat_number=address_data.get("Piso"),
+        floor=address_data.get("Planta"),
+        number=address_data.get("Numero"),
+        state=address_data.get("Provincia"),
+        street=address_data.get("Calle"),
+        zip_code=address_data.get("Codigo Postal")
+        )
+
+    new_user = User(
+        name = request_body["Nombre"],
+        last_name = request_body["Apellidos"],
+        document_type = request_body["Tipo de documento"],
+        document_number = request_body["Numero de identificacion"],
+        address = address,
+        phone = request_body["Telefono"],
+        email = request_body["Email"],
+        password = request_body["Contraseña"],
+        is_active = request_body["Activo"]
+        )
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    response_body = {
+                    "message": "Adding new user",
+                    "status": "ok",
+                    "new_user": request_body
+                    }
+        
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not Found", 404
+
+
+# Users ID methods ///////////////////////////////////////////////////////  
+
+@api.route('/users/<int:id>', methods=['GET']) # Ok
+def get_users_id(id):
+
+    user = db.get_or_404(User, id)
+
+    response_body = {
+        "status": "ok",
+        "results": user.serialize()
+    }
+
+    return response_body, 200
+
+
+@api.route('/users/<int:id>', methods=['PUT']) # Ok
+def put_users_id(id):
+
+    request_body = request.get_json()
+
+    user = db.get_or_404(User, id)
+
+    address_data = request_body.get("Direccion", {})
+    address = Address(
+        city=address_data.get("Ciudad"),
+        flat_number=address_data.get("Piso"),
+        floor=address_data.get("Planta"),
+        number=address_data.get("Numero"),
+        state=address_data.get("Provincia"),
+        street=address_data.get("Calle"),
+        zip_code=address_data.get("Codigo Postal")
+        )
+
+    user.name = request_body["Nombre"]
+    user.last_name = request_body["Apellidos"]
+    user.document_type = request_body["Tipo de documento"]
+    user.document_number = request_body["Numero de identificacion"]
+    user.address = address
+    user.phone = request_body["Telefono"]
+    user.email = request_body["Email"]
+    user.password = request_body["Contraseña"]
+    user.is_active = request_body["Activo"]
+       
+    db.session.commit()
+
+    response_body = {
+        "message": "Update user",
+        "status": "ok",
+        "user": request_body
+        }
                 
-        return request_body , 200
+    return request_body , 200
 
-       
+
+@api.route('/users/<int:id>', methods= ['DELETE']) # Ok
+def delete_users_id(id):
+
+    user = db.get_or_404(User, id)
     
-    if request.method == 'DELETE' :
-        user = db.get_or_404(User, id)
-        db.session.delete(user)
+    if user.address:  
+        db.session.delete(user)  
+        db.session.delete(user.address)  
         db.session.commit()
-        response_body = {"message": "DELETE user",
-                         "status": "ok",
-                         "user_deleting": id}
+
+        response_body = {
+            "message": "Deleted user and associated address",
+            "status": "ok",
+            "user": id
+        }
+    else:
+        db.session.delete(user)  
+        db.session.commit()
+
+        response_body = {
+            "message": "Deleted user",
+            "status": "ok",
+            "user": id
+        }
+   
+    return response_body , 200
+
+
+#FavoriteUsers methods //////////////////////////////////////////////////
+
+@api.route('/users/<int:id>/favoriteusers', methods=['GET']) # Ok
+def get_favorite_users(id): 
+
+    favorite_users = db.session.execute(db.select(FavoriteUser).where(FavoriteUser.follower_id == id)).scalars()
+
+    results = [item.serialize() for item in favorite_users]
+    followeds = [followed["followed"]["id"] for followed in results]
+
+    response_body = {
+        "message": "Following",
+        "user_id": followeds
+    }
+
+    return response_body, 200
+
+
+@api.route('/users/<int:id>/favoriteusers', methods=['POST']) # Ok
+def post_favorite_users(id):
+
+    user = User.query.get_or_404(id)
+    follower = user
+
+    request_body = request.get_json()
+
+    followed_id = request_body["Seguir"]
+    followed = User.query.get_or_404(followed_id)
+
+    new_followed = FavoriteUser(
+        follower=follower,
+        followed=followed
+    )
+
+    db.session.add(new_followed)
+    db.session.commit()
+    
+    response_body = {
+        "message": "New followed added",
+        "status": "ok",
+        "new_followed": new_followed.serialize()
+    }
         
-        return response_body, 200
-
-       
+    return response_body, 200
 
 
+@api.route('/users/<int:id>/favoriteusers', methods=['DELETE']) # Ok
+def delete_favorite_users(id):
 
-@api.route('/listings', methods=['POST', 'GET']) 
-def handle_items():
-    if request.method == 'GET' :
-        items = db.session.execute(db.select(Listings).order_by(Listings.listing_title)).scalars()
-        results = [item.serialize() for item in items]
-        response_body = {"message": " esto devuelve el GET del endpoint /listings",
-                         "results": results,
-                         "status": "ok"}
+    user = User.query.get_or_404(id) 
+    follower = user
+
+    request_body = request.get_json()
+
+    followed_id = request_body["Seguido"]
+    followed = User.query.get_or_404(followed_id)
+
+    favorite_user_id = FavoriteUser.query.filter_by(follower=follower, followed=followed).first()
+
+    if favorite_user_id:
+        db.session.delete(favorite_user_id)
+        db.session.commit()
+        
+        response_body = {
+            "message": "Follow relationship deleted",
+            "status": "ok"
+        }
 
         return response_body, 200
     
-    if request.method == 'POST' : #signup
+    else:
+        response_body = {
+            "message": "Follow relationship not found",
+            "status": "error"
+        }
+
+        return response_body, 404
+    
+
+# Listings methods //////////////////////////////////////////////////////////////
+
+@api.route('/listings', methods=['GET']) # Ok
+def get_listings():
+      
+    items = db.session.execute(db.select(Listings).order_by(Listings.listing_title)).scalars()
+    results = [item.serialize() for item in items]
+
+    response_body = {
+        "message": "All items",
+        "results": results,
+        "status": "ok"
+        }
+
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not found", 404
+
+
+@api.route('/users/<int:id>/listings', methods=['POST']) # Ok
+def post_listings(id):
+    
+    user = User.query.get_or_404(id)
+    seller_id = user.id
+    
+    request_body = request.get_json()
+
+    listing_title = request_body.get("Titulo del item")
+    sale_price = request_body.get("Precio de venta")
+    description = request_body.get("Descripcion")
+    status = request_body.get("Status")
+
+    album_data = request_body.get("album", {})  
+    album = Album(
+        url=album_data.get("La url")
+    )   
+    
+    db.session.add(album)
+    db.session.commit()
+
+    album_id = album.id
+
+    book_data = request_body.get("book", {})
+    book = Books(
+        title = book_data.get("Titulo"),
+        author = book_data.get("Autor"),
+        publisher = book_data.get("Editorial"),
+        published_date = book_data.get("Fecha publicacion"),
+        isbn = book_data.get("ISBN")
+        #category1
+        #category2
+    )
+
+    db.session.add(book)
+    db.session.commit()
+
+    book_id = book.id
+
+    favorite_counter = 0
+    new_item = Listings(
+        listing_title=listing_title,
+        favorite_counter=favorite_counter,
+        sale_price=sale_price,
+        description=description,
+        status=status,
+        seller_id=seller_id,
+        book_id=book_id,
+        album_id=album_id
+    )
+
+    db.session.add(new_item)
+    db.session.commit()
+
+    response_body = {
+        "message": "New item added",
+        "status": "ok",
+        "new_item": new_item.serialize()
+    }
+
+    return response_body, 200
+
+@api.route('/users/<int:user_id>/listings/<int:listing_id>', methods=['PUT']) # Ok
+def put_listings(user_id, listing_id):
+
+    user = User.query.get_or_404(user_id)
+    listing = Listings.query.get_or_404(listing_id)
+
+    put_listing = Listings.query.filter_by(seller_id=user.id, id=listing.id).first()
+
+    if put_listing:
+
         request_body = request.get_json()
-        user = User(listing_title = request_body["encunciado"],
-                    sale_price = request_body["precio"],
-                    description = request_body["descripcion"],
-                    document_number = request_body["document_number"],
-                    status_enum = request_body["estado"],
-                    status = request_body["status"]
-                    )
-        db.session.add(user)
-        db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new item",
-                         "status": "ok",
-                         "new_item": request_body}
-        
-        return response_body, 200
-    
 
-@api.route('/listings/<int:id>', methods= ['GET', 'PUT', 'DELETE']) #falta probarlo
-def handle_listing(id):
-
-    if request.method == 'GET' :
-        listing = db.get_or_404(Listings, id)
-        print(listing)
-        response_body = {"status": "ok",
-                         "results": Listings.serialize()
-                         }
+        album_data = request_body.get("Album", {})
+        album_url = album_data.get("La url")
         
-        return response_body, 200
-        
+        if album_url:
+            put_listing.album.url = album_url
 
-    if request.method == 'PUT' :
-        request_body = request.get_json()
-        listing = db.get_or_404(Listings, id)    
-        Listings.listing_title = request_body["titulo"]
-        Listings.sale_price = request_body["precio"]
-        Listings.description = request_body["descripcion"]
-        Listings.status = request_body["status"]
-        Listings.status_enum = request_body["estado"]
-       
+        put_listing.listing_title = request_body.get("Titulo", put_listing.listing_title)
+        put_listing.sale_price = request_body.get("Precio venta", put_listing.sale_price)
+        put_listing.description = request_body.get("Descripcion", put_listing.description)
+        put_listing.status = request_body.get("Estado", put_listing.status)
+        
        
         db.session.commit()
 
-        response_body = {"message": "Update listing",
-                         "status": "ok",
-                         "user": request_body}
-                
-        return request_body , 200
+        response_body = {
+            "message": "Update listing",
+            "status": "ok",
+            "listing": request_body
+        }
 
-       
+        return request_body, 200
+
+    else:
+
+        response_body = {
+            "message": "Listing not found",
+            "status": "ok",
+        }
+
+        return response_body, 404
+
+
+@api.route('/listings/<int:id_listing>', methods=['DELETE']) # Ok
+def delete_listings(id_listing):
+
+    # user = User.query.get_or_404(id)
+    # user_id = user.id
+
+    listing = Listings.query.get_or_404(id_listing)
     
-    if request.method == 'DELETE' :
-        listing = db.get_or_404(Listings, id)
+    album_id = listing.album_id
+    album_id_in_album = Album.query.get_or_404(album_id)
+    
+    if listing and album_id_in_album:
         db.session.delete(listing)
+        db.session.delete(album_id_in_album)
         db.session.commit()
-        response_body = {"message": "DELETE listing",
-                         "status": "ok",
-                         "user_deleting": id}
         
-        return response_body, 200
-
-
-@api.route('/address', methods=['POST', 'GET', 'PUT', 'DELETE']) #Falta PUT Y DELETE
-def handle_address():
-    if request.method == 'GET' :
-        location = db.session.execute(db.select(Address).order_by(Address.id)).scalars()
-        results = [item.serialize() for item in location]
-        response_body = {"message": " esto devuelve el GET del endpoint /address",
-                         "results": results,
-                         "status": "ok"}
+        response_body = {
+            "message": "Listing deleted",
+            "status": "ok"
+        }
 
         return response_body, 200
     
-    if request.method == 'POST' : #signup
-        request_body = request.get_json()
-        user = User(street = request_body["Calle"],
-                    number = request_body["Numero"],
-                    floor = request_body["Planta"],
-                    letter = request_body["Letra"],
-                    zipcode = request_body["Codigo postal"],
-                    state = request_body["Poblacion"],
-                    city = request_body["Ciudad"],
-                    )
-        db.session.add(user)
+    else:
+        response_body = {
+            "message": "Listing not found",
+            "status": "error"
+        }
+
+        return response_body, 404
+
+
+# Review methods //////////////////////////////////////////////////
+
+@api.route('/users/<int:id>/reviews', methods=['GET']) # Ok
+def get_users_reviews(id):
+
+    reviews_user = db.session.execute(db.select(Reviews).where(Reviews.receiver_id == id)).scalars()
+
+    result = [
+        {
+            "reviewer": {
+                "id": review.reviewer.id,
+            },
+            "comment": review.comment,
+            "punctuation": review.punctuation,
+            "receiver": {
+                "id": review.receiver.id,               
+            }
+        }
+        for review in reviews_user
+    ]
+
+    response_body = {
+        "Reviews": result
+    }
+
+    return response_body, 200
+
+
+@api.route('/users/<int:id_reviewer>/reviews/<int:id_receiver>', methods=['POST'])#OK
+def post_users_reviews(id_reviewer, id_receiver):
+
+    user_reviewer = User.query.get_or_404(id_reviewer)
+    reviewer = user_reviewer.id
+
+    user_receiver = User.query.get_or_404(id_receiver)
+    receiver = user_receiver.id
+
+    request_body = request.get_json()
+
+    new_review = Reviews(
+        comment = request_body["Comentario"],
+        punctuation = request_body["Puntuacion"],
+        reviewer_id = reviewer,
+        receiver_id = receiver
+    )
+
+    db.session.add(new_review)
+    db.session.commit()
+    
+    response_body = {
+        "message": "New review added",
+        "status": "ok",
+        "review": new_review.serialize()
+    }
+    
+    return response_body, 200
+
+# FavoriteListings methods //////////////////////////////////////////////////////////////////////////////////////////////
+
+@api.route('/users/<int:id>/favoritelistings/', methods=['GET'])#OK
+def get_favorite_items(id):
+
+    favorite_items = db.session.execute(db.select(FavoriteListings).where(FavoriteListings.user_id == id)).scalars()
+
+    items = [item.listing_id for item in favorite_items]
+
+    response_body = {
+        "message": "Estos son tus articulos favoritos",
+        "articulos": items  
+    }
+
+    return response_body
+
+
+@api.route('/users/<int:user_id>/favoritelistings/<int:listing_id>', methods=['POST']) #Ok
+def post_favorite_items(user_id, listing_id):
+    
+    user = User.query.get_or_404(user_id)    
+    user_favoritelisting = user.id
+
+    listing = Listings.query.get_or_404(listing_id)
+    listing_favoritelisting = listing.id
+
+    existing_favorite = FavoriteListings.query.filter_by(user_id=user_id, listing_id=listing_id).first()
+
+    if existing_favorite:
+        response_body = {
+            "message": "Este articulo ya esta en tu lista de favoritos."
+        }
+        return response_body, 400  
+
+    new_favorite_listing = FavoriteListings(
+        listing_id=listing_favoritelisting,
+        user_id=user_favoritelisting
+    )
+
+    db.session.add(new_favorite_listing)
+    db.session.commit()
+    
+    response_body = {
+        "message": "Nuevo articulo favorito añadido",
+        "Item": new_favorite_listing.serialize()
+    }
+
+    
+    return response_body, 200
+    
+
+@api.route("/users/<int:user_id>/favoritelistings/<int:listing_id>", methods=['DELETE']) # Ok
+def delete_userid_listingid(user_id, listing_id):
+
+    user = User.query.get_or_404(user_id)  
+    
+    listing = Listings.query.get_or_404(listing_id)
+    
+    delete_favorite = FavoriteListings.query.filter_by(user_id=user.id, listing_id=listing.id).first()
+
+    if delete_favorite:
+        db.session.delete(delete_favorite)
         db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new address",
-                         "status": "ok",
-                         "new user": request_body}
-        
+
+        response_body = {
+            "message": "Favorite deleted",
+            "status": "ok"
+        }
+
+        return response_body, 200
+
+    else:
+
+        response_body = {
+            "message": "Favorite not found",
+            "status": "Error"
+        }
+
+        return response_body, 404
+
+
+# Books methods ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+@api.route('/books', methods=['GET']) # Ok
+def get_books():
+      
+    books = db.session.execute(db.select(Books).order_by(Books.title)).scalars()
+    results = [item.serialize() for item in books]
+
+    response_body = {
+        "message": "All books",
+        "results": results,
+        "status": "ok"
+        }
+
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not found", 404
+
+
+@api.route('/transactions', methods=['GET']) # Ok
+def get_transactions():
+
+    transactions = db.session.execute(db.select(Transactions).order_by(Transactions.id)).scalars()
+    results = [item.serialize() for item in transactions]
+
+    response_body = {
+                    "message": "All users",
+                    "results": results,
+                    "status": "ok"
+                    }
+
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not Found", 404
+    
+
+@api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['POST'])
+def post_transactions(buyer_id, listing_id):
+
+    buyer = User.query.get_or_404(buyer_id)
+    listing = Listings.query.get_or_404(listing_id)
+    seller = User.query.get_or_404(listing.seller_id)
+
+    if buyer.id != seller.id:
+
+        request_data = request.get_json()
+
+    
+        date_str = request_data.get("date")
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()  
+
+        total = request_data.get("total")
+        status = request_data.get("status")
+
+        new_transaction = Transactions(
+                date=date,
+                total=total,
+                status=status,
+                seller=seller,
+                buyer=buyer,
+                listing=listing
+            )
+
+        db.session.add(new_transaction)
+        db.session.commit()
+
+        response_body = {
+                "message": "New transaction added",
+                "status": "ok",
+                "transaction": new_transaction.serialize()
+            }
+    
         return response_body, 200
     
+    else:
 
+        response_body = {
+            "message": "El comprador y el vendedor no pueden ser el mismo, crack"
+        }
 
-@api.route('/books', methods=['POST', 'GET', 'PUT', 'DELETE']) #Falta PUT Y DELETE
-def handle_books():
-    if request.method == 'GET' :
-        book = db.session.execute(db.select(Books).order_by(Books.title)).scalars()
-        results = [item.serialize() for item in book]
-        response_body = {"message": " esto devuelve el GET del endpoint /books",
-                         "results": results,
-                         "status": "ok"}
+        return response_body, 403
+
+@api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['DELETE']) # Ok
+def delete_transactions(buyer_id, listing_id):
+
+    buyer = User.query.get_or_404(buyer_id)
+    listing = Listings.query.get_or_404(listing_id)
+    seller = User.query.get_or_404(listing.seller_id)
+
+    
+
+    delete_transactions = Transactions.query.filter_by(buyer_id=buyer.id, listing_id=listing.id, seller_id=seller.id).first()
+
+    if delete_transactions:
+        db.session.delete(delete_transactions)
+        db.session.commit()
+
+        response_body = {
+            "message": "Transaction deleted",
+            "status": "ok",
+            "ID": listing.id
+            }
 
         return response_body, 200
-    
-    if request.method == 'POST' : #signup
-        request_body = request.get_json()
-        user = User(title = request_body["titulo"],
-                    author = request_body["autor"],
-                    publisher = request_body["editorial"],
-                    published_date = request_body["año de publicacion"],
-                    isbn = request_body["isbn"],
-                    )
-        db.session.add(user)
-        db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new Book",
-                         "status": "ok",
-                         "new_user": request_body}
-        
-        return response_body, 200
-    
 
+    else:
 
-@api.route('/bookCategory', methods=['GET'])
-def handle_booksCategory():
-    if request.method == 'GET' :
-        category = db.session.execute(db.select(BookCategories).order_by(BookCategories.category_id)).scalars()
-        results = [item.serialize() for item in category]
-        response_body = {"message": " esto devuelve el GET del endpoint /bookCategory",
-                         "results": results,
-                         "status": "ok"}
+        response_body = {
+            "message": "Transaction not found",
+            "status": "Error"
+            }
 
-        return response_body, 200
-    
-
-
-@api.route('/category', methods=['POST', 'GET', 'PUT', 'DELETE']) #Falta PUT Y DELETE
-def handle_categorys():
-    if request.method == 'GET' :
-        categorys = db.session.execute(db.select(Categories).order_by(Categories.title)).scalars()
-        results = [item.serialize() for item in categorys]
-        response_body = {"message": " esto devuelve el GET del endpoint /categorys",
-                         "results": results,
-                         "status": "ok"}
-
-        return response_body, 200
-    
-    if request.method == 'POST' : #signup
-        request_body = request.get_json()
-        user = User(name = request_body["nombre categoria"],
-                    description = request_body["descripcion"],
-                 
-                    )
-        db.session.add(user)
-        db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new Category",
-                         "status": "ok",
-                         "new_user": request_body}
-        
-        return response_body, 200
-
-
-
-
-@api.route('/transaccion', methods=['POST', 'GET'])
-def handle_transaccion():
-    if request.method == 'GET' :
-        sale = db.session.execute(db.select(Transactions).order_by(Transactions.id)).scalars()
-        results = [item.serialize() for item in sale]
-        response_body = {"message": " esto devuelve el GET del endpoint /transaccion",
-                         "results": results,
-                         "status": "ok"}
-
-        return response_body, 200
-    
-    if request.method == 'POST' : #signup
-        request_body = request.get_json()
-        user = User(seller_id = request_body["vendedor"],
-                    buyer_id = request_body["comprador"],
-                    listing_id = request_body["articulo"],
-                    date = request_body["fecha"],
-                    total = request_body["total"],
-                    transaction_status_enum = request_body["estado"],
-                    )
-        db.session.add(user)
-        db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new Book",
-                         "status": "ok",
-                         "new_user": request_body}
-        
-        return response_body, 200    
-
-
-
-@api.route('/favoriteusers', methods=['POST', 'GET','DELETE']) #Falta delete
-def handle_favUsers():
-    if request.method == 'GET' :
-        favorite = db.session.execute(db.select(FavoriteUser).order_by(FavoriteUser.followed_id)).scalars()
-        results = [item.serialize() for item in favorite]
-       
-        return results, 200
-    
-    if request.method == 'POST' : 
-        request_body = request.get_json()
-        user = User( follower = request_body["seguidor"],
-                    followed = request_body["seguidos"]
-                    )
-        db.session.add(user)
-        db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new Favorite User",
-                         "status": "ok",
-                         "new_Fav_User": request_body}
-        
-        return response_body, 200  
-
-
-    
-@api.route('/favoritelisting', methods=['POST', 'GET','DELETE']) #Falta delete
-def handle_favListing():
-    if request.method == 'GET' :
-        favorite = db.session.execute(db.select(FavoriteListings).order_by(FavoriteListings.listing_id)).scalars()
-        results = [item.serialize() for item in favorite]
-       
-        return results, 200
-    
-    if request.method == 'POST' : 
-        request_body = request.get_json()
-        user = User( item = request_body["articulo favorito"],
-                    )
-                    
-        db.session.add(user)
-        db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new Favorite Item",
-                         "status": "ok",
-                         "new_Fav_Item": request_body}
-        
-        return response_body, 200      
-    
-
-
-@api.route('/review', methods=['POST', 'GET', 'DELETE']) #falta delete
-def handle_review():
-    if request.method == 'GET' :
-        reviews = db.session.execute(db.select(Reviews).order_by(Reviews.id)).scalars()
-        results = [item.serialize() for item in reviews]
-       
-        return results, 200
-    
-    if request.method == 'POST' : 
-        request_body = request.get_json()
-        user = User( reviewer = request_body["reseñador"],
-                    receiver = request_body["receptor"],
-                    comment = request_body["comentario"],
-                    punctuation = request_body["puntuacion"]
-                    )
-                    
-        db.session.add(user)
-        db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new Favorite Item",
-                         "status": "ok",
-                         "new_Fav_Item": request_body}
-        
-        return response_body, 200      
-    
-
-
-@api.route('/album', methods=['POST', 'GET', 'PUT', 'DELETE']) #Falta PUT Y DELETE
-def handle_album():
-    if request.method == 'GET' :
-        photos = db.session.execute(db.select(Album).order_by(Album.id)).scalars()
-        results = [item.serialize() for item in photos]
-       
-        return results, 200
-    
-    if request.method == 'POST' : 
-        request_body = request.get_json()
-        user = User( url = request_body["fotos"],
-                    
-                    )
-                    
-        db.session.add(user)
-        db.session.commit()
-        print(request_body)
-        response_body = {"message": "Adding new Photo",
-                         "status": "ok",
-                         "new_Fav_Item": request_body}
-        
-        return response_body, 200      
+        return response_body, 404
+   
