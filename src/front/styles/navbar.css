@@ -192,4 +192,17 @@
         margin-left: 25px;
     }
   }
-  
+
+
+
+@media screen and (min-width: 1701px) {
+  .dropdown {
+    display: none; /* Oculta el menú desplegable */
+  }
+
+  .upload,
+  .login {
+    display: inline-block; 
+  }
+}
+
