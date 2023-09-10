@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaHeart, FaUser, FaPlus } from 'react-icons/fa';
 import bookIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2-removebg-preview.png";
 import "../../styles/navbar.css";
 
