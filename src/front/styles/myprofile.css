@@ -1,0 +1,92 @@
+.myprofile {
+    margin: 150px auto;
+    background-color: white;
+    width: 1500px;
+    border-radius: 50px;
+    height: 500px; /* quitar lueego */
+}
+
+.firstLine {
+    /* border: 1px solid red; */
+    display: flex;
+}
+
+.firstLineLeft {
+    /* border: 1px solid green; */
+    width: 50%;
+    padding: 15px 15px 15px 50px;   
+    display: flex;
+    align-items: center;
+}
+
+.profileIcon {
+    /* border: 1px red solid; */
+    font-size: 70px;
+}
+
+.nameNrating {
+    margin-left: 30px;
+}
+
+.rating {
+    color: black;
+    text-decoration: none;
+}
+
+.rating:hover {
+    color: #AFCBFF;
+}
+
+.firstLineRight {
+    /* border: 1px solid green; */
+    width: 50%;
+    padding: 15px 0px 15px 15px;
+    display: flex;
+    flex-direction: column; 
+    align-items: left;
+    justify-content: center;
+}
+
+.city {
+    margin-bottom: 5px;
+}
+
+.date {
+    margin-top: 5px;
+}
+
+.secondLine {
+    border-top: grey solid 1px;
+    border-bottom: grey solid 1px;
+    /* border: 1px solid red; */
+    display: flex;
+    text-align: center;
+    padding: 15px 0px 15px 0px;
+}
+
+.secondLineLeft {
+    width: 50%;
+    border-right: grey solid 1px;
+    color: black;
+    text-decoration: none;
+    /* border: 1px solid green; */
+}
+
+.secondLineLeft:hover {
+    width: 50%;
+    /* border: 1px solid green; */
+    color: #AFCBFF;
+}
+
+.secondLineRight {
+    width: 50%;
+    color: black;
+    text-decoration: none;
+    /* border: 1px solid blue; */
+}
+
+.secondLineRight:hover {
+    width: 50%;
+    /* border: 1px solid green; */
+    color: #AFCBFF;
+}
