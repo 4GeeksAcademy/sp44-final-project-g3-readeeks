@@ -35,7 +35,6 @@ export const Navbar = () => {
           <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" onClick={toggleMenu}>
             <i className="fas fa-bars"></i>
           </button>
-          {/* Utilizamos clases de Bootstrap 5 para el menú */}
           <ul className={`dropdown-menu ${menuOpen ? "show" : ""}`} aria-labelledby="dropdownMenuButton">
             <li><a className="dropdown-item" href="#">Regístrate</a></li>
             <li><a className="dropdown-item" href="#">Inicia sesión</a></li>

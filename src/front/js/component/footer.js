@@ -8,7 +8,10 @@ import twitterIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/im
 import instagramIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/instagram.png";
 import "../../styles/footer.css";
 
-export const Footer = () => (
+export const Footer = () => {
+
+    return (
+      
   <footer className="footer_Footer__NbyvZ w-100 footer-navbar-color">
     <div className="d-flex flex-column flex-md-row container footer_Footer__info__erf93">
       <section className="col-6 col-md-2 p-0 undefined">
@@ -360,4 +363,5 @@ export const Footer = () => (
   </footer>
 );
 
+}
 
