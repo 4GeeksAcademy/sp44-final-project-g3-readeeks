@@ -1,101 +1,113 @@
+/* Estilos comunes para todos los tamaños de pantalla */
 a {
-  color: inherit; /* Hereda el color del texto de su contenedor padre */
-  text-decoration: none; /* Quita el subrayado predeterminado */
+  color: inherit;
+  text-decoration: none;
 }
 
-
-
 .home_Home__hero__dKSyR {
-    margin: 0 0 32px;
-    padding: 64px 0 0;
-  }
-  
-  .top-main {
-    margin-top: 150px; /* Ajusta la altura según la altura de tu barra de navegación */
-    margin-left: 159px;
-    margin-right: 159px;
-    padding: 0 15px;
-  }
-  
-  .searchbox-form_SearchBox__input__kl64p {
-    background-color: transparent;
-    border: none;
-    color: #DEA54B;
-    text-align: center;
-    margin: auto;
-    width: 65%;
-  }
-  
-  .searchbox-form_SearchBox__wrapper__6HWA_ {
-    width: 100%;
-    height: 50px;
-    background-color: transparent;
-    border: none;
-    color: #DEA54B;
-    text-align: center;
-    margin: auto;
-    width: 65%;
-    border: 3px solid #4f6367;
-    border-radius: 150px;
-    padding-left: 20px;
-  }
-  
-  .button-searcher-home {
-    border: 2px solid #DEA54B;
-    background-color: #DEA54B;
-    color: #0E1C36;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-    border-radius: 50px;
-    font-weight: 500;
-    margin-left: 14px;
-  }
-  
-  .searcher-home {
-    background-image: url('/workspaces/sp44-final-project-g3-readeeks/src/front/img/svg/search-icon.svg');
-    margin-top: 26px;
-  }
-  
-  .categories-container {
-    width: 100%; /* Ajusta el ancho según tus necesidades */
-    overflow: hidden; /* Oculta los elementos que excedan el ancho del contenedor */
-  }
-  
-  .categories-list {
-    display: flex; /* Muestra los elementos li en línea */
-    list-style: none; /* Elimina los puntos de la lista */
-    margin: 0;
-    padding: 0;
-    transition: transform 0.3s; /* Agrega una transición suave al desplazamiento */
-  }
-  
-  .categories-list li {
-    flex: 0 0 auto; /* Evita que los elementos cambien de tamaño */
-    margin-right: 20px; /* Espacio entre elementos li */
-  }
-  
- 
-  
-  .scroll-button {
-    background-color: transparent;
-    border: none;
-    color: #DEA54B;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  .scroll-button.left {
-    margin-right: 20px;
-  }
+  margin: 0 0 32px;
+  padding: 64px 0 0;
+}
 
+.top-main {
+  margin-top: 150px;
+  margin-left: 159px;
+  margin-right: 159px;
+  padding: 0 15px;
+}
 
+.searchbox-form_SearchBox__input__kl64p {
+  background-color: transparent;
+  border: none;
+  color: #DEA54B;
+  text-align: center;
+  margin: auto;
+  width: 65%;
+}
 
+.searchbox-form_SearchBox__wrapper__6HWA_ {
+  width: 100%;
+  height: 50px;
+  background-color: transparent;
+  border: none;
+  color: #DEA54B;
+  text-align: center;
+  margin: auto;
+  width: 65%;
+  border: 3px solid #4f6367;
+  border-radius: 150px;
+  padding-left: 20px;
+}
 
-  /* Resto de tus estilos CSS existentes */
+.button-searcher-home {
+  border: 2px solid #DEA54B;
+  background-color: #DEA54B;
+  color: #0E1C36;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 50px;
+  font-weight: 500;
+  margin-left: 14px;
+}
+
+.searcher-home {
+  background-image: url('/workspaces/sp44-final-project-g3-readeeks/src/front/img/svg/search-icon.svg');
+  margin-top: 26px;
+}
+
+.categories-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.categories-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center; /* Centramos los elementos <li> horizontalmente */
+  text-align: center; /* Centramos el contenido de los <li> */
+}
+
+.categories-list li {
+  flex: 0 0 auto;
+  margin-right: 20px;
+  text-align: center; /* Centramos el contenido del <li> */
+}
+
+.scroll-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  position: relative;
+  min-width: 80px;
+  justify-content: center; /* Centramos los elementos <li> horizontalmente */
+  text-align: center; 
+}
+
+.scroll-button {
+  background-color: transparent;
+  border: none;
+  color: #DEA54B;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.scroll-button.left {
+  left: 0;
+}
+
+.scroll-button.right {
+  right: 0;
+}
 
 /* Estilos para dispositivos móviles (768px o menos de ancho) */
 @media screen and (max-width: 768px) {
@@ -104,53 +116,31 @@ a {
   }
 
   .top-main {
-    margin-top: 80px; /* Ajusta la altura según la altura de tu barra de navegación */
-    margin-left: 10px; /* Ajusta los márgenes según tus necesidades */
-    margin-right: 10px; /* Ajusta los márgenes según tus necesidades */
+    margin-top: 80px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .searchbox-form_SearchBox__input__kl64p,
   .searchbox-form_SearchBox__wrapper__6HWA_ {
-    width: 90%; /* Ajusta el ancho según tus necesidades */
+    width: 90%;
   }
 
   .scroll-button.left {
-    margin-right: 10px; /* Ajusta el margen según tus necesidades */
+    margin-right: 10px;
   }
 
-  /* Agregar estilos adicionales según tus necesidades para dispositivos móviles */
+  .scroll-button.right {
+    margin-left: 10px;
+  }
 }
 
-/* Estilos para pantallas más grandes (más de 768px) */
-@media screen and (min-width: 769px) {
-  /* Restaura los estilos originales para pantallas más grandes */
-  .home_Home__hero__dKSyR {
-    margin: 0 0 32px;
-    padding: 64px 0 0;
+@media screen and (max-width: 768px) {
+  .categories-list li {
+    display: none;
   }
 
-  .top-main {
-    margin-top: 150px; /* Ajusta la altura según la altura de tu barra de navegación */
-    margin-left: 159px;
-    margin-right: 159px;
-    padding: 0 15px;
+  .categories-list li:first-child {
+    display: block;
   }
-
-  .searchbox-form_SearchBox__input__kl64p,
-  .searchbox-form_SearchBox__wrapper__6HWA_ {
-    width: 65%; /* Restaura el ancho original */
-  }
-
-  .scroll-button.left {
-    margin-right: 20px; /* Restaura el margen original */
-  }
-
-  /* Restaura otros estilos según tus necesidades */
 }
-
-/* Estilos adicionales para dispositivos con un ancho aún mayor si es necesario */
-@media screen and (min-width: 1200px) {
-  /* Agrega estilos adicionales para pantallas muy grandes */
-}
-
-/* Resto de tus estilos CSS existentes */
