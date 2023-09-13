@@ -99,9 +99,45 @@ export const EditProfile = () => {
 
         <div className="editprofile">
 
-            <h2 className="editTitle">Editar perfil</h2>
+            <div className="myProfileNmyAddress">
 
+            <div className="myProfile">
+
+                <div className="myProfileImg">
+                    <i class="fa-regular fa-image"></i>
+                </div>
+
+                <div className="myProfileD">
+                    <h6>Nombre Apellido</h6>
+                    <h6>Número de teléfono</h6>
+                    <h6>Email</h6>
+                </div>
+                 
+            </div>
+
+
+            <div className="myAddress">
+
+                <div className="myAddressLeft">
+                <h6>Calle</h6>
+                    <h6>Número</h6>
+                    <h6>Planta</h6>
+                    <h6>Letra/Número</h6>
+                </div>
+                <div className="myAddressRight">
+                <h6>Código Postal</h6>
+                    <h6>Provincia</h6>
+                    <h6>Ciudad</h6>
+                </div>
+
+            </div>
+
+            </div>
+            
+            <div className="editProfileFormNeditAddressForm">
             <div className="editProfileForm">
+
+                <h2 className="editTitle">Editar perfil</h2>
                 
                 <form onSubmit={handleSubmitUser}>
 
@@ -243,6 +279,7 @@ export const EditProfile = () => {
 
                 </form>
                 
+            </div>
             </div>
 
         </div>

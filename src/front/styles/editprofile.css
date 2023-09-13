@@ -3,18 +3,64 @@
     background-color: white;
     width: 1500px;
     border-radius: 50px;
-    padding: 30px 50px 30px 50px; 
+    padding: 30px 50px 30px 50px;
+    
 }
 
-.editTitle {
+.myProfileNmyAddress {
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid grey;
+}
+
+.myProfile {
+    display: flex;
+    width: 50%;
+    align-items: center;
+}
+
+.myProfileImg i{
+    font-size: 100px;
+    align-items: center;
+    justify-content: center;
+}
+
+.myProfileD {
+    padding-left: 30px;   
+}
+
+.myAddress {
+    display: flex;
+    width: 50%;
+    align-items: center;
+}
+
+.myAddressLeft {
+    width: 50%;
+}
+
+.myAddressRight {
+    width: 50%;
+}
+
+.editProfileFormNeditAddressForm {
+    display: flex;
+}
+
+.editProfileForm {
+    width: 50%;
+    padding-right: 50px;
+}
+
+.editProfileForm h2 {
     border-bottom: grey 1px solid;
     padding-bottom: 20px;
 }
 
-.editProfileForm {
+.editProfileDivInputImg {
     padding-top: 20px;
 }
-
 
 .editProfileDivInputImg label {
     margin-right: 10px;
@@ -76,7 +122,7 @@
 /* EDIT ADDRESS ////////////////////////////////////// */
 
 .editAddressForm {
-    margin-top: 50px;
+    width: 50%;
 }
 
 .editAddressForm h2 {
