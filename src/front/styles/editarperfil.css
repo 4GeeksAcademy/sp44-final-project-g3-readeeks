@@ -23,6 +23,10 @@
 
 @media (min-width: 1200px) {
 
+.EditarPerfil-wrapper {
+    padding: 50px;
+}
+
 .EditarPerfil-img-profile {
     display: flex;
     align-items: center;
@@ -34,7 +38,7 @@
 
 .EditarPerfil-profile {
     margin-top: 5px;
-    margin-left: 15px;
+    margin-left: 30px;
 }
 
 }

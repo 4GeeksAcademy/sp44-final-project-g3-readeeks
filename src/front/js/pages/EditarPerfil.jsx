@@ -20,9 +20,13 @@ export const EditarPerfil = () => {
                 <h5>Número de teléfono <i class="fa-solid fa-gear"></i></h5>
                 <h5>Contraseña <i class="fa-solid fa-gear"></i></h5>
                 <h5>Dirección <i class="fa-solid fa-gear"></i></h5>
-            </div>
-            </div>
+                
+    {/* LOS H5 TIENEN QUE SER LOS PLACEHOLDER, Y UNA VEZ HAGAS CLICK SELECCIONAS EL INPUT */}
 
+
+            </div>
+           
+            </div>
         
 
         </div>
