@@ -1,0 +1,75 @@
+.editprofile {
+    margin: 150px auto;
+    background-color: white;
+    width: 1500px;
+    border-radius: 50px;
+    height: 500px; /* quitar lueego */
+    padding: 30px 50px 30px 50px; 
+}
+
+.editTitle {
+    border-bottom: grey 1px solid;
+    padding-bottom: 20px;
+}
+
+.editProfileForm {
+    padding-top: 20px;
+}
+
+
+.editProfileDivInputImg label {
+    margin-right: 10px;
+}
+
+.editProfileDivPhone {
+    margin-top: 30px;
+}
+
+.editProfileDivPhone label {
+    margin-right: 10px;
+}
+
+.editProfileDivPhone input {
+    padding-left: 10px;
+}
+
+.editProfileDivEmail {
+    margin-top: 30px;
+}
+
+.editProfileDivEmail label {
+    margin-right: 10px;
+}
+
+.editProfileDivEmail input {
+    padding-left: 10px;
+}
+
+.editProfileDivPassword {
+    margin-top: 30px;
+}
+
+.editProfileDivPassword label {
+    margin-right: 10px;
+}
+
+.editProfileDivPassword input {
+    padding-left: 10px;
+}
+
+.editProfileDivPassword p {
+    margin-top: 5px;
+    font-size: 15px;
+    font-style: italic;
+}
+
+/* EDIT ADDRESS ////////////////////////////////////// */
+
+.editAddressForm {
+    border-bottom: grey 1px solid;
+    margin-top: 50px;
+}
+
+.editAddressForm h2 {
+    padding-bottom: 20px;
+}
