@@ -2,20 +2,27 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
+
+
+
 export const Home = () => {
-  const { store, actions } = useContext(Context);
-
-  const [scrollX, setScrollX] = useState(0);
-
-  const handleScrollLeft = () => {
-    // Desplaza la lista hacia la izquierda
-    setScrollX(scrollX - 1);
-  };
-
-  const handleScrollRight = () => {
-    // Desplaza la lista hacia la derecha
-    setScrollX(scrollX + 1);
-  };
+	const { store, actions } = useContext(Context);
+  
+	const [scrollX, setScrollX] = useState(0);
+  
+	const handleScrollLeft = () => {
+	  // Desplaza la lista hacia la izquierda
+	  if (scrollX > 0) {
+		setScrollX(scrollX - 1);
+	  }
+	};
+  
+	const handleScrollRight = () => {
+	  // Desplaza la lista hacia la derecha
+	  if (scrollX < store.categories.length - 1) {
+		setScrollX(scrollX + 1);
+	  }
+	};
 
   return (
     <div className="top-main">

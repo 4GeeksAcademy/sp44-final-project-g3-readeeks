@@ -1,0 +1,77 @@
+.upload-product-card {
+    margin-top: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    border-color: brown;
+    border: solid;
+    padding: 5%;
+    background-color: white;
+    border-radius: 50px;
+    
+}
+
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2%; /* Espacio entre las filas de input */
+  }
+
+/* Estilos para los inputs */
+.custom-input {
+    border: 1px solid #AFCBFF; /* Borde personalizado */
+    padding: 2%; /* Espaciado interior */
+    margin-bottom: 2%; /* Margen inferior */
+    width: 100%; /* Ancho completo */
+  }
+  
+  /* Estilos para los input de archivos (personalizados) */
+  .custom-file-input {
+    border: 1px solid #AFCBFF; /* Borde personalizado */
+    padding: 2%; /* Espaciado interior */
+    margin-bottom: 2%; /* Margen inferior */
+    width: 100%; /* Ancho completo */
+    display: flex; /* Mostrar en línea */
+    align-items: center; /* Centrar elementos verticalmente */
+    cursor: pointer; /* Cambiar el cursor a mano al pasar por encima */
+  }
+  
+  .custom-file-input i {
+    margin-right: 2%; /* Espacio entre el icono y el texto */
+  }
+  
+  /* Estilos para el botón "Subir Producto" */
+  .submit-button {
+    border: 1px solid #DEA54B;
+    background-color: #DEA54B;
+    color: #0E1C36;
+    padding: 2% 4%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    border-radius: 5%;
+    font-weight: 500;
+    width: 100%; /* Ancho completo */
+  }
+  
+  .submit-button:hover {
+    background-color: #0E1C36;
+    color: #DEA54B;
+  }
+  
+
+  .input-container {
+    flex: 1;
+    margin-right: 2%;
+  }
+
+  .input-row:nth-child(2) .input-container {
+    flex: 1;
+    margin-right: 2%;
+  }
+
+  .submit-button {
+    margin-top: 5%;
+  }
