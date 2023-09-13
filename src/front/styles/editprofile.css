@@ -3,7 +3,6 @@
     background-color: white;
     width: 1500px;
     border-radius: 50px;
-    height: 500px; /* quitar lueego */
     padding: 30px 50px 30px 50px; 
 }
 
@@ -63,13 +62,120 @@
     font-style: italic;
 }
 
+.editProfileForm button {
+    margin-top: 20px;
+    font-weight: 500;
+    padding: 8px;
+    background-color: #AFCBFF;
+}
+
+.editProfileForm button:hover {
+    background-color: #DEA54B;
+}
+
 /* EDIT ADDRESS ////////////////////////////////////// */
 
 .editAddressForm {
-    border-bottom: grey 1px solid;
     margin-top: 50px;
 }
 
 .editAddressForm h2 {
     padding-bottom: 20px;
+    border-bottom: grey 1px solid;
+}
+
+.editAddressFormStreet {
+    padding-top: 20px;
+}
+
+.editAddressFormStreet label {
+    margin-right: 10px;
+}
+
+.editAddressFormStreet input {
+    padding-left: 10px;
+}
+
+.editAddressFormNum {
+    padding-top: 20px;
+}
+
+.editAddressFormNum label {
+    margin-right: 10px;
+}
+
+.editAddressFormNum input {
+    padding-left: 10px;
+}
+
+.editAddressFormFloor {
+    padding-top: 20px;
+}
+
+.editAddressFormFloor label {
+    margin-right: 10px;
+}
+
+.editAddressFormFloor input {
+    padding-left: 10px;
+}
+
+.editAddressFormLetter {
+    padding-top: 20px;
+}
+
+.editAddressFormLetter label {
+    margin-right: 10px;
+}
+
+.editAddressFormLetter input {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.editAddressFormZipCode {
+    padding-top: 20px;
+}
+
+.editAddressFormZipCode label {
+    margin-right: 10px;
+}
+
+.editAddressFormZipCode input {
+    padding-left: 10px;
+}
+
+.editAddressFormState {
+    padding-top: 20px;
+}
+
+.editAddressFormState label {
+    margin-right: 10px;
+}
+
+.editAddressFormState input {
+    padding-left: 10px;
+}
+
+.editAddressFormCity {
+    padding-top: 20px;
+}
+
+.editAddressFormCity label {
+    margin-right: 10px;
+}
+
+.editAddressFormCity input {
+    padding-left: 10px;
+}
+
+.editAddressForm button {
+    margin-top: 30px;
+    font-weight: 500;
+    padding: 8px;
+    background-color: #AFCBFF;
+}
+
+.editAddressForm button:hover {
+    background-color: #DEA54B;
 }

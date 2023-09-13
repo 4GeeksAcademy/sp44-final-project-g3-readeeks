@@ -145,13 +145,19 @@ export const EditProfile = () => {
                         maxLength={12}
                     />
 
-                    <p>"Máximo 12 caracteres permitidos"</p>
-                    
+                    <p>"Máximo 12 caracteres permitidos"</p>   
                 </div>
+
+            
+                    <button type="submit">Guardar cambios de perfil</button>
 
                 </form>
                 
+                
+
             </div>
+
+            
 
             <div className="editAddressForm">
 
@@ -159,7 +165,81 @@ export const EditProfile = () => {
                 
                 <form onSubmit={handleSubmitAddress}>
 
-                
+                <div className="editAddressFormStreet">
+                    <label><b>Calle:</b></label>
+                    <input 
+                        type="text" 
+                        value={street} 
+                        onChange={handleStreet}
+                        placeholder='Nombre de la calle'
+                        maxLength={100}
+                    />
+                </div>
+
+                <div className="editAddressFormNum">
+                    <label><b>Número:</b></label>
+                    <input 
+                        type="number" 
+                        value={num} 
+                        onChange={handleNum}
+                        placeholder='Número bloque'
+                    />
+                </div>
+
+                <div className="editAddressFormFloor">
+                    <label><b>Planta:</b></label>
+                    <input 
+                        type="number" 
+                        value={floor} 
+                        onChange={handleFloor}
+                        placeholder='Número de planta'
+                    />
+                </div>
+
+                <div className="editAddressFormLetter">
+                    <label><b>Letra:</b></label>
+                    <input 
+                        type="text" 
+                        value={letter} 
+                        onChange={handleLetter}
+                        placeholder='Letra / Número de puerta'
+                        maxLength={5}
+                    />
+                </div>
+
+                <div className="editAddressFormZipCode">
+                    <label><b>Código Postal:</b></label>
+                    <input 
+                        type="number" 
+                        value={zipCode} 
+                        onChange={handleZipCode}
+                        placeholder='Código Postal'
+                    />
+                </div>
+
+                <div className="editAddressFormState">
+                    <label><b>Provincia:</b></label>
+                    <input 
+                        type="text" 
+                        value={state} 
+                        onChange={handleState}
+                        placeholder='Provincia'
+                        maxLength={20}
+                    />
+                </div>
+
+                <div className="editAddressFormCity">
+                    <label><b>Ciudad:</b></label>
+                    <input 
+                        type="text" 
+                        value={city} 
+                        onChange={handleCity}
+                        placeholder='Ciudad'
+                        maxLength={50}
+                    />
+                </div>
+
+                <button type="submit">Guardar cambios de dirección</button>
 
                 </form>
                 
