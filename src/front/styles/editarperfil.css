@@ -1,0 +1,40 @@
+.EditarPerfil-wrapper {
+    margin: auto;
+    margin-top: 150px;
+    background-color: white;
+    width: 85vw;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+
+.EditarPerfil-img img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.EditarPerfil-profile {
+    margin-top: 10%;
+}
+
+.EditarPerfil-profile h5:hover {
+    color: #AFCBFF
+}
+
+@media (min-width: 1200px) {
+
+.EditarPerfil-img-profile {
+    display: flex;
+    align-items: center;
+}
+
+.EditarPerfil-img {
+    max-width: 10%;
+}
+
+.EditarPerfil-profile {
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+}

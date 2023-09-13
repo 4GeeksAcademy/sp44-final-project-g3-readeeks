@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import "../../styles/editprofile.css";
+// import "../../styles/editprofile.css";
+import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.png";
+
 
 export const EditProfile = () => {
 
@@ -104,7 +106,7 @@ export const EditProfile = () => {
             <div className="myProfile">
 
                 <div className="myProfileImg">
-                    <i class="fa-regular fa-image"></i>
+                    <img src={photo} alt="" srcset="" />
                 </div>
 
                 <div className="myProfileD">
