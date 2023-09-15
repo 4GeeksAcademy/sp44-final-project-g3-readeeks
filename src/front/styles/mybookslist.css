@@ -1,0 +1,33 @@
+.MyBooksList-BookImg img {
+    width: 100%;
+    border-radius: 5px; 
+}
+
+.MyBooksList-BookImg {
+    text-align: center;
+    padding: 2vw;
+}
+
+
+@media (min-width: 600px) {
+
+.MyBooksList-main {
+    display: flex;
+    flex-wrap: wrap;
+}
+      
+.MyBooksList-BookImg {
+    text-align: center;
+    width: 25%;
+}
+      
+.MyBooksList-BookImg img {
+    width: 100%;
+    border-radius: 5px;   
+}
+
+.MyBooksList-BookImg p {
+    padding-top: 15px;
+}
+
+}

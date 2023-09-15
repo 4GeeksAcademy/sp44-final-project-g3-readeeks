@@ -1,6 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	
-	const host = "https://probable-couscous-7gpq6vx59w6c7jq-3001.app.github.dev/api";
 	
 	return {
 		store: {
@@ -55,7 +54,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const rest = "/users";
 
 				const fetchGetUsers = async () => {
-					const url = host + rest;
+					const url = process.env.BACKEND_URL + rest;
 					const request = {
 						method: "GET",
 					};
@@ -75,7 +74,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     
 			// 	id = 1; // Cambiar por la variable del usuario logueado
 				
-			// 	const url = `${host}/users/${id}`;
+			// 	const url = `${process.env.BACKEND_URL}/users/${id}`;
 			
 			// 	const fetchGetUsersId = async () => {
 					

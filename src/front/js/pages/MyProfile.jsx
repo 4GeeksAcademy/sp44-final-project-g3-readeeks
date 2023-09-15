@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/myprofile.css";
 import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.png";
+// import { MyBooksList } from "/workspaces/sp44-final-project-g3-readeeks/src/front/js/component/MyBooksList.jsx"
+import { MyBooksList } from "../component/MyBooksList.jsx"
+
 
 export const MyProfile = () => {
+
   const [user, setUser] = useState('');
   
-  const host = "https://probable-couscous-7gpq6vx59w6c7jq-3001.app.github.dev/api";
-
+  
   const fetchGetUsers = async (id) => {
     
-    const url = `${host}/users/${id}`;
+    const url = `${process.env.BACKEND_URL}/users/${id}`;
 
     const request = {
       method: "GET",
@@ -80,18 +83,21 @@ export const MyProfile = () => {
         </div>
 
       </div>
-          
-                    
-
-              
-                    
+                                    
       ) : (
                   
           <div className="spinner-border" role="status">
 						<span className="visually-hidden">Loading...</span>
-					</div>
-                
+          </div>
+       
       )}
+
+      <div className="MyProfile-Components">
+        
+        <div className="MyProfile-MyBooksList"><MyBooksList /></div>
+        
+      </div>
+     
     </div>
             
   );

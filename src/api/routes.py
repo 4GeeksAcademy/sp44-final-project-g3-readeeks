@@ -255,6 +255,25 @@ def get_listings():
     else:
         return "Not found", 404
 
+@api.route('/users/<int:id>/listings', methods=['GET'])
+def get_id_listings(id):
+
+    # user = User.query.get_or_404(id)
+    listings = db.session.execute(db.select(Listings).where(Listings.seller_id == id)).scalars()
+
+    results = [item.serialize() for item in listings]
+
+    response_body = {
+        "message": "Listings",
+        "results": results,
+        "status": "ok"
+    }
+
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not found", 404
+
 
 @api.route('/users/<int:id>/listings', methods=['POST']) # Ok
 def post_listings(id):

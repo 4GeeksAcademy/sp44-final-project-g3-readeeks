@@ -67,6 +67,12 @@
     color: #AFCBFF;
 }
 
+.MyProfile-Components {
+    margin-top: 10%;
+}
+
+/* MyBooksList Component //////////////////////////////////// */
+
 @media (min-width: 1200px) {
 
 .MyProfile-main {
@@ -76,26 +82,22 @@
 .MyProfile-Profile {
     display: flex;
     align-items: center;
-    border: 1px blue solid;
 }
 
 .MyProfile-Img {
     width: 10%;
-    border: 1px green solid;
 }
 
 .MyProfile-User {
     margin-top: 5px;
     margin-left: 30px;
     width: 20%;
-    border: 1px yellow solid;
 }
 
 .MyProfile-ThreeElements {
     margin-top: 5px;
-    border: 1px red solid;
     width: 70%;
-    font-size: 200%;
+    font-size: 250%;
 }
 
 .MyProfile-ThreeElements-Books {
@@ -112,5 +114,9 @@
     width: 33%;
 }
 
+
+.MyProfile-Components {
+    margin-top: 3%;
+}
 
 }
