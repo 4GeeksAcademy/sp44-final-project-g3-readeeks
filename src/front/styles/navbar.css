@@ -1,31 +1,29 @@
 /* Estilos para pantallas de escritorio (más de 768px de ancho) */
 /* Reset de márgenes para todos los elementos */
-
-
 * {
   margin: 0;
 }
 
 /* Estilos para el icono del libro en la barra de navegación */
 .Reedeeks-icon {
-  width: 80px;
-  height: 80px;
+  width: 5rem; /* Ancho del icono en unidades rem */
+  height: 5rem; /* Altura del icono en unidades rem */
   border-radius: 50%;
-  margin-left: 10px;
+  margin-left: 1rem; /* Margen izquierdo en unidades rem */
   overflow: hidden;
 }
 
 /* Estilos para la barra de navegación */
 .navbar {
   background-color: #0E1C36;
-  padding: 1em;
+  padding: 1rem; /* Espaciado interior en unidades rem */
   display: flex;
   color: #DEA54B;
   position: fixed;
   top: 0;
   z-index: 1000;
   width: 100%;
-  padding: 1em;
+  padding: 1rem; /* Espaciado interior en unidades rem */
 }
 
 /* Contenedor para el logotipo y el título */
@@ -38,26 +36,26 @@
 
 /* Estilos para el título */
 .title {
-  margin-left: 5px;
-  margin-right: 10px;
+  margin-left: 0.5rem; /* Margen izquierdo en unidades rem */
+  margin-right: 1rem; /* Margen derecho en unidades rem */
 }
 
 /* Contenedor para la barra de búsqueda */
 .searcher {
   margin: auto;
   width: 65%;
-  border: 3px solid #4f6367;
-  border-radius: 50px;
+  border: 0.2rem solid #4f6367; /* Borde en unidades rem */
+  border-radius: 2rem; /* Radio de borde en unidades rem */
 }
 
 /* Estilos para el campo de búsqueda */
 .buscador {
   width: 100%;
-  height: 50px;
+  height: 3rem; /* Altura del campo de búsqueda en unidades rem */
   background-color: transparent;
   border: none;
   color: #DEA54B;
-  padding-left: 20px;
+  padding-left: 1rem; /* Espaciado interior en unidades rem */
 }
 
 /* Elimina el contorno del campo de búsqueda al enfocarlo */
@@ -75,17 +73,17 @@ input:focus {
 
 /* Estilos para el botón "Regístrate o inicia sesión" */
 .login {
-  border: 2px solid #DEA54B;
+  border: 0.2rem solid #DEA54B; /* Borde en unidades rem */
   background-color: transparent;
   color: #DEA54B;
-  padding: 10px 20px;
+  padding: 1rem 1.5rem; /* Espaciado interior en unidades rem */
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  border-radius: 50px;
-  margin-right: 15px;
+  border-radius: 2rem; /* Radio de borde en unidades rem */
+  margin-right: 0.5rem; /* Margen derecho en unidades rem */
   font-weight: 500;
 }
 
@@ -97,16 +95,16 @@ input:focus {
 
 /* Estilos para el botón "Subir producto" */
 .upload {
-  border: 2px solid #DEA54B;
+  border: 0.2rem solid #DEA54B; /* Borde en unidades rem */
   background-color: #DEA54B;
   color: #0E1C36;
-  padding: 10px 20px;
+  padding: 1rem 1.5rem; /* Espaciado interior en unidades rem */
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-  border-radius: 50px;
+  border-radius: 2rem; /* Radio de borde en unidades rem */
   font-weight: 500;
 }
 
@@ -116,7 +114,6 @@ input:focus {
   border-color: #DEA54B;
 }
 
-/* Estilos para dispositivos móviles (768px o menos de ancho) */
 @media screen and (max-width: 1700px) {
   .title {
     display: none;
@@ -176,7 +173,7 @@ input:focus {
 }
 
 
-@media (max-width: 375px) {
+@media (max-width: 541px) {
   /* Reduce el tamaño del logo y ajusta los márgenes */
   .Reedeeks-icon {
     width: 60px; /* Cambia el tamaño del logo según tus necesidades */
