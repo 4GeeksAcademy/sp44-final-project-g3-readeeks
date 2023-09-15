@@ -16,7 +16,7 @@ export const NewItem = () => {
       };
   
       // Envía la información del producto al servidor o API (sustituye la URL con la correcta)
-      const response = await fetch("URL_DE_TU_API", {
+      const response = await fetch(process.env.BACKEND_URL, {
         method: "POST", // Puedes usar el método HTTP adecuado (POST, PUT, etc.)
         headers: {
           "Content-Type": "application/json",
