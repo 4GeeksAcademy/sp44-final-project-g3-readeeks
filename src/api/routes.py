@@ -6,7 +6,11 @@ from api.models import db, User, Address, FavoriteUser, FavoriteListings, Review
 from api.utils import generate_sitemap, APIException
 from datetime import datetime
 
+
+
 api = Blueprint('api', __name__)
+
+
 
 # Users methods /////////////////////////////////////////////////////////////
 

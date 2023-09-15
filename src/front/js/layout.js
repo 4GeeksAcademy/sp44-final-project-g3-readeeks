@@ -9,6 +9,7 @@ import { Single } from "./pages/single";
 import { MyProfile } from "./pages/MyProfile.jsx"
 import { EditProfile } from "./pages/EditProfile.jsx";
 import { EditarPerfil } from "./pages/EditarPerfil.jsx";
+import { Prueba } from "./pages/Prueba.jsx"
 
 import injectContext from "./store/appContext";
 
@@ -37,6 +38,7 @@ const Layout = () => {
                         <Route element={<MyProfile />} path="/miperfil" />
                         <Route element={<EditProfile />} path="/editarperfil" />
                         <Route element={<EditarPerfil />} path="/editarperfill" />
+                        <Route element={<Prueba />} path="/prueba" />
                         
                     </Routes>
                     <Footer />
