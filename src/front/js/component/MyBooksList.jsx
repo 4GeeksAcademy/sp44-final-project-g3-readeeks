@@ -48,18 +48,22 @@ export const MyBooksList = () => {
     return (
 
         <div className="MyBooksList-main">
-          {book.status !== undefined && book.status !== "" ? (
-            book.results.map((item, index) => (
-              <div key={index} className="MyBooksList-BookImg">
-                <img src={photo} alt="" className="" />
-                <p>{item.listing_title}: <b>{item.sale_price}€</b></p>
+          <h5>Libros en venta</h5>
+
+          <div className="MyBooksList-Component">
+            {book.status !== undefined && book.status !== "" ? (
+              book.results.map((item, index) => (
+                <div key={index} className="MyBooksList-BookImg">
+                  <img src={photo} alt="" className="" />
+                  <p>{item.listing_title}: <b>{item.sale_price}€</b></p>
+                </div>
+              ))
+            ) : (
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
               </div>
-            ))
-          ) : (
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
       );   

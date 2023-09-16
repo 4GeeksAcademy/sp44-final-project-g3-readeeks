@@ -73,9 +73,13 @@
 
 .MyProfile-ThreeElements-Books.active i {
     color: #AFCBFF; 
-  }
+}
   
 .MyProfile-ThreeElements-Favorites.active i {
+    color: #AFCBFF; 
+}
+
+.MyProfile-ThreeElements-Following.active i {
     color: #AFCBFF; 
 }
 
@@ -121,7 +125,6 @@
 .MyProfile-ThreeElements-Following {
     width: 33%;
 }
-
 
 .MyProfile-Components {
     margin-top: 3%;

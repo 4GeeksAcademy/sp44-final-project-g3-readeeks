@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.png";
 import "../../styles/mybookslist.css"
 
-export const MyFavoritesList = () => {
+export const MyFollowingList = () => {
     
-    const [favorite, setFavorite] = useState('');
+    const [following, setFollowing] = useState('');
   
-    const fetchGetFavorites = async (id) => {
+    const fetchGetFollowings = async (id) => {
       
-      const url = `${process.env.BACKEND_URL}/users/${id}/favoritelistings/`;
+      const url = `${process.env.BACKEND_URL}/users/${id}/favoriteusers/`;
+      
   
       const request = {
         method: "GET",
@@ -18,28 +19,28 @@ export const MyFavoritesList = () => {
   
       if (response.ok) {
         const data = await response.json();
-        setFavorite(data);
+        setFollowing(data);
       } else {
         console.log("Error", response.status, response.statusText);
       }
     }
   
-    const favoriteId = 1; //cambiar este id por la variable del ID del usuario logueado
+    const followingId = 1; //cambiar este id por la variable del ID del usuario logueado
   
     useEffect(() => {
-      fetchGetFavorites(favoriteId);
+      fetchGetFollowings(followingId);
     }, []);
     
     return (
 
         <div className="MyBooksList-main">
-            <h5>Libros favoritos</h5>
+            <h5>Siguiendo</h5>
             <div className="MyBooksList-Component">
-          {favorite.status !== undefined && favorite.status !== "" ? (
-            favorite.articulos.map((item, index) => (
+          {following.status !== undefined && following.status !== "" ? (
+            following.user_id.map((item, index) => (
               <div key={index} className="MyBooksList-BookImg">
                 <img src={photo} alt="" className="" />
-                <p>{item.favorite_listing.listing_title}: <b>{item.favorite_listing.sale_price}€</b></p>
+                <p>{item.name} {item.last_name}</p>
               </div>
             ))
           ) : (

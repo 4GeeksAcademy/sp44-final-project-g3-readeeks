@@ -165,11 +165,12 @@ def get_favorite_users(id):
     favorite_users = db.session.execute(db.select(FavoriteUser).where(FavoriteUser.follower_id == id)).scalars()
 
     results = [item.serialize() for item in favorite_users]
-    followeds = [followed["followed"]["id"] for followed in results]
+    followeds = [followed["followed"] for followed in results]
 
     response_body = {
         "message": "Following",
-        "user_id": followeds
+        "user_id": followeds,
+        "status": "ok"
     }
 
     return response_body, 200

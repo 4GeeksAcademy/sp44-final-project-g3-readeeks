@@ -3,6 +3,7 @@ import "../../styles/myprofile.css";
 import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.png";
 import { MyBooksList } from "../component/MyBooksList.jsx"
 import { MyFavoritesList } from "../component/MyFavoritesList.jsx"
+import { MyFollowingList } from "../component/MyFollowingList.jsx";
 
 export const MyProfile = () => {
 
@@ -16,6 +17,10 @@ export const MyProfile = () => {
 
   const handleFavoritesTabClick = () => { 
     setActiveTab('favorites');
+  };
+
+  const handleFollowingTabClick = () => { 
+    setActiveTab('following');
   };
 
   const fetchGetUsers = async (id) => {
@@ -93,9 +98,13 @@ export const MyProfile = () => {
           </i>
         </div>
 
-          <div 
-            className="MyProfile-ThreeElements-Following">
-            <i className="fa-solid fa-user"></i>
+        <div
+          className={`MyProfile-ThreeElements-Following 
+          ${activeTab === 'following' ? 'active' : ''}`}
+          onClick={handleFollowingTabClick}
+        >
+            <i className="fa-solid fa-user">           
+            </i>
           </div>
 
         </div>
@@ -117,6 +126,9 @@ export const MyProfile = () => {
         </div>
         <div className="MyProfile-MyFavoritesList" style={{ display: activeTab === 'favorites' ? 'block' : 'none' }}>
           <MyFavoritesList />
+        </div>
+        <div className="MyProfile-MyFollowingList" style={{ display: activeTab === 'following' ? 'block' : 'none' }}>
+          <MyFollowingList />
         </div>
         
       </div>
