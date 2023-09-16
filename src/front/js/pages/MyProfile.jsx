@@ -7,7 +7,17 @@ import { MyFavoritesList } from "../component/MyFavoritesList.jsx"
 export const MyProfile = () => {
 
   const [user, setUser] = useState('');
-  
+
+  const [activeTab, setActiveTab] = useState('books');
+
+  const handleBooksTabClick = () => { 
+    setActiveTab('books');
+  };
+
+  const handleFavoritesTabClick = () => { 
+    setActiveTab('favorites');
+  };
+
   const fetchGetUsers = async (id) => {
     
     const url = `${process.env.BACKEND_URL}/users/${id}`;
@@ -63,16 +73,28 @@ export const MyProfile = () => {
         </div>
 
         <div className="MyProfile-ThreeElements">
+        <div
+          className={`MyProfile-ThreeElements-Books
+          ${activeTab === 'books' ? 'active' : ''}`}
+          onClick={handleBooksTabClick}
+        >
+          <i className={`fa-solid fa-book
+            ${activeTab === 'books' ? 'active-icon' : ''}`}> 
+          </i>
+        </div>
 
-          <div className="MyProfile-ThreeElements-Books">
-            <i className="fa-solid fa-book"></i>
-          </div>
+        <div
+          className={`MyProfile-ThreeElements-Favorites 
+          ${activeTab === 'favorites' ? 'active' : ''}`}
+          onClick={handleFavoritesTabClick}
+        >
+          <i className={`fa-solid fa-heart 
+            ${activeTab === 'favorites' ? 'active-icon' : ''}`}>
+          </i>
+        </div>
 
-          <div className="MyProfile-ThreeElements-Favorites">
-            <i className="fa-solid fa-heart"></i>
-          </div>
-
-          <div className="MyProfile-ThreeElements-Following">
+          <div 
+            className="MyProfile-ThreeElements-Following">
             <i className="fa-solid fa-user"></i>
           </div>
 
@@ -90,8 +112,12 @@ export const MyProfile = () => {
 
       <div className="MyProfile-Components">
         
-        <div className="MyProfile-MyBooksList"><MyBooksList /></div>
-        <div className="MyProfile-MyFavoritesList"><MyFavoritesList /></div>
+        <div className="MyProfile-MyBooksList"style={{ display: activeTab === 'books' ? 'block' : 'none' }}>
+          <MyBooksList />
+        </div>
+        <div className="MyProfile-MyFavoritesList" style={{ display: activeTab === 'favorites' ? 'block' : 'none' }}>
+          <MyFavoritesList />
+        </div>
         
       </div>
      

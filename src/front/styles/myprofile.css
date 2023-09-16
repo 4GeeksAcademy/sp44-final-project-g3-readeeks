@@ -71,6 +71,14 @@
     margin-top: 10%;
 }
 
+.MyProfile-ThreeElements-Books.active i {
+    color: #AFCBFF; 
+  }
+  
+.MyProfile-ThreeElements-Favorites.active i {
+    color: #AFCBFF; 
+}
+
 /* MyBooksList Component //////////////////////////////////// */
 
 @media (min-width: 1200px) {
