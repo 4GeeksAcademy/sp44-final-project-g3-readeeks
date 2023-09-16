@@ -31,6 +31,20 @@ export const MyBooksList = () => {
       fetchGetBooks(bookId);
     }, []);
 
+
+    //     document.querySelectorAll(".folder-tab").forEach((tab) => {
+    //     tab.addEventListener("click", () => {
+    //         console.log("tabJAJAJ");
+    //         document.querySelectorAll(".folder-tab").forEach((innerTab) => innerTab.classList.remove("active"));
+    //         document.querySelectorAll(".folder-content").forEach((content) => content.classList.remove("active"));
+    //         tab.classList.add("active");
+    //         document.getElementById(tab.getAttribute("data-target")).classList.add("active");
+    //     } )
+    // })
+    // console.log(tabs)
+
+
+
     return (
 
         <div className="MyBooksList-main">
@@ -47,6 +61,6 @@ export const MyBooksList = () => {
             </div>
           )}
         </div>
-        
+
       );   
 };

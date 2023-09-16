@@ -477,14 +477,18 @@ def get_favorite_items(id):
 
     favorite_items = db.session.execute(db.select(FavoriteListings).where(FavoriteListings.user_id == id)).scalars()
 
-    items = [item.listing_id for item in favorite_items]
+    items = [item.serialize() for item in favorite_items]
 
     response_body = {
         "message": "Estos son tus articulos favoritos",
-        "articulos": items  
+        "articulos": items,
+        "status": "ok"
     }
 
-    return response_body
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not found", 404
 
 
 @api.route('/users/<int:user_id>/favoritelistings/<int:listing_id>', methods=['POST']) #Ok

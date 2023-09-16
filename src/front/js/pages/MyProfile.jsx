@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/myprofile.css";
 import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.png";
-// import { MyBooksList } from "/workspaces/sp44-final-project-g3-readeeks/src/front/js/component/MyBooksList.jsx"
 import { MyBooksList } from "../component/MyBooksList.jsx"
-
+import { MyFavoritesList } from "../component/MyFavoritesList.jsx"
 
 export const MyProfile = () => {
 
   const [user, setUser] = useState('');
-  
   
   const fetchGetUsers = async (id) => {
     
@@ -38,8 +36,6 @@ export const MyProfile = () => {
     
     <div className="MyProfile-main">
       {user.status !== undefined && user.status !== "" ? (
-      
-      
                 
       <div className="MyProfile-Profile">
         
@@ -69,15 +65,15 @@ export const MyProfile = () => {
         <div className="MyProfile-ThreeElements">
 
           <div className="MyProfile-ThreeElements-Books">
-            <i class="fa-solid fa-book"></i>
+            <i className="fa-solid fa-book"></i>
           </div>
 
           <div className="MyProfile-ThreeElements-Favorites">
-            <i class="fa-solid fa-heart"></i>
+            <i className="fa-solid fa-heart"></i>
           </div>
 
           <div className="MyProfile-ThreeElements-Following">
-            <i class="fa-solid fa-user"></i>
+            <i className="fa-solid fa-user"></i>
           </div>
 
         </div>
@@ -95,6 +91,7 @@ export const MyProfile = () => {
       <div className="MyProfile-Components">
         
         <div className="MyProfile-MyBooksList"><MyBooksList /></div>
+        <div className="MyProfile-MyFavoritesList"><MyFavoritesList /></div>
         
       </div>
      
