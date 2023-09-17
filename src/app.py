@@ -12,12 +12,28 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 #from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+app.config['CLOUD_NAME'] = os.getenv("CLOUD_NAME")
+app.config['CLOUD_API_SECRET'] = os.getenv("CLOUD_API_SECRET")
+app.config['CLOUD_KEY'] = os.getenv("CLOUD_KEY")
+
+cloudinary.config( 
+  cloud_name = app.config['CLOUD_NAME'], 
+  api_key = app.config['CLOUD_KEY'], 
+  api_secret = app.config['CLOUD_API_SECRET'],
+  secure = True
+)
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -48,6 +64,16 @@ def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
+@app.route('/img', methods=["POST"])
+def upload_image():
+    img= request.file["img"]
+    print(img)
+
+    return jsonify("test"), 200
+
+
+
+
 @app.route('/')
 def sitemap():
     if ENV == "development":
