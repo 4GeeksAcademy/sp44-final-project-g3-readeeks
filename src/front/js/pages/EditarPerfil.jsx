@@ -549,21 +549,21 @@ export const EditarPerfil = () => {
                 <h4>Editar Perfil</h4>
 
                 <div className="EditarPerfil-Input">
-                <h6>{user.results.name}</h6>
+                
                 <input type="text" value={newName} placeholder='Nuevo nombre' onChange={(e) => setNewName(e.target.value)} />
                 <button onClick={handleNameChange}><i class="fa-solid fa-rotate-right"></i></button>
                 {newName && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
                 </div>
 
                 <div className="EditarPerfil-Input">
-                <h6>{user.results.last_name}</h6>
+                
                 <input type="text" value={newLastName} placeholder='Nuevo apellido/s' onChange={(e) => setNewLastName(e.target.value)} />
                 <button onClick={handleLastNameChange}><i class="fa-solid fa-rotate-right"></i></button>
                 {newLastName && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
                 </div>
 
                 <div className="EditarPerfil-Input">
-                <h6>{user.results.phone}</h6>
+                
                 <input 
                   type="text" 
                   value={newPhone} 
@@ -582,14 +582,14 @@ export const EditarPerfil = () => {
                 </div>
 
                 <div className="EditarPerfil-Input">
-                  <h6>{user.results.email}</h6>
+                  
                   <input type="text" value={newEmail} placeholder='Nuevo Email' onChange={(e) => setNewEmail(e.target.value)} />
                   <button onClick={handleEmailChange}><i class="fa-solid fa-rotate-right"></i></button>
                   {newEmail && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
                 </div>
 
                 <div className="EditarPerfil-Input">
-                  <h6>Contraseña***</h6>
+                  
                   <input type="password" value={newPassword} placeholder='Nueva Contraseña' onChange={(e) => setNewPassword(e.target.value)} />
                   <button onClick={handlePasswordChange}><i class="fa-solid fa-rotate-right"></i></button>
                   {newPassword && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}

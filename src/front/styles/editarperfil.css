@@ -24,7 +24,7 @@
 
 .EditarPerfil-Input input {
     width: 50%;
-    margin-left: 5%;
+    
 }
 
 .EditarPerfil-Input h6 {
@@ -103,12 +103,23 @@
 .EditarPerfil-Information {
     margin-top: 0;
     margin-left: 2vw;
-    width: 33%;
+    width: 25%;
+    
+}
+
+.EditarPerfil-Input {
+    
+    margin-top: 1%; 
+}
+
+.EditarPerfil-Information input {
+    margin-top: 1%; 
 }
 
 .EditarPerfil-Information2 {
     width: 66%;
     margin-top: 0;
+    
 }
 
 .EditarPerfil-Input2{
