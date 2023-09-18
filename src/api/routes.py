@@ -2,11 +2,19 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
+from flask_cors import CORS, cross_origin
+
 from api.models import db, User, Address, FavoriteUser, FavoriteListings, Reviews, Listings, Album, Books, Transactions
 from api.utils import generate_sitemap, APIException
 from datetime import datetime
+from cloudinary.uploader import upload as cloudinary_upload
+
+from cloudinary.uploader import upload
+
+
 
 api = Blueprint('api', __name__)
+CORS(api)
 
 # Users methods /////////////////////////////////////////////////////////////
 
@@ -240,24 +248,24 @@ def get_listings():
     items = db.session.execute(db.select(Listings).order_by(Listings.listing_title)).scalars()
     results = [item.serialize() for item in items]
 
-    response_body = {
-        "message": "All items",
-        "results": results,
-        "status": "ok"
+    if results:
+        response_body = {
+            "message": "All items",
+            "results": results,
+            "status": "ok"
         }
-
-    if response_body:
         return response_body, 200
     else:
-        return "Not found", 404
+        return {"message": "nada que mostrasr", "status": "error"}, 404
+    
 
-
+# ----------------------------
 @api.route('/users/<int:id>/listings', methods=['POST']) # Ok
 def post_listings(id):
-    
+
     user = User.query.get_or_404(id)
     seller_id = user.id
-    
+
     request_body = request.get_json()
 
     listing_title = request_body.get("Titulo del item")
@@ -265,11 +273,11 @@ def post_listings(id):
     description = request_body.get("Descripcion")
     status = request_body.get("Status")
 
-    album_data = request_body.get("album", {})  
+    album_data = request_body.get("album", {})
     album = Album(
         url=album_data.get("La url")
-    )   
-    
+    )
+
     db.session.add(album)
     db.session.commit()
 
@@ -313,6 +321,9 @@ def post_listings(id):
     }
 
     return response_body, 200
+# ----------------
+
+
 
 @api.route('/users/<int:user_id>/listings/<int:listing_id>', methods=['PUT']) # Ok
 def put_listings(user_id, listing_id):
@@ -328,7 +339,7 @@ def put_listings(user_id, listing_id):
 
         album_data = request_body.get("Album", {})
         album_url = album_data.get("La url")
-        
+
         if album_url:
             put_listing.album.url = album_url
 
@@ -336,8 +347,8 @@ def put_listings(user_id, listing_id):
         put_listing.sale_price = request_body.get("Precio venta", put_listing.sale_price)
         put_listing.description = request_body.get("Descripcion", put_listing.description)
         put_listing.status = request_body.get("Estado", put_listing.status)
-        
-       
+
+
         db.session.commit()
 
         response_body = {
@@ -353,38 +364,6 @@ def put_listings(user_id, listing_id):
         response_body = {
             "message": "Listing not found",
             "status": "ok",
-        }
-
-        return response_body, 404
-
-
-@api.route('/listings/<int:id_listing>', methods=['DELETE']) # Ok
-def delete_listings(id_listing):
-
-    # user = User.query.get_or_404(id)
-    # user_id = user.id
-
-    listing = Listings.query.get_or_404(id_listing)
-    
-    album_id = listing.album_id
-    album_id_in_album = Album.query.get_or_404(album_id)
-    
-    if listing and album_id_in_album:
-        db.session.delete(listing)
-        db.session.delete(album_id_in_album)
-        db.session.commit()
-        
-        response_body = {
-            "message": "Listing deleted",
-            "status": "ok"
-        }
-
-        return response_body, 200
-    
-    else:
-        response_body = {
-            "message": "Listing not found",
-            "status": "error"
         }
 
         return response_body, 404

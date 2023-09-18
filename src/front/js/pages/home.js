@@ -54,89 +54,89 @@ export const Home = () => {
               &lt; {/* Flecha izquierda */}
             </button>
             <ul className="categories-list"  >
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Todas las categorías</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Todas las categorías</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Cómics</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Cómics</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Autobiográficos</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Autobiográficos</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Científicos</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Científicos</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Autoayuda</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Autoayuda</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Aventuras</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Aventuras</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Ciencia ficción</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Ciencia ficción</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Cuentos</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Cuentos</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Deporte</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Deporte</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Humor</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Humor</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Marketing</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Marketing</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">salud</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">salud</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Suspense</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Suspense</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Videojuegos</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Videojuegos</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Novelas</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Novelas</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Novelas Románticas</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Novelas Románticas</span>
 						</a>
 					</li>
-					<li class="categories_Categories__listitem__iJWwr h-100 text-center">
+					<li className="categories_Categories__listitem__iJWwr h-100 text-center">
 						<a href="" rel="nofollow" className="category_Category_All d-flex flex-column justify-content-center align-items-center" aria-labelledby="category-0">
-							<span class="category_Category__title__qJiR3 text-center" id="category-0">Novela negra</span>
+							<span className="category_Category__title__qJiR3 text-center" id="category-0">Novela negra</span>
 						</a>
 					</li>
 					</ul>
@@ -144,9 +144,9 @@ export const Home = () => {
               &gt; {/* Flecha derecha */}
             </button>
           </div>
-			<div class="popular-books">
+			<div className="popular-books">
 				<h2>Libros Populares</h2>
-					<ul class="popular-books-list">
+					<ul className="popular-books-list">
 	
 					</ul>
 </div>

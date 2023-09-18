@@ -1,125 +1,198 @@
 import React, { useState } from "react";
 import "../../styles/NewItem.css";
 
+
+
 export const NewItem = () => {
-  const [imageURLs, setImageURLs] = useState(Array(4).fill("")); // Estado para almacenar las URL de las imágenes
+  const [selectedFiles, setSelectedFiles] = useState(Array(4).fill(null));
+  const [title, setTitle] = useState("");
+  const [albumUrl, setAlbumUrl] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [state, setState] = useState("");
 
-  const handleEnviarProducto = async () => {
-    try {
-      // Reúne la información del producto
-      const producto = {
-        titulo: [], /* Obtén el valor del input de título */
-        precio: [],/* Obtén el valor del input de precio */
-        descripcion: [], /* Obtén el valor del input de descripción */
-        estado: [], /* Obtén el valor del select de estado */
-        imagenes: imageURLs.filter((url) => url !== ""), // Filtra las URLs de imágenes no vacías
-      };
-  
-      // Envía la información del producto al servidor o API (sustituye la URL con la correcta)
-      const response = await fetch(process.env.BACKEND_URL, {
-        method: "POST", // Puedes usar el método HTTP adecuado (POST, PUT, etc.)
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(producto), // Convierte el objeto a formato JSON
-      });
-  
-      if (response.ok) {
-        // Si la respuesta es exitosa, puedes mostrar un mensaje de éxito o redirigir a otra página
-        alert("Producto enviado exitosamente");
-        // Redirigir a otra página si es necesario
-        // history.push("/otra-pagina");
-      } else {
-        // Si la respuesta es un error, puedes mostrar un mensaje de error o manejarlo de otra manera
-        alert("Hubo un error al enviar el producto");
-      }
-    } catch (error) {
-      console.error("Error al enviar el producto:", error);
-    }
-  };
-
-  // Función para manejar el cambio de archivo
   const handleFileChange = (event, index) => {
-    const file = event.target.files[0]; // Obtiene el primer archivo seleccionado
-    if (file) {
-      const imageURL = URL.createObjectURL(file); // Crea una URL para el archivo
-      const newURLs = [...imageURLs];
-      newURLs[index] = imageURL;
-      setImageURLs(newURLs); // Actualiza el estado con la URL de la imagen
+    console.log("Handling file change for index:", index);
+
+    const file = event.target.files[0];
+    console.log("Selected file:", file);
+
+    const newFiles = [...selectedFiles];
+    newFiles[index] = file;
+    setSelectedFiles(newFiles);
+};
+
+const removeImage = (index) => {
+    console.log("Removing image at index:", index);
+
+    const newFiles = [...selectedFiles];
+    newFiles[index] = null;
+    setSelectedFiles(newFiles);
+};
+
+const uploadToCloudinary = async (file) => {
+    console.log("Uploading file to Cloudinary:", file);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "ml_default"); 
+
+    try {
+        const response = await fetch("https://api.cloudinary.com/v1_1/dnxh8brpp/image/upload", {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await response.json();
+        console.log("Cloudinary response:", data);
+        return setAlbumUrl(data.secure_url);
+    } catch (error) {
+        console.error("Error uploading to Cloudinary:", error);
+        return null;
     }
-  };
+};
 
-  // Función para eliminar una imagen cargada
-  const removeImage = (index) => {
-    const newURLs = [...imageURLs];
-    newURLs[index] = ""; // Borra la URL de la imagen
-    setImageURLs(newURLs);
-  };
+const handleEnviarProducto = async () => {
+    console.log("Preparing to send product");
 
-  return (
-    <div>
-      <div className="upload-product-card">
-        <h1>Nuevo libro a la venta</h1>
-        <div className="input-row">
-          <div className="input-container">
-            <h3>Titulo</h3>
-            <input type="text" placeholder="Ingrese la información de la sección 1" className="custom-input" />
-          </div>
-          <div className="input-container">
-            <h3>Precio</h3>
-            <input type="text" placeholder="Ingrese la información de la sección 2" className="custom-input" />
-          </div>
-        </div>
-        <div className="input-row">
-          <div className="input-container">
-            <h3>Descripción</h3>
-            <input type="text" placeholder="Ingrese la información de la sección 3" className="custom-input" />
-          </div>
-          <div className="input-container">
-            <h3>Estado</h3>
-            <select className="custom-select">
-              <option value="opcion1">Venta</option>
-              <option value="opcion2">Reservado</option>
-              <option value="opcion3">Vendido</option>
-            </select>
-          </div>
-        </div>
+    const imageUrls = [];
 
-        <h1>Fotos</h1>
-        <div className="image-uploads">
-          {imageURLs.map((imageURL, index) => (
-            <div key={index}>
-              {imageURL ? (
-                <div  className="contenedor-imagen" style={{ textAlign: "start" }}>
-                  <img
-                    src={imageURL}
-                    alt={`Imagen ${index + 1}`}
-                    style={{ width: "300px", height: "200px" }} // Tamaño fijo de la imagen
-                  />
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                  <button className="submit-button" onClick={() => removeImage(index)}>Cambiar Imagen</button>
-                  </div>
-                </div>
-              ) : (
-                <label htmlFor={`file-input-${index + 1}`} className="custom-file-input">
-                  <i className="fas fa-camera"></i>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id={`file-input-${index + 1}`}
-                    onChange={(event) => handleFileChange(event, index)} // Asigna la función de manejo de cambio
-                  />
-                </label>
-              )}
+    for (const file of selectedFiles) {
+        if (file) {
+            const url = await uploadToCloudinary(file);
+            if (url) {
+                imageUrls.push(url);
+            }
+        }
+    }
+
+    const product = {
+      "Titulo del item": title,
+      "Precio de venta": price,
+      "Descripcion": description,
+      "Status": state,
+      "album": {
+        "La url": albumUrl
+    }
+  }
+
+    console.log("Sending product to backend:", product);
+
+    try {
+        const response = await fetch("https://scaling-guacamole-jx79vqq6676h565q-3001.app.github.dev/api/users/1/listings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(product),
+        });
+
+        const responseData = await response.json();
+        console.log("Backend response:", responseData);
+
+        if (response.ok) {
+            alert("Producto enviado exitosamente");
+        } else {
+            alert("Hubo un error al enviar el producto");
+        }
+    } catch (error) {
+        console.error("Error al enviar el producto:", error);
+    }
+};
+
+
+  
+    
+    return (
+      <div>
+        <div className="upload-product-card">
+          <h1>Nuevo libro a la venta</h1>
+          <div className="input-row">
+            <div className="input-container">
+              <h3>Titulo</h3>
+              <input
+                type="text"
+                placeholder="Ingrese la información de la sección 1"
+                className="custom-input"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </div>
-          ))}
-        </div>
-        <div className="send-button-container">
-          <button className="send-button" onClick={handleEnviarProducto}>
-            Enviar Producto
-          </button>
+            <div className="input-container">
+              <h3>Precio</h3>
+              <input
+                type="text"
+                placeholder="Ingrese la información de la sección 2"
+                className="custom-input"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="input-row">
+            <div className="input-container">
+              <h3>Descripción</h3>
+              <input
+                type="text"
+                placeholder="Ingrese la información de la sección 3"
+                className="custom-input"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+            <div className="input-container">
+              <h3>Estado</h3>
+              <select
+                className="custom-select"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+              >
+                <option value="" disabled hidden>Seleccione una opción</option>
+                <option value="Activo">Venta</option>
+                <option value="Reservado">Reservado</option>
+                <option value="Vendido">Vendido</option>
+                <option value="Cancelado">Cancelado</option>
+              </select>
+
+            </div>
+          </div>
+    
+          <h1>Fotos</h1>
+          <div className="image-uploads">
+            {selectedFiles.map((file, index) => (
+              <div key={index}>
+                {file ? (
+                  <div className="contenedor-imagen" style={{ textAlign: "start" }}>
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={`Imagen ${index + 1}`}
+                      style={{ width: "300px", height: "200px" }}
+                    />
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <button className="submit-button" onClick={() => removeImage(index)}>Cambiar Imagen</button>
+                    </div>
+                  </div>
+                ) : (
+                  <label htmlFor={`file-input-${index + 1}`} className="custom-file-input">
+                    <i className="fas fa-camera"></i>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      name="img"
+                      id={`file-input-${index + 1}`}
+                      onChange={(event) => handleFileChange(event, index)}
+                    />
+                  </label>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="send-button-container">
+            <button className="send-button" onClick={handleEnviarProducto}>
+              Enviar Producto
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+}
