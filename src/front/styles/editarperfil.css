@@ -7,7 +7,6 @@
     padding: 20px;
 }
 
-
 .EditarPerfil-img img {
     width: 100%;
     border-radius: 5px;
@@ -20,8 +19,7 @@
 .EditarPerfil-Input {
     display: flex;
     align-items: center;
-    margin-top: 5%;
-     
+    margin-top: 5%;    
 }
 
 .EditarPerfil-Input input {
@@ -35,7 +33,7 @@
 
 .EditarPerfil-CambioRealizadoConExito {
     color: green;
-    margin-left: 5%;
+    margin-left: 2%;
 }
 
 .EditarPerfil-Input button {
@@ -45,6 +43,47 @@
 .EditarPerfil-Input button:hover {
     background-color: #dea54b;
 }
+
+.EditarPerfil-Information2 {
+    margin-top: 10%;
+}
+
+.EditarPerfil-Input2 {
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.EditarPerfil-Input2 input {
+    width: 80%;   
+}
+
+.EditarPerfil-Input2 button {
+    background-color: #AFCBFF;
+}
+
+.EditarPerfil-Input2 button:hover {
+    background-color: #dea54b;
+}
+
+.EditarPerfil-Input2short {
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.EditarPerfil-Input2short input {
+    width: 80%;   
+}
+
+.EditarPerfil-Input2short button {
+    background-color: #AFCBFF;
+}
+
+.EditarPerfil-Input2short button:hover {
+    background-color: #dea54b;
+}
+
 
 
 @media (min-width: 1200px) {
@@ -66,6 +105,33 @@
     margin-top: 0;
     margin-left: 2vw;
     border: 1px solid red;
+    width: 33%;
+}
+
+.EditarPerfil-Information2 {
+    border: 1px solid green;
+    width: 66%;
+    margin-top: 0;
+}
+
+.EditarPerfil-Input2{
+    width: 80%;
+    margin-top: 1%;
+    border: 1px solid blue;     
+}
+
+.EditarPerfil-Input2 input {
+    width: 80%;          
+}
+
+.EditarPerfil-Input2short{
+    width: 20%;
+    margin-top: 1%;
+    border: 1px solid blue;     
+}
+
+.EditarPerfil-Input2short input {
+    width: 80%;          
 }
 
 }

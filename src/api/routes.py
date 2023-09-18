@@ -6,7 +6,25 @@ from api.models import db, User, Address, FavoriteUser, FavoriteListings, Review
 from api.utils import generate_sitemap, APIException
 from datetime import datetime
 
+# import os
+# from cloudinary.uploader import upload as cloudinary_upload
+# import cloudinary
 
+# # Obtén las credenciales de Cloudinary desde las variables de entorno
+# cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME')
+# api_key = os.environ.get('CLOUDINARY_API_KEY')
+# api_secret = os.environ.get('CLOUDINARY_API_SECRET')
+
+# # Verifica si las credenciales están configuradas
+# if cloud_name is None or api_key is None or api_secret is None:
+#     raise ValueError("Debes configurar las variables de entorno para Cloudinary.")
+
+# # Configura Cloudinary con las credenciales
+# cloudinary.config(
+#     cloud_name=cloud_name,
+#     api_key=api_key,
+#     api_secret=api_secret
+# )
 
 api = Blueprint('api', __name__)
 
