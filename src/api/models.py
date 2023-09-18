@@ -155,7 +155,7 @@ class Listings(db.Model):
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(200), unique=False, nullable=False)
+    url = db.Column(db.String(800), unique=False, nullable=False)
 
     def __repr__(self):
         return f'<Album {self.id}>'

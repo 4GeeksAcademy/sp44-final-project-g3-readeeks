@@ -31,26 +31,27 @@ const removeImage = (index) => {
 };
 
 const uploadToCloudinary = async (file) => {
-    console.log("Uploading file to Cloudinary:", file);
+  console.log("Uploading file to Cloudinary:", file);
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "ml_default"); 
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "ml_default"); 
 
-    try {
-        const response = await fetch("https://api.cloudinary.com/v1_1/dnxh8brpp/image/upload", {
-            method: "POST",
-            body: formData,
-        });
+  try {
+      const response = await fetch("https://api.cloudinary.com/v1_1/dnxh8brpp/image/upload", {
+          method: "POST",
+          body: formData,
+      });
 
-        const data = await response.json();
-        console.log("Cloudinary response:", data);
-        return setAlbumUrl(data.secure_url);
-    } catch (error) {
-        console.error("Error uploading to Cloudinary:", error);
-        return null;
-    }
+      const data = await response.json();
+      console.log("Cloudinary response:", data);
+      return data.secure_url;
+  } catch (error) {
+      console.error("Error uploading to Cloudinary:", error);
+      return null;
+  }
 };
+
 
 const handleEnviarProducto = async () => {
     console.log("Preparing to send product");
@@ -72,7 +73,7 @@ const handleEnviarProducto = async () => {
       "Descripcion": description,
       "Status": state,
       "album": {
-        "La url": albumUrl
+        "La url": imageUrls
     }
   }
 
@@ -112,7 +113,7 @@ const handleEnviarProducto = async () => {
               <h3>Titulo</h3>
               <input
                 type="text"
-                placeholder="Ingrese la información de la sección 1"
+                placeholder="Ingrese un titulo"
                 className="custom-input"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -121,8 +122,8 @@ const handleEnviarProducto = async () => {
             <div className="input-container">
               <h3>Precio</h3>
               <input
-                type="text"
-                placeholder="Ingrese la información de la sección 2"
+                type="number"
+                placeholder="Determine el precio de venta"
                 className="custom-input"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
@@ -134,7 +135,7 @@ const handleEnviarProducto = async () => {
               <h3>Descripción</h3>
               <input
                 type="text"
-                placeholder="Ingrese la información de la sección 3"
+                placeholder="Exponga una breve descripción del producto"
                 className="custom-input"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
