@@ -94,7 +94,6 @@
 
 .EditarPerfil-Profile {
     display: flex;
-    border: 1px solid red;
 }
 
 .EditarPerfil-img {
@@ -104,20 +103,17 @@
 .EditarPerfil-Information {
     margin-top: 0;
     margin-left: 2vw;
-    border: 1px solid red;
     width: 33%;
 }
 
 .EditarPerfil-Information2 {
-    border: 1px solid green;
     width: 66%;
     margin-top: 0;
 }
 
 .EditarPerfil-Input2{
     width: 80%;
-    margin-top: 1%;
-    border: 1px solid blue;     
+    margin-top: 1%;       
 }
 
 .EditarPerfil-Input2 input {
@@ -127,11 +123,16 @@
 .EditarPerfil-Input2short{
     width: 20%;
     margin-top: 1%;
-    border: 1px solid blue;     
+        
 }
 
 .EditarPerfil-Input2short input {
     width: 80%;          
+}
+
+.EditarPerfil-Input2shortgroup {
+    display: flex;
+    width: 114%;
 }
 
 }

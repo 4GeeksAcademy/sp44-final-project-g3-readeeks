@@ -17,6 +17,11 @@ export const EditarPerfil = () => {
 
     const [newStreet, setNewStreet] = useState('');
     const [newNumber, setNewNumber] = useState('');
+    const [newFloor, setNewFloor] = useState('');
+    const [newFlat, setNewFlat] = useState('');
+    const [newState, setNewState] = useState('');
+    const [newCity, setNewCity] = useState('');
+    const [newZipCode, setNewZipCode] = useState('');
 
     const fetchGetUsers = async (id) => {
     
@@ -34,7 +39,7 @@ export const EditarPerfil = () => {
         } else {
           console.log("Error", response.status, response.statusText);
         }
-      }
+    }
     
     const handleNameChange = async () => {
 
@@ -291,6 +296,232 @@ export const EditarPerfil = () => {
         console.error('Error al actualizar el número', response.status, response.statusText);
       }
     };
+
+    const handleFloorChange = async () => {
+      if (newFloor.trim() === '') {
+        console.error('El piso no puede estar vacío.');
+        return;
+      }
+    
+      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`;
+    
+      const request = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          Direccion: {
+            Planta: newFloor  // Modificar el piso de la dirección
+            // Asegúrate de enviar las otras propiedades de la dirección si es necesario
+          }
+        })
+      };
+    
+      const response = await fetch(url, request);
+    
+      if (response.ok) {
+        console.log('Piso actualizado correctamente');
+        // Actualiza el piso en la dirección del usuario si es necesario
+        setUser(prevUser => ({
+          ...prevUser,
+          results: {
+            ...prevUser.results,
+            address: {
+              ...prevUser.results.address,
+              floor: newFloor
+            }
+          }
+        }));
+        setCambioRealizado(true);
+        setTimeout(() => {
+          setCambioRealizado(false);
+        }, 3000);
+      } else {
+        console.error('Error al actualizar el piso', response.status, response.statusText);
+      }
+    };
+
+    const handleFlatChange = async () => {
+      if (newFlat.trim() === '') {
+        console.error('El número de piso no puede estar vacío.');
+        return;
+      }
+    
+      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`;
+    
+      const request = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          Direccion: {
+            Piso: newFlat  // Modificar el número de piso de la dirección
+            // Asegúrate de enviar las otras propiedades de la dirección si es necesario
+          }
+        })
+      };
+    
+      const response = await fetch(url, request);
+    
+      if (response.ok) {
+        console.log('Número de piso actualizado correctamente');
+        // Actualiza el número de piso en la dirección del usuario si es necesario
+        setUser(prevUser => ({
+          ...prevUser,
+          results: {
+            ...prevUser.results,
+            address: {
+              ...prevUser.results.address,
+              flat_number: newFlat
+            }
+          }
+        }));
+        setCambioRealizado(true);
+        setTimeout(() => {
+          setCambioRealizado(false);
+        }, 3000);
+      } else {
+        console.error('Error al actualizar el número de piso', response.status, response.statusText);
+      }
+    };
+
+    const handleStateChange = async () => {
+      if (newState.trim() === '') {
+        console.error('El estado no puede estar vacío.');
+        return;
+      }
+    
+      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`;
+    
+      const request = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          Direccion: {
+            Provincia: newState  // Modificar el estado de la dirección
+            // Asegúrate de enviar las otras propiedades de la dirección si es necesario
+          }
+        })
+      };
+    
+      const response = await fetch(url, request);
+    
+      if (response.ok) {
+        console.log('Estado actualizado correctamente');
+        // Actualiza el estado en la dirección del usuario si es necesario
+        setUser(prevUser => ({
+          ...prevUser,
+          results: {
+            ...prevUser.results,
+            address: {
+              ...prevUser.results.address,
+              state: newState
+            }
+          }
+        }));
+        setCambioRealizado(true);
+        setTimeout(() => {
+          setCambioRealizado(false);
+        }, 3000);
+      } else {
+        console.error('Error al actualizar el estado', response.status, response.statusText);
+      }
+    };
+
+    const handleCityChange = async () => {
+      if (newCity.trim() === '') {
+        console.error('La ciudad no puede estar vacía.');
+        return;
+      }
+    
+      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`;
+    
+      const request = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          Direccion: {
+            Ciudad: newCity  // Modificar la ciudad de la dirección
+            // Asegúrate de enviar las otras propiedades de la dirección si es necesario
+          }
+        })
+      };
+    
+      const response = await fetch(url, request);
+    
+      if (response.ok) {
+        console.log('Ciudad actualizada correctamente');
+        // Actualiza la ciudad en la dirección del usuario si es necesario
+        setUser(prevUser => ({
+          ...prevUser,
+          results: {
+            ...prevUser.results,
+            address: {
+              ...prevUser.results.address,
+              city: newCity
+            }
+          }
+        }));
+        setCambioRealizado(true);
+        setTimeout(() => {
+          setCambioRealizado(false);
+        }, 3000);
+      } else {
+        console.error('Error al actualizar la ciudad', response.status, response.statusText);
+      }
+    };
+
+    const handleZipCodeChange = async () => {
+      if (newZipCode.trim() === '') {
+        console.error('El código postal no puede estar vacío.');
+        return;
+      }
+    
+      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`;
+    
+      const request = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          Direccion: {
+            'Codigo Postal': newZipCode  // Modificar el código postal de la dirección
+            // Asegúrate de enviar las otras propiedades de la dirección si es necesario
+          }
+        })
+      };
+    
+      const response = await fetch(url, request);
+    
+      if (response.ok) {
+        console.log('Código postal actualizado correctamente');
+        // Actualiza el código postal en la dirección del usuario si es necesario
+        setUser(prevUser => ({
+          ...prevUser,
+          results: {
+            ...prevUser.results,
+            address: {
+              ...prevUser.results.address,
+              zip_code: newZipCode
+            }
+          }
+        }));
+        setCambioRealizado(true);
+        setTimeout(() => {
+          setCambioRealizado(false);
+        }, 3000);
+      } else {
+        console.error('Error al actualizar el código postal', response.status, response.statusText);
+      }
+    };
+
     //useEffect////////////////////////////////////////////////////////////////////
 
       const userId = 1; //cambiar este id por la variable del ID del usuario logueado
@@ -380,18 +611,51 @@ export const EditarPerfil = () => {
                   {newStreet && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
                 </div>
 
-                <div className="EditarPerfil-Input2short">
-                  <input type="text" value={newNumber} placeholder='Nuevo número' onChange={(e) => setNewNumber(e.target.value)} />
-                  <button onClick={handleNumberChange}><i class="fa-solid fa-rotate-right"></i></button>
-                  {newNumber && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                <div className="EditarPerfil-Input2shortgroup">
+
+                  <div className="EditarPerfil-Input2short">
+                    <input type="text" value={newNumber} placeholder='Nuevo número' onChange={(e) => setNewNumber(e.target.value)} />
+                    <button onClick={handleNumberChange}><i class="fa-solid fa-rotate-right"></i></button>
+                    {newNumber && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                  </div>
+
+                  <div className="EditarPerfil-Input2short">
+                   <input type="text" value={newFloor} placeholder='Nuevo piso' onChange={(e) => setNewFloor(e.target.value)} />
+                    <button onClick={handleFloorChange}><i class="fa-solid fa-rotate-right"></i></button>
+                    {newFloor && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                  </div>
+
+                  <div className="EditarPerfil-Input2short">
+                   <input type="text" value={newFlat} placeholder='Nuevo piso' onChange={(e) => setNewFlat(e.target.value)} />
+                    <button onClick={handleFlatChange}><i class="fa-solid fa-rotate-right"></i></button>
+                    {newFlat && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                  </div>
+
                 </div>
                 
-                
-                  
-                
+                <div className="EditarPerfil-Input2shortgroup">
 
+                  <div className="EditarPerfil-Input2short">
+                    <input type="text" value={newState} placeholder='Nueva provincia' onChange={(e) => setNewState(e.target.value)} />
+                    <button onClick={handleStateChange}><i class="fa-solid fa-rotate-right"></i></button>
+                    {newState && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                  </div>
+
+                  <div className="EditarPerfil-Input2short">
+                    <input type="text" value={newCity} placeholder='Nueva ciudad' onChange={(e) => setNewCity(e.target.value)} />
+                    <button onClick={handleCityChange}><i class="fa-solid fa-rotate-right"></i></button>
+                    {newCity && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                  </div>
+
+                  <div className="EditarPerfil-Input2short">
+                    <input type="text" value={newZipCode} placeholder='Nuevo código postal' onChange={(e) => setNewZipCode(e.target.value)} />
+                    <button onClick={handleZipCodeChange}><i class="fa-solid fa-rotate-right"></i></button>
+                    {newZipCode && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                  </div>
+                
+                </div>
+              
               </div>  
-
 
             </div>
             
