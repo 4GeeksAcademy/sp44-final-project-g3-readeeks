@@ -5,7 +5,12 @@ import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.pn
 export const EditarPerfil = () => {
 
     const [user, setUser] = useState('');
+    
+    const [cambioRealizado, setCambioRealizado] = useState(false);
+
     const [newName, setNewName] = useState('');
+    const [newLastName, setNewLastName] = useState('');
+    const [newPhone, setNewPhone] = useState('');
 
     const fetchGetUsers = async (id) => {
     
@@ -27,7 +32,12 @@ export const EditarPerfil = () => {
     
     const handleNameChange = async () => {
 
-      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`; //Puede que haya que cambiar el user.id por userId
+      if (newName.trim() === '') {
+        console.error('El nombre no puede estar vacío.');
+        return; 
+      }
+
+      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`;
 
       const request = {
         method: "PUT",
@@ -44,18 +54,94 @@ export const EditarPerfil = () => {
       if (response.ok) {
         console.log("Nombre actualizado correctamente");
         setUser(prevUser => ({ ...prevUser, results: { ...prevUser.results, name: newName } }));
+        setCambioRealizado(true);
+        setTimeout(() => {
+        setCambioRealizado(false);
+        }, 3000); 
     } else {
         console.error("Error al actualizar el nombre", response.status, response.statusText);
     }
 
     }
 
+    const handleLastNameChange = async () => {
+
+      if (newLastName.trim() === '') {
+        console.error('El Apellido no puede estar vacío.');
+        return; 
+      }
+
+      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`;
+
+      const request = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "Apellidos": newLastName
+          })
+      };
+
+      const response = await fetch(url, request);
+
+      if (response.ok) {
+        console.log("Apellido actualizado correctamente");
+        setUser(prevUser => ({ ...prevUser, results: { ...prevUser.results, last_name: newLastName } }));
+        setCambioRealizado(true);
+        setTimeout(() => {
+        setCambioRealizado(false);
+        }, 3000); 
+    } else {
+        console.error("Error al actualizar el apellido", response.status, response.statusText);
+    }
+    }
+
+    const handlePhoneChange = async () => {
+
+      if (newPhone.trim() === '') {
+        console.error('El teléfono no puede estar vacío.');
+        return; 
+      }
+
+    
+      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`;
+
+      const request = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "Telefono": newPhone
+          })
+      };
+
+      const response = await fetch(url, request);
+
+      if (response.ok) {
+        console.log("Telefono actualizado correctamente");
+        setUser(prevUser => ({ ...prevUser, results: { ...prevUser.results, phone: newPhone } }));
+        setCambioRealizado(true);
+        setTimeout(() => {
+        setCambioRealizado(false);
+        }, 3000); 
+    } else {
+        console.error("Error al actualizar el telefono", response.status, response.statusText);
+    }
+    }
+
+
+
+
+
+    //useEffect////////////////////////////////////////////////////////////////////
+
       const userId = 1; //cambiar este id por la variable del ID del usuario logueado
     
       useEffect(() => {
         fetchGetUsers(userId);
       }, []);
-
 
 
     return (
@@ -72,9 +158,42 @@ export const EditarPerfil = () => {
             </div>
 
             <div className="EditarPerfil-Information">
-                <h5>{user.results.name}</h5>
-                <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} />
-                <button onClick={handleNameChange}>Cambiar Nombre</button>
+                
+                <h4>Editar Perfil</h4>
+
+                <div className="EditarPerfil-Input">
+                <h6>{user.results.name}</h6>
+                <input type="text" value={newName} placeholder='Nuevo nombre' onChange={(e) => setNewName(e.target.value)} />
+                <button onClick={handleNameChange}><i class="fa-solid fa-rotate-right"></i></button>
+                {newName && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                </div>
+
+                <div className="EditarPerfil-Input">
+                <h6>{user.results.last_name}</h6>
+                <input type="text" value={newLastName} placeholder='Nuevo apellido/s' onChange={(e) => setNewLastName(e.target.value)} />
+                <button onClick={handleLastNameChange}><i class="fa-solid fa-rotate-right"></i></button>
+                {newLastName && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                </div>
+
+                <div className="EditarPerfil-Input">
+                <h6>{user.results.phone}</h6>
+                <input 
+                  type="text" 
+                  value={newPhone} 
+                  placeholder='Nuevo teléfono' 
+                  maxLength={9}
+                  inputMode="numeric"
+                  onChange={(e) => {
+                  const phoneNumber = e.target.value.replace(/\D/g, '');
+                  if (phoneNumber.length <= 9) {
+                    setNewPhone(phoneNumber);
+                  }
+                  ;}} 
+                  />
+                <button onClick={handlePhoneChange}><i class="fa-solid fa-rotate-right"></i></button>
+                {newPhone && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                </div>
+
             </div>
 
             </div>

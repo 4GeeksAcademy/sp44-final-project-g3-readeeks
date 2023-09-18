@@ -17,6 +17,34 @@
     margin-top: 10%;
 }
 
+.EditarPerfil-Input {
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+     
+}
+
+.EditarPerfil-Input input {
+    width: 50%;
+    margin-left: 5%;
+}
+
+.EditarPerfil-Input h6 {
+    margin: 0; 
+}
+
+.EditarPerfil-CambioRealizadoConExito {
+    color: green;
+    margin-left: 5%;
+}
+
+.EditarPerfil-Input button {
+    background-color: #AFCBFF;
+}
+
+.EditarPerfil-Input button:hover {
+    background-color: #dea54b;
+}
 
 
 @media (min-width: 1200px) {
@@ -27,7 +55,7 @@
 
 .EditarPerfil-Profile {
     display: flex;
-    align-items: center;
+    border: 1px solid red;
 }
 
 .EditarPerfil-img {
@@ -35,7 +63,9 @@
 }
 
 .EditarPerfil-Information {
-    /* margin-top: 10%; CAMBIAR */
+    margin-top: 0;
+    margin-left: 2vw;
+    border: 1px solid red;
 }
 
 }
