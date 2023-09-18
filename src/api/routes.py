@@ -39,7 +39,7 @@ def post_users():
 
     address_data = request_body.get("Direccion", {})
     address = Address(
-        city=address_data.get("Ciudad"),
+        city=address_data.get("Ciudad", city),
         flat_number=address_data.get("Piso"),
         floor=address_data.get("Planta"),
         number=address_data.get("Numero"),
@@ -92,31 +92,31 @@ def get_users_id(id):
 
 @api.route('/users/<int:id>', methods=['PUT']) # Ok
 def put_users_id(id):
-
+    
+    user = User.query.get_or_404(id)
+    
     request_body = request.get_json()
-
-    user = db.get_or_404(User, id)
 
     address_data = request_body.get("Direccion", {})
     address = Address(
-        city=address_data.get("Ciudad"),
-        flat_number=address_data.get("Piso"),
-        floor=address_data.get("Planta"),
-        number=address_data.get("Numero"),
-        state=address_data.get("Provincia"),
-        street=address_data.get("Calle"),
-        zip_code=address_data.get("Codigo Postal")
+        city=address_data.get("Ciudad", user.address.city),
+        flat_number=address_data.get("Piso", user.address.flat_number),
+        floor=address_data.get("Planta", user.address.floor),
+        number=address_data.get("Numero", user.address.number),
+        state=address_data.get("Provincia", user.address.state),
+        street=address_data.get("Calle", user.address.street),
+        zip_code=address_data.get("Codigo Postal", user.address.zip_code)
         )
 
-    user.name = request_body["Nombre"]
-    user.last_name = request_body["Apellidos"]
-    user.document_type = request_body["Tipo de documento"]
-    user.document_number = request_body["Numero de identificacion"]
+    user.name = request_body.get("Nombre", user.name)
+    user.last_name = request_body.get("Apellidos", user.last_name)
+    user.document_type = request_body.get("Tipo de documento", user.document_type)
+    user.document_number = request_body.get("Numero de identificacion", user.document_number)
     user.address = address
-    user.phone = request_body["Telefono"]
-    user.email = request_body["Email"]
-    user.password = request_body["Contraseña"]
-    user.is_active = request_body["Activo"]
+    user.phone = request_body.get("Telefono", user.phone)
+    user.email = request_body.get("Email", user.email)
+    user.password = request_body.get("Contraseña", user.password)
+    user.is_active = request_body.get("Activo", user.is_active)
        
     db.session.commit()
 
