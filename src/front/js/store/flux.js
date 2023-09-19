@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token: null,
 			message: null,
 			demo: [
 				{
@@ -19,6 +20,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+
+			login: async (email, password) => {
+				const opts = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						"email": email,
+						"password": password
+					})
+				};
+
+				try {
+					const resp = await fetch('https://silver-pancake-r9j4jjqrj5xc9j5-3001.app.github.dev/api/login', opts)
+					if(resp.status !== 200){
+						alert("The status is not 200 when posting for token API");
+						return false;
+					} 
+
+					const data = await resp.json();
+					localStorage.setItem("token", data.access_token);
+					setStore({ token: data.access_token });
+					return true	
+				}
+				catch(error){
+					console.error("There has been an error");
+				}
+				
 			},
 
 			getMessage: async () => {
@@ -48,7 +79,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			}
 		}
-	};
+	}
 };
 
 export default getState;

@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Address, FavoriteUser, FavoriteListings, Reviews, Listings, Album, Books, Transactions
 from api.utils import generate_sitemap, APIException
 from datetime import datetime
+from flask_jwt_extended import create_access_token
 
 api = Blueprint('api', __name__)
 
@@ -644,4 +645,14 @@ def delete_transactions(buyer_id, listing_id):
             }
 
         return response_body, 404
-   
+
+
+@api.route("/login", methods=['POST'])
+def login():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    if email != "test" or password != "test":
+        return jsonify({"msg": "Bad email or password"}), 401
+
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
