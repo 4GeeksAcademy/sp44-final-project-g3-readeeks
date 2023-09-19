@@ -49,6 +49,14 @@
     background-color: #dea54b; 
 }
 
+.Transactions-Option1.active  {
+    color: #AFCBFF; 
+}
+
+.Transactions-Option2.active  {
+    color: #AFCBFF; 
+}
+
 @media (min-width: 1200px) {
 
     .Transactions-wrapper {
