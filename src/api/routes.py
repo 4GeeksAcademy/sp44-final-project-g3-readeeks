@@ -631,6 +631,24 @@ def get_transactionsId(user_id):
         return response_body, 200
     else:
         return "Not Found", 404
+
+@api.route('/<int:user_id>/transactionssell', methods=['GET']) # Ok
+def get_transactionssellId(user_id):
+
+    transaction_items = db.session.execute(db.select(Transactions).where(Transactions.seller_id == user_id)).scalars()
+    items = [item.serialize() for item in transaction_items]
+
+
+    response_body = {
+                    "message": "All users",
+                    "results": items,
+                    "status": "ok"
+                    }
+
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not Found", 404
     
 
 @api.route('/<int:buyer_id>/transactions/<int:listing_id>', methods=['POST'])
