@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import {ProductDetail} from '/workspaces/sp44-final-project-g3-readeeks/src/front/js/component/ProductDetail.js';
-
+import Modal from 'react-modal';
+import { ProductDetail } from '/workspaces/sp44-final-project-g3-readeeks/src/front/js/component/ProductDetail.js';
 import "../../styles/NewItem.css";
-
-
 
 export const NewItem = () => {
   const [products, setProducts] = useState([]);
@@ -13,52 +11,53 @@ export const NewItem = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [state, setState] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+
 
   const handleFileChange = (event, index) => {
-    console.log("Handling file change for index:", index);
-
     const file = event.target.files[0];
-    console.log("Selected file:", file);
-
     const newFiles = [...selectedFiles];
     newFiles[index] = file;
     setSelectedFiles(newFiles);
-};
+  };
 
-const removeImage = (index) => {
-    console.log("Removing image at index:", index);
-
+  const removeImage = (index) => {
     const newFiles = [...selectedFiles];
     newFiles[index] = null;
     setSelectedFiles(newFiles);
-};
+  };
 
-const uploadToCloudinary = async (file) => {
-  console.log("Uploading file to Cloudinary:", file);
+  const uploadToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "ml_default"); 
 
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "ml_default"); 
-
-  try {
+    try {
       const response = await fetch("https://api.cloudinary.com/v1_1/dnxh8brpp/image/upload", {
           method: "POST",
           body: formData,
       });
 
       const data = await response.json();
-      console.log("Cloudinary response:", data);
       return data.secure_url;
-  } catch (error) {
+    } catch (error) {
       console.error("Error uploading to Cloudinary:", error);
       return null;
-  }
-};
+    }
+  };
 
+  const resetFields = () => {
+    setSelectedFiles(Array(4).fill(null));
+    setTitle("");
+    setAlbumUrl("");
+    setPrice("");
+    setDescription("");
+    setState("");
+  };
 
-const handleEnviarProducto = async (submittedProduct) => {
-    console.log("Preparing to send product");
-
+  const handleEnviarProducto = async () => {
     const imageUrls = [];
 
     for (const file of selectedFiles) {
@@ -77,10 +76,8 @@ const handleEnviarProducto = async (submittedProduct) => {
       "Status": state,
       "album": {
         "La url": imageUrls
-    }
-  }
-
-    console.log("Sending product to backend:", product);
+      }
+    };
 
     try {
         const response = await fetch("https://scaling-guacamole-jx79vqq6676h565q-3001.app.github.dev/api/users/1/listings", {
@@ -91,23 +88,38 @@ const handleEnviarProducto = async (submittedProduct) => {
             body: JSON.stringify(product),
         });
 
-        const responseData = await response.json();
-        console.log("Backend response:", responseData);
-
         if (response.ok) {
-            alert("Producto enviado exitosamente");
-            setProducts(prevProducts => [...prevProducts, product]); // Usar el callback para evitar errores de estado desactualizado
-        } else {
-            alert("Hubo un error al enviar el producto");
-        }
+          alert("Producto enviado exitosamente");
+          setProducts(prevProducts => [...prevProducts, product]);
+      
+          console.log("Producto a establecer:", product); 
+          setSelectedProduct(product);
+      
+          setIsModalOpen(true);
+      } else {
+          alert("Hubo un error al enviar el producto");
+      }
     } catch (error) {
         console.error("Error al enviar el producto:", error);
     }
+  };
+    
+  const handleModalOpen = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+};
+
+const handleModalClose = () => {
+    setIsModalOpen(false);
+    // Reset fields
+    setTitle("");
+    setPrice("");
+    setDescription("");
+    setState("");
+    setSelectedFiles(Array(4).fill(null));
 };
 
 
-  
-    
 return (
   <div>
     <div className="upload-product-card">
@@ -170,8 +182,7 @@ return (
                 <img
                   src={URL.createObjectURL(file)}
                   alt={`Imagen ${index + 1}`}
-                  style={{ width: "300px", height: "200px" }}
-                />
+                  />
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <button className="submit-button" onClick={() => removeImage(index)}>Cambiar Imagen</button>
                 </div>
@@ -198,9 +209,21 @@ return (
       </div>
     </div>
 
+    <Modal isOpen={isModalOpen} onRequestClose={handleModalClose} ariaHideApp={false}>
+    <ProductDetail product={selectedProduct} />
+
+esto es una modificacion
+
+      <button onClick={handleModalClose}>Cerrar</button>
+    </Modal>
+
+    {/* Aquí está la lista de productos (si aún deseas mostrarla fuera del modal) */}
     <div className="productList">
       {products.map((product, index) => (
-        <ProductDetail key={index} product={product} />
+        <div key={index} onClick={() => handleProductClick(product)}>
+          {/* Aquí puedes poner un resumen o una miniatura del producto en lugar de todo el detalle */}
+          
+        </div>
       ))}
     </div>
   </div>

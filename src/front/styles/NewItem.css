@@ -95,7 +95,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content:space-around;
-  margin-top: 1rem; /* Espacio entre los elementos y el contenedor en unidades rem */
+  margin-top: 0.5rem; /*Espacio entre los elementos y el contenedor en unidades rem*/
   margin-bottom: 1rem;
 }
 
@@ -108,6 +108,8 @@
   
 }
 
+
+
 /* Estilos para los inputs de archivo */
 .image-uploads input[type="file"] {
   display: none; /* Oculta los inputs de archivo */
@@ -117,16 +119,14 @@
 .input-row:nth-child(3) select {
   width: 100%; /* Ocupa todo el ancho disponible dentro del contenedor */
 }
-
-
-
-
-/* Establece un tamaño máximo para las imágenes */
-.image-upload img {
-  max-width: 5%; /* Ajusta la imagen al ancho máximo del contenedor */
-  max-height: 5rem; /* Ajusta la imagen a una altura máxima de 200px */
-  /* Puedes ajustar estos valores según tus necesidades */
+.image-uploads img {
+  width: 450px; /* Ancho deseado para todas las imágenes */
+  height: 450px; /* Altura deseada para todas las imágenes */
+  object-fit: cover; /* Mantiene el aspecto de la imagen y la recorta si es necesario */
 }
+
+
+
 
 
 /* Estilos para el botón "Cambiar Imagen" */
