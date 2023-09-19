@@ -1,0 +1,38 @@
+.Transactions-wrapper {
+    margin: auto;
+    margin-top: 150px;
+    background-color: white;
+    width: 85vw;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.Transactions-transaction {
+    border-top: 1px solid grey;
+    padding-bottom: 5%;
+    padding-top: 5%;  
+    justify-content: center; 
+    
+}
+
+.Transactions-transaction button {
+    background-color: #AFCBFF;
+    font-weight: 600;
+}
+
+.Transactions-transaction button:hover {
+    background-color: #dea54b; 
+}
+
+@media (min-width: 1200px) {
+
+    .Transactions-wrapper {
+        padding: 50px;
+    }
+
+    .Transactions-wrapper h5 {
+        margin-bottom: 2%;
+        padding-bottom: 2%;
+    }
+    
+}

@@ -14,7 +14,6 @@ export const EditarPerfil = () => {
     const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     
-
     const [newStreet, setNewStreet] = useState('');
     const [newNumber, setNewNumber] = useState('');
     const [newFloor, setNewFloor] = useState('');

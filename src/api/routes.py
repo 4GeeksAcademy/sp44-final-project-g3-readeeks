@@ -595,6 +595,8 @@ def get_books():
         return "Not found", 404
 
 
+# Transactions methods //////////////////////////////////////////////////////////////////
+
 @api.route('/transactions', methods=['GET']) # Ok
 def get_transactions():
 
@@ -604,6 +606,24 @@ def get_transactions():
     response_body = {
                     "message": "All users",
                     "results": results,
+                    "status": "ok"
+                    }
+
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not Found", 404
+    
+@api.route('/<int:user_id>/transactions', methods=['GET']) # Ok
+def get_transactionsId(user_id):
+
+    transaction_items = db.session.execute(db.select(Transactions).where(Transactions.buyer_id == user_id)).scalars()
+    items = [item.serialize() for item in transaction_items]
+
+
+    response_body = {
+                    "message": "All users",
+                    "results": items,
                     "status": "ok"
                     }
 
