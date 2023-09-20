@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import bookIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2-removebg-preview.png";
 import "../../styles/navbar.css";
 
 export const Navbar = ({isAuthenticated, onLogout}) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(isAuthenticated);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -12,8 +13,12 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.reload();
+    setLoggedIn(false);
   };
+
+  useEffect(() => {
+    setLoggedIn(isAuthenticated);
+  }, [isAuthenticated]);
 
   return (
     <div className="navbar">
@@ -34,7 +39,7 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
         />
       </div>
       <div className="navbar-buttons">
-        {isAuthenticated ? (
+        {loggedIn ? (
           <>
             <button className="loggedin-buttons">Perfil</button>
             <button className="loggedin-buttons">Subir producto</button>

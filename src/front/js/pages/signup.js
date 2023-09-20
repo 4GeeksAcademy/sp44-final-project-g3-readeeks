@@ -91,7 +91,7 @@ export const Signup = () => {
 						/>
 					</div>
 				</div>
-				<div className="signup-input">
+				<div className="signup-input login-details-input">
 					<input 
 					type="text" 
 					placeholder="Dirección de email" 
@@ -100,7 +100,7 @@ export const Signup = () => {
 					onChange={handleInputChange}
 					/>
 				</div>
-				<div className="signup-input">
+				<div className="signup-input login-details-input">
 					<input 
 					type="password" 
 					placeholder="Contraseña" 

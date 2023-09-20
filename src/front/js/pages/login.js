@@ -9,7 +9,7 @@ export const Login = () => {
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
 
-	const handleLogin = () => {
+	const handleClick = () => {
 		actions.login(email, password).then(() => {
 		 	navigate("/")
 			window.location.reload();
@@ -26,7 +26,7 @@ export const Login = () => {
 					<div className="login-input">
 						<input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)}/>
 					</div>
-					<button className="login-button" onClick={handleLogin}>Entrar</button>
+					<button className="login-button" onClick={handleClick}>Entrar</button>
 					<p className="signup-notice">
 						¿Aún no tienes una cuenta? <br/>
 						<Link to="/signup">Regístrate</Link>

@@ -123,14 +123,63 @@ body {
     margin-bottom: 10%;
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 975px) {
 
     .signup-container {
         width: 80%;
       }
 
-    .signup-input input {
+    .signup-input {
         width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 975px) {
+
+    .signup-input {
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .name-field {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .login-details-input {
+        margin-bottom: 10px;
+    }
+    
+    #doc-type {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .id-field {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .address-street {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .address-input-num {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .address-zip {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .address-geo {
+        width: 100%;
+        margin-bottom: 10px;
     }
 
 }

@@ -73,9 +73,9 @@
   
   /* Estilos para el botón "Regístrate o inicia sesión" */
   .login {
-    border: 2px solid #DEA54B;
-    background-color: transparent;
-    color: #DEA54B;
+    background-color: #DEA54B;
+    color: white;
+    border-color: transparent;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -88,16 +88,16 @@
   }
   
   .login:hover {
-    background-color: #DEA54B;
-    color: white;
+    background-color: #AFCBFF;
+    color: #0E1C36;
     border-color: transparent;
   }
   
   /* Estilos para el botón "Subir producto" */
   .loggedin-buttons {
-    border: 2px solid #DEA54B;
-    background-color: transparent;
-    color: #DEA54B;
+    background-color: #DEA54B;
+    color: white;
+    border-color: transparent;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -112,9 +112,9 @@
   }
   
   .loggedin-buttons:hover {
-    background-color: #DEA54B;
-    color: white;
-    border-color: #DEA54B;
+    background-color: #AFCBFF;
+    color: #0E1C36;
+    border-color: transparent;
   }
   
   /* Estilos para dispositivos móviles (768px o menos de ancho) */
