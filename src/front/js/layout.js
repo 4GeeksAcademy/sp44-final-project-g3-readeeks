@@ -7,6 +7,7 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { NewItem } from "./pages/NewItem";
+import {ProductView} from "/workspaces/sp44-final-project-g3-readeeks/src/front/js/pages/ProductView .js"
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -28,7 +29,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<NewItem />} path="/newbook" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route path="/productView/:id" element={<ProductView />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

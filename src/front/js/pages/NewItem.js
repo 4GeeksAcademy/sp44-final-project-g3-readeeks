@@ -15,6 +15,11 @@ export const NewItem = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
 
+  const handleKeyPress = (e) => {
+    if (['E', 'e'].includes(e.key)) {
+      e.preventDefault();
+    }
+  };
 
   const handleFileChange = (event, index) => {
     const file = event.target.files[0];
@@ -143,6 +148,7 @@ export const NewItem = () => {
               className="custom-input"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              onKeyDown={handleKeyPress}
             />
           </div>
         </div>

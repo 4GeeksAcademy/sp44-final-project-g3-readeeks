@@ -369,6 +369,19 @@ def put_listings(user_id, listing_id):
         return response_body, 404
 
 
+@api.route('/listings/<int:id>', methods=['GET']) # Ok
+def get_listings_id(id):
+
+    listing = db.get_or_404(Listings, id)
+
+    response_body = {
+        "status": "ok",
+        "results": listing.serialize()
+    }
+
+    return response_body, 200
+
+
 # Review methods //////////////////////////////////////////////////
 
 @api.route('/users/<int:id>/reviews', methods=['GET']) # Ok
