@@ -205,30 +205,25 @@ def post_favorite_users(id):
     return response_body, 200
 
 
-@api.route('/users/<int:id>/favoriteusers', methods=['DELETE']) # Ok
-def delete_favorite_users(id):
-
-    user = User.query.get_or_404(id) 
+@api.route('/users/<int:id>/favoriteusers/<int:followed_id>', methods=['DELETE'])
+def delete_favorite_user(id, followed_id):
+    user = User.query.get_or_404(id)
     follower = user
-
-    request_body = request.get_json()
-
-    followed_id = request_body["Seguido"]
     followed = User.query.get_or_404(followed_id)
 
-    favorite_user_id = FavoriteUser.query.filter_by(follower=follower, followed=followed).first()
+    favorite_user = FavoriteUser.query.filter_by(follower=follower, followed=followed).first()
 
-    if favorite_user_id:
-        db.session.delete(favorite_user_id)
+    if favorite_user:
+        db.session.delete(favorite_user)
         db.session.commit()
-        
+
         response_body = {
             "message": "Follow relationship deleted",
             "status": "ok"
         }
 
         return response_body, 200
-    
+
     else:
         response_body = {
             "message": "Follow relationship not found",
@@ -256,6 +251,20 @@ def get_listings():
         return response_body, 200
     else:
         return "Not found", 404
+
+
+@api.route('/listings/<int:id>', methods=['GET']) # Ok
+def get_listings_id(id):
+
+    listing = db.get_or_404(Listings, id)
+
+    response_body = {
+        "status": "ok",
+        "results": listing.serialize()
+    }
+
+    return response_body, 200
+
 
 @api.route('/users/<int:id>/listings', methods=['GET'])
 def get_id_listings(id):

@@ -12,6 +12,28 @@
     padding: 2vw;
 }
 
+.MyBookList-Component-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.MyBookList-Component-group p {
+    align-self: center; 
+    
+    margin-top: 5%;
+}
+
+.MyBookList-Component-group button {
+    color: black;
+    background-color: transparent;
+    border: none;
+}
+
+.MyBookList-Component-group button:hover {
+    color: red;
+}
 
 @media (min-width: 600px) {
 
@@ -33,6 +55,12 @@
 
 .MyBooksList-BookImg p {
     padding-top: 15px;
+}
+
+.MyBookList-Component-group p {
+    align-self: center; 
+   
+    margin-top: 0%;
 }
 
 }
