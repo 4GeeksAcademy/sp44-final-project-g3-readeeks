@@ -7,74 +7,74 @@
     padding: 20px;
 }
 
-.MyBooksList-main {
+.HomeList-main {
   text-align: center;
 }
 
-.MyBooksList-main h5 {
+.HomeList-main h5 {
   font-size: 5vw;
 }
 
-.MyBooksList-BookImg img {
+.HomeList-BookImg img {
     width: 100%;
     border-radius: 5px; 
 }
 
-.MyBooksList-BookImg {
+.HomeList-BookImg {
     text-align: center;
     padding: 2vw;
 }
 
-.MyBookList-Component-group {
+.HomeList-Component-group {
     display: flex;
     justify-content: center;
     align-items: center;
     
 }
 
-.MyBookList-Component-group p {
+.HomeList-Component-group p {
     align-self: center; 
     
     margin-top: 5%;
 }
 
-.MyBookList-Component-group button {
+.HomeList-Component-group button {
     color: black;
     background-color: transparent;
     border: none;
 }
 
-.MyBookList-Component-group button:hover {
+.HomeList-Component-group button:hover {
     color: red;
 }
 
 @media (min-width: 600px) {
 
-  .MyBooksList-main h5 {
+  .HomeList-main h5 {
     font-size: 1.5vw;
   }
 
-.MyBooksList-Component {
+.HomeList-Component {
     display: flex;
     flex-wrap: wrap;
 }
 
       
-.MyBooksList-BookImg {
+.HomeList-BookImg {
     text-align: center;
     width: 25%;
 }
       
-.MyBooksList-BookImg img {
+.HomeList-BookImg img {
     width: 100%;
     border-radius: 5px;   
 }
 
-.MyBooksList-BookImg p {
+.HomeList-BookImg p {
     padding-top: 15px;
 }
 
-.MyBookList-Component-group p {
+.HomeList-Component-group p {
     align-self: center; 
    
     margin-top: 0%;
