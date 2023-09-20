@@ -2,7 +2,10 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '/workspaces/sp44-final-project-g3-readeeks/src/front/styles/productDetail.css';
 import { NewItem } from '../pages/NewItem';
-export const ProductDetail = ({ product }) => {
+
+
+
+export const ProductDetail = ({ product, onClose }) => {
   if (!product) return  <div>No hay detalles disponibles para este producto.</div>;
 
   const navigate = useNavigate();
@@ -45,7 +48,7 @@ export const ProductDetail = ({ product }) => {
       </div>
       <div className="ProductDetail_send-button-container">
         <Link to="/newbook">
-        <button className='ProductDetail_send-button'>Volver</button>
+        <button className='ProductDetail_send-button' onClick={onClose}>Volver</button>
         </Link>
       </div>
     </div>

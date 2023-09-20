@@ -181,6 +181,22 @@
   border-color: #DEA54B;
 }
 
+.modal-content {
+  width: 90%; /* Ancho del modal, puedes ajustar este valor */
+  max-width: 600px; /* Ancho máximo, puedes ajustar a lo que consideres similar a la tarjeta */
+  margin: 5rem auto; /* Centrar el modal */
+  background-color: white;
+  border-radius: 2rem;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+}
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro semitransparente */
+}
+
+
+
 
 
 /* Establece un tamaño máximo para las imágenes en dispositivos móviles */
