@@ -679,7 +679,7 @@ def login():
         return jsonify({"msg": "Incorrect password"}), 401
 
 
-@api.route("/signup", methods=["POST"])
+@api.route("/signup", methods=['POST'])
 def signup():
     data = request.get_json()
     # Create a new user record and save it to the database

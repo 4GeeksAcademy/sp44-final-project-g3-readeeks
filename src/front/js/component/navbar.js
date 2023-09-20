@@ -11,7 +11,8 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
   };
 
   const handleLogout = () => {
-    onLogout();
+    localStorage.clear();
+    window.location.reload();
   };
 
   return (
@@ -48,7 +49,7 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
                 <li><a className="dropdown-item" href="#">Perfil</a></li>
                 <li><a className="dropdown-item" href="#">Subir producto</a></li>
                 <li><a className="dropdown-item" href="#">Carrito</a></li>
-                <li><a className="dropdown-item" href="#">Cerrar sesión</a></li>
+                <li><a className="dropdown-item" onClick={handleLogout}>Cerrar sesión</a></li>
               </ul>
             </div>
         </>
@@ -57,12 +58,16 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
             <Link to="/login">
                 <button className="login">Regístrate o inicia sesión</button>
             </Link>
-            <ul className={`dropdown-menu ${menuOpen ? "show" : ""}`} aria-labelledby="dropdownMenuButton">
-            <li><a className="dropdown-item" href="#">Perfil</a></li>
-            <li><a className="dropdown-item" href="#">Subir producto</a></li>
-            <li><a className="dropdown-item" href="#">Carrito</a></li>
-            <li><a className="dropdown-item" href="#">Cerrar sesión</a></li>
-            </ul>
+            <div className="dropdown">
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" onClick={toggleMenu}>
+                <i className="fas fa-bars"></i>
+              </button>
+              {/* Utilizamos clases de Bootstrap 5 para el menú */}
+              <ul className={`dropdown-menu ${menuOpen ? "show" : ""}`} aria-labelledby="dropdownMenuButton">
+                <li><Link to="/login" className="dropdown-item">Iniciar sesión</Link></li>
+                <li><Link to="/signup" className="dropdown-item">Crear cuenta</Link></li>
+              </ul>
+            </div>
           </>
         )}
       </div>

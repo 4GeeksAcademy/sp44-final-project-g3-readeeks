@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Signup = () => {
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
         name: "",
 		last_name: "",
@@ -31,8 +32,11 @@ export const Signup = () => {
 	};
 
 	const handleSignup = async () => {
+
+		const url = `${process.env.BACKEND_URL}/signup`;
+
 		try {
-			const response = await fetch('/api/signup', {
+			const response = await fetch( url, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -43,9 +47,19 @@ export const Signup = () => {
 			if (response.status === 201) {
 				// Registration successful, you can redirect or display a success message
 				console.log('User registered successfully!');
+				actions.login(formData.email, formData.password)
+                .then(() => {
+                    // Redirect the user to the home page after successful login
+                    navigate("/");
+					window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('Login failed:', error);
+                });
 			} else {
 				// Handle errors, such as displaying an error message to the user
 				console.error('Registration failed:', response.statusText);
+				alert('There was an error during registration');
 			}
 		} catch (error) {
 			// Handle network errors
@@ -106,7 +120,7 @@ export const Signup = () => {
 						>
 							<option value="DNI">DNI</option>
 							<option value="NIE">NIE</option>
-							<option value="Passport">Passport</option>
+							<option value="Passport">Pasaporte</option>
 						</select>
 					</div>
 					<div className="id-field">
@@ -164,7 +178,7 @@ export const Signup = () => {
 					<div className="address-input-num">
 						<input 
 						type="text" 
-						placeholder="Número" 
+						placeholder="Puerta" 
 						name="flat_number"
 						value={formData.flat_number}
 						onChange={handleInputChange}
