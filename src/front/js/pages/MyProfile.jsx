@@ -55,7 +55,7 @@ export const MyProfile = () => {
       <div className="MyProfile-Profile">
         
         <div className="MyProfile-Img">
-          <img src={photo} alt="" className="" />
+          <img src={user.results.url} alt="" className="" />
         </div>
 
         <div className="MyProfile-User">

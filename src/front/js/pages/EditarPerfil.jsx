@@ -5,7 +5,65 @@ import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.pn
 export const EditarPerfil = () => {
 
     const [user, setUser] = useState('');
+  
+    const [file, setFile] = useState('');
+
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      setFile(file);
+    };
+
+    const uploadToCloudinary = async (file) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+  
+      try {
+        const response = await fetch("https://api.cloudinary.com/v1_1/dnxh8brpp/image/upload", {
+          method: "POST",
+          body: formData,
+        });
+  
+        const data = await response.json();
+        return data.secure_url;
+      } catch (error) {
+        console.error("Error uploading to Cloudinary:", error);
+        return null;
+      }
+    };
+
+    const handleEnviarProducto = async () => {
     
+      
+      const urlImg = await uploadToCloudinary(file);
+      
+      
+      const url = `${process.env.BACKEND_URL}/users/${user.results.id}`;
+
+      const request = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "Url": urlImg
+          })
+      };
+
+      const response = await fetch(url, request);
+
+      if (response.ok) {
+        console.log("Imagen", urlImg);
+        setUser(prevUser => ({ ...prevUser, results: { ...prevUser.results, url: urlImg } }));
+        setCambioRealizado(true);
+        setTimeout(() => {
+        setCambioRealizado(false);
+        }, 3000); 
+    } else {
+        console.error("Error al actualizar el img", response.status, response.statusText);
+    }
+    };
+ 
     const [cambioRealizado, setCambioRealizado] = useState(false);
 
     const [newName, setNewName] = useState('');
@@ -521,6 +579,7 @@ export const EditarPerfil = () => {
       }
     };
 
+
     //useEffect////////////////////////////////////////////////////////////////////
 
       const userId = 1; //cambiar este id por la variable del ID del usuario logueado
@@ -528,7 +587,6 @@ export const EditarPerfil = () => {
       useEffect(() => {
         fetchGetUsers(userId);
       }, []);
-
 
     return (
 
@@ -539,8 +597,8 @@ export const EditarPerfil = () => {
             <div className="EditarPerfil-Profile">
             
               <div className="EditarPerfil-img">
-                  <img src={photo} alt="" className="" />
-                  {/* AÑADIR EL BOTON DE CAMBIAR DE IMAGEN */}
+                  <img src={user.results.url} alt="" className="" />
+       
               </div>
 
               <div className="EditarPerfil-Information">
@@ -550,15 +608,15 @@ export const EditarPerfil = () => {
                 <div className="EditarPerfil-Input">
                 
                 <input type="text" value={newName} placeholder='Nuevo nombre' onChange={(e) => setNewName(e.target.value)} />
-                <button onClick={handleNameChange}><i class="fa-solid fa-rotate-right"></i></button>
-                {newName && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                <button onClick={handleNameChange}><i className="fa-solid fa-rotate-right"></i></button>
+                {newName && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                 </div>
 
                 <div className="EditarPerfil-Input">
                 
                 <input type="text" value={newLastName} placeholder='Nuevo apellido/s' onChange={(e) => setNewLastName(e.target.value)} />
-                <button onClick={handleLastNameChange}><i class="fa-solid fa-rotate-right"></i></button>
-                {newLastName && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                <button onClick={handleLastNameChange}><i className="fa-solid fa-rotate-right"></i></button>
+                {newLastName && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                 </div>
 
                 <div className="EditarPerfil-Input">
@@ -576,24 +634,36 @@ export const EditarPerfil = () => {
                   }
                   ;}} 
                   />
-                <button onClick={handlePhoneChange}><i class="fa-solid fa-rotate-right"></i></button>
-                {newPhone && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                <button onClick={handlePhoneChange}><i className="fa-solid fa-rotate-right"></i></button>
+                {newPhone && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                 </div>
 
                 <div className="EditarPerfil-Input">
                   
                   <input type="text" value={newEmail} placeholder='Nuevo Email' onChange={(e) => setNewEmail(e.target.value)} />
-                  <button onClick={handleEmailChange}><i class="fa-solid fa-rotate-right"></i></button>
-                  {newEmail && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                  <button onClick={handleEmailChange}><i className="fa-solid fa-rotate-right"></i></button>
+                  {newEmail && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                 </div>
 
                 <div className="EditarPerfil-Input">
                   
                   <input type="password" value={newPassword} placeholder='Nueva Contraseña' onChange={(e) => setNewPassword(e.target.value)} />
-                  <button onClick={handlePasswordChange}><i class="fa-solid fa-rotate-right"></i></button>
-                  {newPassword && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                  <button onClick={handlePasswordChange}><i className="fa-solid fa-rotate-right"></i></button>
+                  {newPassword && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                 </div>
 
+                <div className="EditarPerfil-Input">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="img"
+                    onChange={(event) => handleFileChange(event)}
+                  />
+                  <button onClick={handleEnviarProducto}>
+                    <i className="fa-solid fa-rotate-right"></i>
+                  </button>
+                  {file && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
+                </div>
               </div>
 
               <div className="EditarPerfil-Information2">
@@ -606,28 +676,28 @@ export const EditarPerfil = () => {
                 
                 <div className="EditarPerfil-Input2">
                   <input type="text" value={newStreet} placeholder='Nueva Calle' onChange={(e) => setNewStreet(e.target.value)} />
-                  <button onClick={handleStreetChange}><i class="fa-solid fa-rotate-right"></i></button>
-                  {newStreet && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                  <button onClick={handleStreetChange}><i className="fa-solid fa-rotate-right"></i></button>
+                  {newStreet && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                 </div>
 
                 <div className="EditarPerfil-Input2shortgroup">
 
                   <div className="EditarPerfil-Input2short">
                     <input type="text" value={newNumber} placeholder='Nuevo número' onChange={(e) => setNewNumber(e.target.value)} />
-                    <button onClick={handleNumberChange}><i class="fa-solid fa-rotate-right"></i></button>
-                    {newNumber && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                    <button onClick={handleNumberChange}><i className="fa-solid fa-rotate-right"></i></button>
+                    {newNumber && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                   </div>
 
                   <div className="EditarPerfil-Input2short">
                    <input type="text" value={newFloor} placeholder='Nuevo piso' onChange={(e) => setNewFloor(e.target.value)} />
-                    <button onClick={handleFloorChange}><i class="fa-solid fa-rotate-right"></i></button>
-                    {newFloor && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                    <button onClick={handleFloorChange}><i className="fa-solid fa-rotate-right"></i></button>
+                    {newFloor && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                   </div>
 
                   <div className="EditarPerfil-Input2short">
                    <input type="text" value={newFlat} placeholder='Nuevo piso' onChange={(e) => setNewFlat(e.target.value)} />
-                    <button onClick={handleFlatChange}><i class="fa-solid fa-rotate-right"></i></button>
-                    {newFlat && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                    <button onClick={handleFlatChange}><i className="fa-solid fa-rotate-right"></i></button>
+                    {newFlat && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                   </div>
 
                 </div>
@@ -636,20 +706,20 @@ export const EditarPerfil = () => {
 
                   <div className="EditarPerfil-Input2short">
                     <input type="text" value={newState} placeholder='Nueva provincia' onChange={(e) => setNewState(e.target.value)} />
-                    <button onClick={handleStateChange}><i class="fa-solid fa-rotate-right"></i></button>
-                    {newState && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                    <button onClick={handleStateChange}><i className="fa-solid fa-rotate-right"></i></button>
+                    {newState && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                   </div>
 
                   <div className="EditarPerfil-Input2short">
                     <input type="text" value={newCity} placeholder='Nueva ciudad' onChange={(e) => setNewCity(e.target.value)} />
-                    <button onClick={handleCityChange}><i class="fa-solid fa-rotate-right"></i></button>
-                    {newCity && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                    <button onClick={handleCityChange}><i className="fa-solid fa-rotate-right"></i></button>
+                    {newCity && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                   </div>
 
                   <div className="EditarPerfil-Input2short">
                     <input type="text" value={newZipCode} placeholder='Nuevo código postal' onChange={(e) => setNewZipCode(e.target.value)} />
-                    <button onClick={handleZipCodeChange}><i class="fa-solid fa-rotate-right"></i></button>
-                    {newZipCode && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i class="fa-solid fa-check"></i></div>}
+                    <button onClick={handleZipCodeChange}><i className="fa-solid fa-rotate-right"></i></button>
+                    {newZipCode && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                   </div>
                 
                 </div>

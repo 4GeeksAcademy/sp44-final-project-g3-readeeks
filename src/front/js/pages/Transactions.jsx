@@ -4,11 +4,12 @@ import { TransactionsSell } from '../component/TransactionsSell.jsx';
 import { TransactionsBuy } from '../component/TransactionsBuy.jsx';
 
 export const Transactions = () => {
-  const [activeTab, setActiveTab] = useState('compras'); // Estado para controlar la pestaña activa
+  const [activeTab, setActiveTab] = useState('compras');
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
+
 
   return (
     <div className="Transactions-wrapper">

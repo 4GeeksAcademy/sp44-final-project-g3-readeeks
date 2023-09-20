@@ -12,9 +12,9 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 
-# import cloudinary
-# import cloudinary.uploader
-# import cloudinary.api
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 #from models import Person
@@ -24,16 +24,17 @@ static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-# app.config['CLOUD_NAME'] = os.getenv("CLOUD_NAME")
-# app.config['CLOUD_API_SECRET'] = os.getenv("CLOUD_API_SECRET")
-# app.config['CLOUD_KEY'] = os.getenv("CLOUD_KEY")
+#Esto es del vídeo de cloudinary
+app.config['CLOUD_NAME'] = os.getenv('CLOUD_NAME')
+app.config['CLOUD_API_SECRET'] = os.getenv('CLOUD_API_SECRET')
+app.config['CLOUD_KEY'] = os.getenv('CLOUD_KEY') 
 
-# cloudinary.config( 
-#   cloud_name = app.config['CLOUD_NAME'], 
-#   api_key = app.config['CLOUD_KEY'], 
-#   api_secret = app.config['CLOUD_API_SECRET'],
-#   secure = True
-# )
+cloudinary.config( 
+  cloud_name = app.config['CLOUD_NAME'], 
+  api_key = app.config['CLOUD_KEY'], 
+  api_secret = app.config['CLOUD_API_SECRET'] ,
+  secure=True
+)
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")

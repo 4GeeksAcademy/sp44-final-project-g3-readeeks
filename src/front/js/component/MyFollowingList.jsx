@@ -39,7 +39,7 @@ export const MyFollowingList = () => {
           {following.status !== undefined && following.status !== "" ? (
             following.user_id.map((item, index) => (
               <div key={index} className="MyBooksList-BookImg">
-                <img src={photo} alt="" className="" />
+                <img src={item.url} alt="" className="" />
                 <p>{item.name} {item.last_name}</p>
               </div>
             ))
