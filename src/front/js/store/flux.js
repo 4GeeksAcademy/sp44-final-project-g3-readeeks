@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const resp = await fetch('https://silver-pancake-r9j4jjqrj5xc9j5-3001.app.github.dev/api/login', opts)
 					if(resp.status !== 200){
-						alert("The status is not 200 when posting for token API");
+						alert("Email y/o contraseña errado");
 						return false;
 					} 
 
@@ -51,6 +51,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				
 			},
+
+			logout: () => {
+				localStorage.removeItem("token");
+				setStore({ token: null });
+			  },
 
 			getMessage: async () => {
 				try{

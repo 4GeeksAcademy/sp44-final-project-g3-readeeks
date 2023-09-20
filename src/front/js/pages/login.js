@@ -9,8 +9,6 @@ export const Login = () => {
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
 
-	const token = localStorage.getItem("token");
-
 	const handleClick = () => {
 		actions.login(email, password).then(() => {
 		 	navigate("/")
@@ -22,10 +20,10 @@ export const Login = () => {
 				<div className="login-container">
 					<h1 className="login-title">Inicia Sesión</h1>
 					<div className="login-input">
-						<input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+						<input type="text" placeholder="Dirección de email" value={email} onChange={(e) => setEmail(e.target.value)}/>
 					</div>
 					<div className="login-input">
-						<input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+						<input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)}/>
 					</div>
 					<button className="login-button" onClick={handleClick}>Entrar</button>
 					<p className="signup-notice">

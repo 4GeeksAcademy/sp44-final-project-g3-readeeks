@@ -37,7 +37,7 @@ class Address(db.Model):
     street = db.Column(db.String(100), unique=False, nullable=False)
     number = db.Column(db.Integer, unique=False, nullable=False)
     floor = db.Column(db.Integer, unique=False, nullable=False)
-    flat_number = db.Column(db.String(5), unique=False, nullable=False)
+    flat_number = db.Column(db.String(5), unique=False, nullable=True)
     zip_code = db.Column(db.Integer, unique=False, nullable=False)
     state = db.Column(db.String(20), unique=False, nullable=False)
     city = db.Column(db.String(50), unique=False, nullable=False)

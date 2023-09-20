@@ -43,9 +43,9 @@
   /* Contenedor para la barra de búsqueda */
   .searcher {
     margin: auto;
-    width: 65%;
-    border: 3px solid #4f6367;
-    border-radius: 50px;
+    width: 60%;
+    border: 2px solid #4f6367;
+    border-radius: 70px;
   }
   
   /* Estilos para el campo de búsqueda */
@@ -64,7 +64,7 @@
   }
   
   /* Contenedor para los botones */
-  .buttons {
+  .navbar-buttons {
     width: 20%;
     display: flex;
     justify-content: center;
@@ -94,11 +94,10 @@
   }
   
   /* Estilos para el botón "Subir producto" */
-  .upload {
+  .loggedin-buttons {
     border: 2px solid #DEA54B;
-    background-color: #DEA54B;
-    color: #0E1C36;
-    padding: 10px 20px;
+    background-color: transparent;
+    color: #DEA54B;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -106,16 +105,20 @@
     transition: background-color 0.3s, border-color 0.3s;
     border-radius: 50px;
     font-weight: 500;
+    margin-right: 1%;
+    font-size: 13px;
+    height: 60px;
+    width: 140px;
   }
   
-  .upload:hover {
-    background-color: transparent;
-    color: #DEA54B;
+  .loggedin-buttons:hover {
+    background-color: #DEA54B;
+    color: white;
     border-color: #DEA54B;
   }
   
   /* Estilos para dispositivos móviles (768px o menos de ancho) */
-  @media screen and (max-width: 1700px) {
+  @media screen and (max-width: 1350px) {
     .title {
       display: none;
     }
@@ -163,7 +166,7 @@
 
     }
 
-    .upload {
+    .loggedin-buttons {
         display: none;
     }
 
@@ -195,12 +198,12 @@
 
 
 
-@media screen and (min-width: 1701px) {
+@media screen and (min-width: 1351px) {
   .dropdown {
     display: none; /* Oculta el menú desplegable */
   }
 
-  .upload,
+  .loggedin-buttons,
   .login {
     display: inline-block; 
   }

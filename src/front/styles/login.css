@@ -35,15 +35,24 @@ body {
     width: 50%;
 }
 
+.login-input input:focus {
+    border: solid 1px #0F1C35;
+}
+
 .login-button {
     margin-top: 20px;
     margin-bottom: 40px;
-    background-color: #0F1C35;
-    color: white;
+    background-color: #AFCBFF;
+    color: #0F1C35;
     border: none;
     border-radius: 70px;
     height: 40px;
-    width: 70px;
+    width: 170px;
+}
+
+.login-button:hover {
+    background-color: #0F1C35;
+    color: white;
 }
 
 .signup-notice {
