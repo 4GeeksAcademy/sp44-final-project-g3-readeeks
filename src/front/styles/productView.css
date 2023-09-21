@@ -21,10 +21,18 @@
 }
 
 
-.ProductViewVendedor-container {
+.product-title-container {
   display: flex;
   justify-content: space-between;
   align-items: center;      
+}
+
+.product-title {
+  margin: 0.2rem 0rem 0.3rem 0rem;
+}
+
+.product-title h2 {
+  font-size: 26px;
 }
 
 .contador_favoritos {
@@ -75,32 +83,37 @@
 
 }
 
+.ProductViewCompra-container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
 
 .ProductViewCompra-button {
-  border: 2px solid #DEA54B; /* Borde sólido con el color dado */
-  background-color: #DEA54B;
+  border: 2px solid #AFCBFF;
+  background-color: #AFCBFF;
   color: #0E1C36;
-  padding: 1rem 1.5rem; 
+  padding: 0.5rem;
   text-align: center;
   text-decoration: none;
-  font-weight: 500;
+  display: block; 
   cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.2s;
-  border-radius: 25px; 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Efecto de sombra suave */
-  margin-top: 2rem;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 2rem; 
+  font-weight: 500;
+  width: 30%;
+  margin-top: 1rem;
 }
 
 .ProductViewCompra-button:hover {
-  background-color: #0E1C36; /* Cambio a un color más brillante al hacer hover */
-  color: #DEA54B;
-  border-color: #FF4B4B;
-  box-shadow: 0 4px 20px rgba(255, 75, 75, 0.2); /* Sombra más pronunciada al hacer hover */
+  background-color: #0E1C36;
+  color: white;
+  border-color: #0E1C36;
 }
 
 .ProductViewCompra-button:active {
-  transform: scale(0.95); /* Efecto de "press" para cuando se active el botón */
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Sombra más sutil al presionar */
+  transform: scale(0.95); 
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 
 

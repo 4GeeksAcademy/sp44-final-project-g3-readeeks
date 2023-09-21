@@ -13,13 +13,13 @@ export const ProductView = () => {
     
 
     useEffect(() => {
-        console.log("Iniciando petición al servidor..."); // Punto 1
+        console.log("Iniciando petición al servidor...");
         fetch(`${process.env.BACKEND_URL}/listings/${id}`)
     .then(res => {
-        if (!res.ok) { // Comprobamos si la respuesta HTTP es exitosa.
+        if (!res.ok) {
             throw new Error('Respuesta del servidor no fue exitosa');
         }
-        return res.json(); // Convertimos la respuesta a JSON.
+        return res.json();
     })
     .then(data => {
         console.log("Datos procesados:", data); 
@@ -74,10 +74,10 @@ return (
     <div className="product-view-page">
         <div className="ProductViewproduct-card">
             {/* Datos del vendedor, favoritos y botón */}
-            <div className="ProductViewVendedor-container">
-                {product.seller && (
-                    <div className="ProductViewVendedor">                    
-                        <h2>{product.seller.name}</h2>
+            <div className="product-title-container">
+                {product.listing_title && (
+                    <div className="product-title">                    
+                        <h2>{product.listing_title}</h2>
                     </div>
                 )}
                 <div className="ProductViewFavoritos">
