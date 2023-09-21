@@ -8,6 +8,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { MyProfile } from "./pages/MyProfile.jsx"
 import { EditarPerfil } from "./pages/EditarPerfil.jsx";
+import { SingleProfile } from "./pages/SingleProfile.jsx";
 
 import { Transactions } from "./pages/Transactions.jsx";
 
@@ -38,6 +39,7 @@ const Layout = () => {
                         <Route element={<MyProfile />} path="/miperfil" />
                         <Route element={<EditarPerfil />} path="/editarperfil" />
                         <Route element={<Transactions />} path="/mistransacciones" />
+                        <Route element={<SingleProfile />} path="/perfil/:id" />
                         
                     </Routes>
                     <Footer />

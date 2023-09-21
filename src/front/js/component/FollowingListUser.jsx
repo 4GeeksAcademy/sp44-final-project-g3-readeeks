@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.png";
 import "../../styles/mybookslist.css"
+import { Link, useParams } from "react-router-dom";
 
-export const MyFollowingList = () => {
+export const FollowingListUser = () => {
     const [following, setFollowing] = useState('');
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [cambioRealizado, setCambioRealizado] = useState(false);
+    const {id} = useParams();
 
     const fetchGetFollowings = async (id) => {
         const url = `${process.env.BACKEND_URL}/users/${id}/favoriteusers/`;
@@ -49,7 +51,7 @@ export const MyFollowingList = () => {
         }
     }
 
-    const followingId = 1; // Cambiar este id por la variable del ID del usuario logueado
+    const followingId = id; // Cambiar este id por la variable del ID del usuario logueado
 
     useEffect(() => {
         fetchGetFollowings(followingId);
@@ -65,8 +67,6 @@ export const MyFollowingList = () => {
                             <img src={item.url} alt="" className="" />
                             <div className="MyBookList-Component-group">
                             <p>{item.name} {item.last_name}</p>
-                            <button onClick={() => handleDelete(followingId, item.id)}><i className="fa-solid fa-trash"></i></button>
-                            {following && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                             </div>
                         </div>
                     ))
