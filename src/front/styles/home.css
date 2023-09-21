@@ -25,6 +25,12 @@
     padding: 2vw;
 }
 
+.HomeList-BookImg a{
+    color: black;
+    text-decoration: none;
+}
+
+
 .HomeList-Component-group {
     display: flex;
     justify-content: center;

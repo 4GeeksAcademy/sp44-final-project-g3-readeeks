@@ -42,8 +42,10 @@ export const MyBooksList = () => {
             {book.status !== undefined && book.status !== "" ? (
               book.results.map((item, index) => (
                 <div key={index} className="MyBooksList-BookImg">
+                  <Link to={"/product-view/" + item.id}>
                   <img src={photo} alt="" className="" />
                   <p>{item.listing_title}: <b>{item.sale_price}€</b></p>
+                  </Link>
                 </div>
               ))
             ) : (

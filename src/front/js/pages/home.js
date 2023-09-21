@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
   const [books, setBooks] = useState([]);
@@ -35,14 +36,21 @@ export const Home = () => {
 
         <div className="HomeList-Component">
           {books.length > 0 ? (
-            books.map((item, index) => (
-              <div key={index} className="HomeList-BookImg">
-                <img src={item.imageSrc} alt={item.listing_title} className="" />
-                <p>
-                  {item.listing_title}: <b>{item.sale_price}€</b>
-                </p>
-              </div>
-            ))
+            books.map((item, index) => {
+              const urls = item.album.url.slice(1, -1).split(','); // Extracción de URLs
+              const firstUrl = urls[0].trim(); // Tomando la primera URL y eliminando espacios adicionales
+
+              return (
+                <div key={index} className="HomeList-BookImg">
+                  <Link to={"/product-view/" + item.id}>
+                  <img src={firstUrl} alt={item.listing_title} className="" />
+                  <p>
+                    {item.listing_title}: <b>{item.sale_price}€</b>
+                  </p>
+                  </Link>
+                </div>
+              );
+            })
           ) : (
             <div className="spinner-border" role="status">
               <span className="visually-hidden">Loading...</span>

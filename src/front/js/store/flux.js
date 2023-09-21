@@ -35,24 +35,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 						"password": password
 					})
 				};
-
+			
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/login`, opts)
 					if(resp.status !== 200){
 						alert("Email y/o contraseña errado");
 						return false;
 					} 
-
+			
 					const data = await resp.json();
 					localStorage.setItem("token", data.access_token);
-					setStore({ token: data.access_token });
-					return true	
+					localSlocalStorage.setItem("user_id", data.user_id); // Asegúrate de que `data.user_id` tenga el ID correcto.
+					// setStore({ token: data.access_token });
+
+
+					setStore({ 
+						token: data.access_token,
+						userId: data.user_id  // Suponiendo que recibes el userId en la respuesta
+					});
+					return true;	
 				}
 				catch(error){
 					console.error("There has been an error");
 				}
-				
 			},
+			
 
 			logout: () => {
 				localStorage.removeItem("token");

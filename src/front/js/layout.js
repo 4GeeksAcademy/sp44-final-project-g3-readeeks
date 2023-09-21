@@ -22,6 +22,8 @@ import { Footer } from "./component/footer";
 
 import { login, logout } from "./store/flux";
 
+import "/workspaces/sp44-final-project-g3-readeeks/src/front/styles/layout.css"
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -53,7 +55,7 @@ const Layout = () => {
     //
 
     return (
-        <div>
+        <div className="main-container">
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
