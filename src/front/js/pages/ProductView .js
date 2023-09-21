@@ -14,7 +14,7 @@ export const ProductView = () => {
 
     useEffect(() => {
         console.log("Iniciando petición al servidor..."); // Punto 1
-        fetch(`https://scaling-guacamole-jx79vqq6676h565q-3001.app.github.dev/api/listings/${id}`)
+        fetch(`${process.env.BACKEND_URL}/listings/${id}`)
     .then(res => {
         if (!res.ok) { // Comprobamos si la respuesta HTTP es exitosa.
             throw new Error('Respuesta del servidor no fue exitosa');

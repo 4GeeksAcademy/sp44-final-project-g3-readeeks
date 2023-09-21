@@ -85,7 +85,7 @@ export const NewItem = () => {
     };
 
     try {
-      const response = await fetch("https://scaling-guacamole-jx79vqq6676h565q-3001.app.github.dev/api/users/1/listings", {
+      const response = await fetch(`${process.env.BACKEND_URL}/users/1/listings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -4,18 +4,18 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=False, nullable=False)
-    last_name = db.Column(db.String(100), unique=False, nullable=False)
+    name = db.Column(db.String(100), unique=False, nullable=True)
+    last_name = db.Column(db.String(100), unique=False, nullable=True)
     document_type_enum = db.Enum('DNI', 'NIE', 'Passport', name='document_type_enum')
-    document_type = db.Column(document_type_enum, nullable=False)
-    document_number = db.Column(db.String(20), unique=True, nullable=False)
-    phone = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    url = db.Column(db.String(200), unique=False, nullable=False, default='valor_por_defecto')
+    document_type = db.Column(document_type_enum, nullable=True)
+    document_number = db.Column(db.String(20), unique=True, nullable=True)
+    phone = db.Column(db.String(20), unique=True, nullable=True)
+    email = db.Column(db.String(120), unique=True, nullable=True)
+    password = db.Column(db.String(80), unique=False, nullable=True)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=True)
+    url = db.Column(db.String(200), unique=False, nullable=True, default='valor_por_defecto')
     # Relacion con tabla Address:
-    address_id = db.Column(db.Integer, db.ForeignKey('address.id'), nullable=False)
+    address_id = db.Column(db.Integer, db.ForeignKey('address.id'), nullable=True)
     address = db.relationship('Address', primaryjoin='User.address_id == Address.id', uselist=False)
 
     def __repr__(self):
@@ -36,13 +36,13 @@ class User(db.Model):
     
 class Address(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    street = db.Column(db.String(100), unique=False, nullable=False)
-    number = db.Column(db.Integer, unique=False, nullable=False)
-    floor = db.Column(db.Integer, unique=False, nullable=False)
+    street = db.Column(db.String(100), unique=False, nullable=True)
+    number = db.Column(db.Integer, unique=False, nullable=True)
+    floor = db.Column(db.Integer, unique=False, nullable=True)
     flat_number = db.Column(db.String(5), unique=False, nullable=True)
-    zip_code = db.Column(db.Integer, unique=False, nullable=False)
-    state = db.Column(db.String(20), unique=False, nullable=False)
-    city = db.Column(db.String(50), unique=False, nullable=False)
+    zip_code = db.Column(db.Integer, unique=False, nullable=True)
+    state = db.Column(db.String(20), unique=False, nullable=True)
+    city = db.Column(db.String(50), unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Address {self.street}>'
@@ -62,8 +62,8 @@ class Address(db.Model):
 class FavoriteUser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # Relaciones con tabla User:
-    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    followed_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
     follower = db.relationship('User', foreign_keys=[follower_id])
     followed = db.relationship('User', foreign_keys=[followed_id])
@@ -81,7 +81,7 @@ class FavoriteUser(db.Model):
 class FavoriteListings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # Relacion con tabla Listings
-    listing_id = db.Column(db.Integer, db.ForeignKey('listings.id'), nullable=False)
+    listing_id = db.Column(db.Integer, db.ForeignKey('listings.id'), nullable=True)
     listing = db.relationship('Listings', primaryjoin='FavoriteListings.listing_id == Listings.id', uselist=False)
     # Relacion con tabla User
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
@@ -102,11 +102,11 @@ class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(1000), unique=False, nullable=True)
     punctuation_enum = db.Enum('1', '2', '3', '4', '5', name='punctuation_enum')
-    punctuation = db.Column(punctuation_enum, nullable=False)
+    punctuation = db.Column(punctuation_enum, nullable=True)
     # Relaciones con tabla User:
-    reviewer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    reviewer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     reviewer = db.relationship('User', primaryjoin='Reviews.reviewer_id == User.id', uselist=False)
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     receiver = db.relationship('User', primaryjoin='Reviews.receiver_id == User.id', uselist=False)
 
     def __repr__(self):
@@ -123,14 +123,14 @@ class Reviews(db.Model):
     
 class Listings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    listing_title = db.Column(db.String(200), unique=False, nullable=False)
-    favorite_counter = db.Column(db.Integer, unique=False, nullable=False)
-    sale_price = db.Column(db.Float, unique=False, nullable=False)
+    listing_title = db.Column(db.String(200), unique=False, nullable=True)
+    favorite_counter = db.Column(db.Integer, unique=False, nullable=True)
+    sale_price = db.Column(db.Float, unique=False, nullable=True)
     description = db.Column(db.String(1000), unique=False, nullable=True)
     status_enum = db.Enum('Activo', 'Reservado', 'Vendido', 'Cancelado', name='status_enum')
-    status = db.Column(status_enum, nullable=False)
+    status = db.Column(status_enum, nullable=True)
     # Relacion con tabla User:
-    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     seller = db.relationship('User', primaryjoin='Listings.seller_id == User.id', uselist=False)
     # Relacion con tabla Books:
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=True)
@@ -157,7 +157,7 @@ class Listings(db.Model):
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(800), unique=False, nullable=False)
+    url = db.Column(db.String(800), unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Album {self.id}>'
@@ -194,10 +194,10 @@ class Books(db.Model):
 # class BookCategories(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     # Relacion con tabla Books:
-#     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+#     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=True)
 #     book = db.relationship('Books', primaryjoin='BookCategories.book_id == Books.id', uselist=False)
 #     # Relacion con tabla Categories:
-#     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+#     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=True)
 #     category = db.relationship('Categories', primaryjoin='BookCategories.category_id == Categories.id', uselist=True)
 
 #     def __repr__(self):
@@ -212,7 +212,7 @@ class Books(db.Model):
     
 # class Categories(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(50), unique=True, nullable=False)
+#     name = db.Column(db.String(50), unique=True, nullable=True)
 #     description = db.Column(db.String(500), unique=False, nullable=True)
 
 #     def __repr__(self):
@@ -227,17 +227,17 @@ class Books(db.Model):
     
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False)
-    total = db.Column(db.Float, unique=False, nullable=False)
+    date = db.Column(db.Date, nullable=True)
+    total = db.Column(db.Float, unique=False, nullable=True)
     transaction_status_enum = db.Enum('Completada', 'Cancelada', 'Suspendida', 'Procesando', 'Error', name='transaction_status_enum')
-    status = db.Column(transaction_status_enum, nullable=False)
+    status = db.Column(transaction_status_enum, nullable=True)
     # Relaciones con tabla User:
-    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     seller = db.relationship('User', primaryjoin='Transactions.seller_id == User.id', uselist=False)
-    buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     buyer = db.relationship('User', primaryjoin='Transactions.buyer_id == User.id', uselist=False)
     # Relacion con tabla Listings:
-    listing_id = db.Column(db.Integer, db.ForeignKey('listings.id'), nullable=False)
+    listing_id = db.Column(db.Integer, db.ForeignKey('listings.id'), nullable=True)
     listing = db.relationship('Listings', primaryjoin='Transactions.listing_id == Listings.id', uselist=False)
 
     def __repr__(self):

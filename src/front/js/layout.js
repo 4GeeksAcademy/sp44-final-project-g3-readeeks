@@ -67,8 +67,8 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
 
                         <Route element={<h1>Not found!</h1>} />
-                        <Route element={<MyProfile />} path="/miperfil" />
-                        <Route element={<EditarPerfil />} path="/editarperfil" />
+                        <Route element={<MyProfile />} path="/mi-perfil" />
+                        <Route element={<EditarPerfil />} path="/editar-perfil" />
                         <Route element={<Transactions />} path="/mistransacciones" />
                         <Route element={<SingleProfile />} path="/perfil/:id" />
                         

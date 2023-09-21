@@ -7,7 +7,7 @@ export const Home = () => {
 
   const fetchGetBooks = async () => {
     try {
-      const url = `https://ubiquitous-invention-pxpv4j6pvv5h74r9-3001.app.github.dev/api/listings`;
+      const url = `${process.env.BACKEND_URL}/listings`;
       const response = await fetch(url);
 
       if (!response.ok) {

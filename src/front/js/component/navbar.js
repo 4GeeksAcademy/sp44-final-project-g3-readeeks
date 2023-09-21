@@ -60,7 +60,9 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
       <div className="navbar-buttons">
         {loggedIn ? (
           <>
-            <button className="loggedin-buttons">Perfil</button>
+            <Link to="/mi-perfil">
+              <button className="loggedin-buttons">Perfil</button>
+            </Link>
             <Link to="/newbook">
               <button className="loggedin-buttons">Subir producto</button>
             </Link>
