@@ -1,4 +1,3 @@
-/* Estilos para pantallas de escritorio (más de 768px de ancho) */
 /* Reset de márgenes para todos los elementos */
 * {
     margin: 0;
@@ -216,4 +215,3 @@
     display: inline-block; 
   }
 }
-

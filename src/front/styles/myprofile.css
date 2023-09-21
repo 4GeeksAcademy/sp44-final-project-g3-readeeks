@@ -1,0 +1,133 @@
+.MyProfile-main {
+    margin: auto;
+    margin-top: 150px;
+    background-color: white;
+    width: 85vw;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.MyProfile-Img img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.MyProfile-User {
+    margin-top: 10%;
+}
+
+.MyProfile-LocationIcon{
+    margin-top: 3%;
+}
+.MyProfile-User h6 span {
+    margin-left: 1%;
+}
+
+.MyProfile-StarIcon{
+    color: #AFCBFF;
+    margin-top: 3%;
+    
+}
+
+.MyProfile-StarIcon span{
+    color: black;
+}
+
+.MyProfile-ThreeElements {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 150%;
+    margin-top: 10%;
+}
+
+.MyProfile-ThreeElements-Books {
+    width: 33%;
+    border-right: 1px solid grey;
+}
+
+.MyProfile-ThreeElements-Favorites {
+    width: 33%;
+    border-right: 1px solid grey;
+}
+
+.MyProfile-ThreeElements-Following {
+    width: 33%;
+}
+
+.MyProfile-ThreeElements-Books:hover {
+    color: #AFCBFF;
+}
+
+.MyProfile-ThreeElements-Favorites:hover {
+    color: #AFCBFF;
+}
+
+.MyProfile-ThreeElements-Following:hover {
+    color: #AFCBFF;
+}
+
+.MyProfile-Components {
+    margin-top: 10%;
+}
+
+.MyProfile-ThreeElements-Books.active i {
+    color: #AFCBFF; 
+}
+  
+.MyProfile-ThreeElements-Favorites.active i {
+    color: #AFCBFF; 
+}
+
+.MyProfile-ThreeElements-Following.active i {
+    color: #AFCBFF; 
+}
+
+/* MyBooksList Component //////////////////////////////////// */
+
+@media (min-width: 1200px) {
+
+.MyProfile-main {
+    padding: 50px;
+}
+
+.MyProfile-Profile {
+    display: flex;
+    align-items: center;
+}
+
+.MyProfile-Img {
+    width: 10%;
+}
+
+.MyProfile-User {
+    margin-top: 5px;
+    margin-left: 30px;
+    width: 20%;
+}
+
+.MyProfile-ThreeElements {
+    margin-top: 5px;
+    width: 70%;
+    font-size: 250%;
+}
+
+.MyProfile-ThreeElements-Books {
+    width: 33%;
+    border-right: 1px solid grey;
+}
+
+.MyProfile-ThreeElements-Favorites {
+    width: 33%;
+    border-right: 1px solid grey;
+}
+
+.MyProfile-ThreeElements-Following {
+    width: 33%;
+}
+
+.MyProfile-Components {
+    margin-top: 3%;
+}
+
+}

@@ -8,16 +8,19 @@ import { Demo } from "./pages/demo";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Single } from "./pages/single";
+import { MyProfile } from "./pages/MyProfile.jsx"
+import { EditarPerfil } from "./pages/EditarPerfil.jsx";
+import { SingleProfile } from "./pages/SingleProfile.jsx";
+import { Transactions } from "./pages/Transactions.jsx";
 import { NewItem } from "./pages/NewItem";
 import {ProductView} from "/workspaces/sp44-final-project-g3-readeeks/src/front/js/pages/ProductView .js"
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
-// being added by VF:
 import { login, logout } from "./store/flux";
-//
 
 //create your first component
 const Layout = () => {
@@ -64,6 +67,11 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
 
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<MyProfile />} path="/miperfil" />
+                        <Route element={<EditarPerfil />} path="/editarperfil" />
+                        <Route element={<Transactions />} path="/mistransacciones" />
+                        <Route element={<SingleProfile />} path="/perfil/:id" />
+                        
                     </Routes>
                     <Footer />
                 </ScrollToTop>

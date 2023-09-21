@@ -1,0 +1,73 @@
+.MyBooksList-main {
+  text-align: center;
+}
+
+.MyBooksList-BookImg img {
+    width: 100%;
+    border-radius: 5px; 
+}
+
+.MyBooksList-BookImg {
+    text-align: center;
+    padding: 2vw;
+}
+
+.MyBookList-Component-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.MyBookList-Component-group p {
+    align-self: center; 
+    color: black;
+    text-decoration: none;
+    margin-top: 18%;
+}
+
+.MyBookList-Component-group a {
+    text-decoration: none; 
+    color: black; 
+}
+
+.MyBookList-Component-group button {
+    color: black;
+    background-color: transparent;
+    border: none;
+}
+
+.MyBookList-Component-group button:hover {
+    color: red;
+}
+
+@media (min-width: 600px) {
+
+.MyBooksList-Component {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+      
+.MyBooksList-BookImg {
+    text-align: center;
+    width: 25%;
+}
+      
+.MyBooksList-BookImg img {
+    width: 100%;
+    border-radius: 5px;   
+}
+
+.MyBooksList-BookImg p {
+    padding-top: 15px;
+}
+
+.MyBookList-Component-group p {
+    align-self: center; 
+   
+    margin-top: 0%;
+}
+
+}
+

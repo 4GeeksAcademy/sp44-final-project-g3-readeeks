@@ -1,4 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
+	
+	
 	return {
 		store: {
 			token: null,
@@ -82,7 +84,51 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+
+			getUsers: () => {
+				const rest = "/users";
+
+				const fetchGetUsers = async () => {
+					const url = process.env.BACKEND_URL + rest;
+					const request = {
+						method: "GET",
+					};
+
+				const response = await fetch(url, response);
+
+				if (response.ok) {
+					const data = await response.json();
+					localStorage.setItem('users', JSON.stringify(data))
+				} else {
+					console.log("Error", response.status, response.statusText);
+				}
+				};
+				fetchGetUsers();
 			}
+			// getUsersId: (id) => {
+    
+			// 	id = 1; // Cambiar por la variable del usuario logueado
+				
+			// 	const url = `${process.env.BACKEND_URL}/users/${id}`;
+			
+			// 	const fetchGetUsersId = async () => {
+					
+			// 		const request = {
+			// 	 		method: "GET",
+			// 		};
+			
+			// 		const response = await fetch(url, request);
+			
+			// 		if (response.ok) {
+			// 	  		const data = await response.json();
+			// 	  		localStorage.setItem('getUsersId', JSON.stringify(data))
+			// 		} else {
+			// 	  		console.log("Error", response.status, response.statusText);
+			// 		}
+			//   	};
+			// 	fetchGetUsersId()
+			// }
 		}
 	}
 };

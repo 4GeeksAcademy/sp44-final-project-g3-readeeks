@@ -17,12 +17,14 @@ import cloudinary.api
 from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 
+
 app = Flask(__name__)
 CORS(app)
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app.url_map.strict_slashes = False
+
 
 app.config['CLOUD_NAME'] = os.getenv("CLOUD_NAME")
 app.config['CLOUD_API_SECRET'] = os.getenv("CLOUD_API_SECRET")

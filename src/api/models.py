@@ -13,6 +13,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    url = db.Column(db.String(200), unique=False, nullable=False, default='valor_por_defecto')
     # Relacion con tabla Address:
     address_id = db.Column(db.Integer, db.ForeignKey('address.id'), nullable=False)
     address = db.relationship('Address', primaryjoin='User.address_id == Address.id', uselist=False)
@@ -29,7 +30,8 @@ class User(db.Model):
             "document_number": self.document_number,
             "address": self.address.serialize() if self.address else None,
             "phone": self.phone,
-            "email": self.email
+            "email": self.email,
+            "url": self.url
         }
     
 class Address(db.Model):
