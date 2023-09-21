@@ -1,0 +1,153 @@
+.EditarPerfil-wrapper {
+    margin: auto;
+    margin-top: 150px;
+    background-color: white;
+    width: 85vw;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.EditarPerfil-img img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* .EditarPerfil-img button {
+    background-color: #AFCBFF;
+}
+
+.EditarPerfil-img button:hover {
+    background-color: #dea54b;
+} */
+
+.EditarPerfil-Information {
+    margin-top: 10%;
+}
+
+.EditarPerfil-Input {
+    display: flex;
+    align-items: center;
+    margin-top: 5%;    
+}
+
+.EditarPerfil-Input input {
+    width: 50%; 
+}
+
+.EditarPerfil-Input h6 {
+    margin: 0; 
+}
+
+.EditarPerfil-CambioRealizadoConExito {
+    color: green;
+    margin-left: 2%;
+}
+
+.EditarPerfil-Input button {
+    background-color: #AFCBFF;
+}
+
+.EditarPerfil-Input button:hover {
+    background-color: #dea54b;
+}
+
+.EditarPerfil-Information2 {
+    margin-top: 10%;
+}
+
+.EditarPerfil-Input2 {
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.EditarPerfil-Input2 input {
+    width: 80%;   
+}
+
+.EditarPerfil-Input2 button {
+    background-color: #AFCBFF;
+}
+
+.EditarPerfil-Input2 button:hover {
+    background-color: #dea54b;
+}
+
+.EditarPerfil-Input2short {
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.EditarPerfil-Input2short input {
+    width: 80%;   
+}
+
+.EditarPerfil-Input2short button {
+    background-color: #AFCBFF;
+}
+
+.EditarPerfil-Input2short button:hover {
+    background-color: #dea54b;
+}
+
+
+
+@media (min-width: 1200px) {
+
+.EditarPerfil-wrapper {
+    padding: 50px;
+}
+
+.EditarPerfil-Profile {
+    display: flex;
+}
+
+.EditarPerfil-img {
+    max-width: 10%;
+}
+
+.EditarPerfil-Information {
+    margin-top: 0;
+    margin-left: 2vw;
+    width: 25%;
+    
+}
+
+.EditarPerfil-Input {  
+    margin-top: 1%; 
+}
+
+.EditarPerfil-Information input {
+    margin-top: 1%; 
+}
+
+.EditarPerfil-Information2 {
+    width: 66%;
+    margin-top: 0;  
+}
+
+.EditarPerfil-Input2{
+    width: 80%;
+    margin-top: 1%;       
+}
+
+.EditarPerfil-Input2 input {
+    width: 80%;          
+}
+
+.EditarPerfil-Input2short{
+    width: 20%;
+    margin-top: 1%;      
+}
+
+.EditarPerfil-Input2short input {
+    width: 80%;          
+}
+
+.EditarPerfil-Input2shortgroup {
+    display: flex;
+    width: 114%;
+}
+
+}

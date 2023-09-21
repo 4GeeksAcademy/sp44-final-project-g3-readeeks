@@ -1,0 +1,162 @@
+/* Estilos para .upload-product-card */
+
+  
+  .ProductDetail_input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem; /* Espacio entre las filas de input en unidades rem */
+  }  
+  
+  .ProductDetail_input-container {
+    flex: 1;
+    margin-right: 1rem; /* Margen derecho en unidades rem */
+  }
+  
+
+  
+  .ProductDetail_input-row:nth-child(2) .ProductDetail_input-container {
+    flex: 1;
+    margin-right: 1rem; /* Margen derecho en unidades rem */
+  }
+  
+
+  
+  .ProductDetail_image-uploads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* Añade un espacio entre las imágenes */
+  }
+  
+  /* .image-uploads label {
+    flex-basis: calc(20% - 1rem); 
+    margin-bottom: 0.2rem; 
+    
+  } */
+  
+
+  
+  
+  
+
+  
+  
+  
+  
+  /* Establece un tamaño máximo para las imágenes */
+  .ProductDetail_image-uploads img {
+    width: 10rem; /* Ancho deseado para todas las imágenes */
+    height: 10rem; /* Altura deseada para todas las imágenes */
+    object-fit: cover; /* Mantiene el aspecto de la imagen y la recorta si es necesario */
+  }
+  
+    
+  /* .ProductDetail_send-button {
+    border: 0.2rem solid #DEA54B;
+    background-color: #0E1C36;
+    color: #DEA54B;
+    padding: 0.5rem 0; 
+    text-align: center;
+    text-decoration: none;
+    display: block; 
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    border-radius: 2rem; 
+    font-weight: 500;
+    width: 50%; 
+    margin-top: 1rem;
+    
+  }
+  
+  .ProductDetail_send-button:hover {
+    background-color: transparent;
+    color: #DEA54B;
+    border-color: #DEA54B;
+  } */
+  
+
+  .ProductDetail_product-card {
+    margin-top: 8rem; /* Margen superior en unidades rem */
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2rem; /* Margen inferior en unidades rem */
+    border-color: brown;
+    border: solid;
+    padding: 2rem; /* Espaciado interior en unidades rem */
+    background-color: white;
+    border-radius: 2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .ProductDetail_product-card .ProductDetail_image-uploads label {
+    text-align: left;
+    display: block;
+  }
+
+  .product-card .image-uploads img {
+    margin: 5rem;  /* Mantenemos el margen */
+    width: 50%;  /* El ancho de la imagen será, como máximo, el ancho del contenedor */
+    height: auto; /* La altura se ajusta automáticamente para mantener la proporción */
+    max-width: 50%; /* Asegura que la imagen no exceda el ancho del contenedor */
+    max-height: 100%; /* Asegura que la imagen no exceda la altura del contenedor */
+    display: inline-block; /* Se muestra como un bloque */
+    justify-content: space-around;
+  }
+  
+  
+  .ProductDetail_product-card:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 0.3rem 0.4rem rgba(0, 0, 0, 0.1);
+  }
+
+  .ProductDetail_send-button{
+    border: 0.2rem solid #DEA54B;
+    background-color: #0E1C36;
+    color: #DEA54B;
+    padding: 0.5rem 0; /* Ajuste el padding horizontal para darle espacio al botón */
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    border-radius: 2rem;
+    font-weight: 500;
+    width: 50%;
+    margin-top: 2rem;
+    margin-left: auto; /* Centra el botón */
+    margin-right: auto; /* Centra el botón */
+    margin-bottom: 2rem;
+    
+}
+
+.ProductDetail_send-button:hover {
+    background-color: transparent;
+    color: #DEA54B;
+    border-color: #DEA54B;
+}
+
+.ProductDetail_send-button-container {
+    justify-content: center; /* Alineación horizontal */
+    align-items: center; /* Alineación vertical */
+    margin: 1rem 0;
+}
+
+
+
+  
+  
+  @media screen and (max-width: 768px) {
+    .image-uploads img {
+      max-width: 100%; /* Ajusta la imagen al ancho máximo del contenedor */
+        height: auto; /* Ajusta la altura automáticamente para mantener la proporción */ 
+    }
+  }
+
+  
+  /* Establece un tamaño máximo para las imágenes en cualquier tamaño de pantalla */
+  @media screen {
+    .image-uploads img {
+      max-width: 50%; /* Ajusta la imagen al ancho máximo del contenedor */
+      height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+      /* Puedes ajustar estos valores según tus necesidades */
+    }
+  }
