@@ -35,12 +35,12 @@ export const FollowingListUser = () => {
         const response = await fetch(url, request);
 
         if (response.ok) {
-            // Handle successful deletion, e.g., remove the item from the state
+            
             console.log("Item deleted successfully");
             setCambioRealizado(true);
         setTimeout(() => {
             setCambioRealizado(false);
-            // Recargar la página después de 3 segundos
+            
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
@@ -64,9 +64,13 @@ export const FollowingListUser = () => {
                 {following.status !== undefined && following.status !== "" ? (
                     following.user_id.map((item, index) => (
                         <div key={index} className="MyBooksList-BookImg">
+                            <Link to={"/perfil/" + item.id}>
                             <img src={item.url} alt="" className="" />
+                            </Link>
                             <div className="MyBookList-Component-group">
+                            <Link to={"/perfil/" + item.id}>
                             <p>{item.name} {item.last_name}</p>
+                            </Link>
                             </div>
                         </div>
                     ))

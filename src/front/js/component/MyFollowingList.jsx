@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.png";
 import "../../styles/mybookslist.css"
 
@@ -62,9 +63,13 @@ export const MyFollowingList = () => {
                 {following.status !== undefined && following.status !== "" ? (
                     following.user_id.map((item, index) => (
                         <div key={index} className="MyBooksList-BookImg">
+                            <Link to={"/perfil/" + item.id}>
                             <img src={item.url} alt="" className="" />
+                            </Link>
                             <div className="MyBookList-Component-group">
-                            <p>{item.name} {item.last_name}</p>
+                            <Link to={"/perfil/" + item.id}>
+                                <p>{item.name} {item.last_name}</p>
+                            </Link>
                             <button onClick={() => handleDelete(followingId, item.id)}><i className="fa-solid fa-trash"></i></button>
                             {following && cambioRealizado && <div className="EditarPerfil-CambioRealizadoConExito"><i className="fa-solid fa-check"></i></div>}
                             </div>
