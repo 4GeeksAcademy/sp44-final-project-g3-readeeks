@@ -13,7 +13,7 @@ import { EditarPerfil } from "./pages/EditarPerfil.jsx";
 import { SingleProfile } from "./pages/SingleProfile.jsx";
 import { Transactions } from "./pages/Transactions.jsx";
 import { NewItem } from "./pages/NewItem";
-import {ProductView} from "/workspaces/sp44-final-project-g3-readeeks/src/front/js/pages/ProductView .js"
+import { ProductView } from "/workspaces/sp44-final-project-g3-readeeks/src/front/js/pages/ProductView .js"
 
 import injectContext from "./store/appContext";
 
@@ -59,8 +59,8 @@ const Layout = () => {
                     <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<NewItem />} path="/newbook" />
-                        <Route path="/productView/:id" element={<ProductView />} />
+                        <Route element={<NewItem />} path="/new-book" />
+                        <Route element={<ProductView />} path="/product-view/:id" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
@@ -69,7 +69,7 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<MyProfile />} path="/mi-perfil" />
                         <Route element={<EditarPerfil />} path="/editar-perfil" />
-                        <Route element={<Transactions />} path="/mistransacciones" />
+                        <Route element={<Transactions />} path="/mis-transacciones" />
                         <Route element={<SingleProfile />} path="/perfil/:id" />
                         
                     </Routes>

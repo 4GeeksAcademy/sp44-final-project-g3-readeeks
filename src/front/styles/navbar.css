@@ -106,8 +106,8 @@
     font-weight: 500;
     margin-right: 3px;
     font-size: 13px;
-    height: 60px;
-    width: 140px;
+    height: 3rem;
+    width: 5rem;
   }
 
   .loggedin-buttons:hover {

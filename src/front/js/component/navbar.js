@@ -63,20 +63,24 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
             <Link to="/mi-perfil">
               <button className="loggedin-buttons">Perfil</button>
             </Link>
-            <Link to="/newbook">
+            <Link to="/new-book">
               <button className="loggedin-buttons">Subir producto</button>
             </Link>
-            <button className="loggedin-buttons">Carrito</button>
-            <button className="loggedin-buttons" onClick={handleLogout}>Cerrar sesión</button>
+            <Link to="/mis-transacciones">
+              <button className="loggedin-buttons">Carrito</button>
+            </Link>
+            <Link to="/">
+              <button className="loggedin-buttons" onClick={handleLogout}>Cerrar sesión</button>
+            </Link>
             <div className="dropdown">
               <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" onClick={toggleMenu}>
                 <i className="fas fa-bars"></i>
               </button>
               {/* Utilizamos clases de Bootstrap 5 para el menú */}
               <ul className={`dropdown-menu ${menuOpen ? "show" : ""}`} aria-labelledby="dropdownMenuButton">
-                <li><a className="dropdown-item" href="#">Perfil</a></li>
-                <li><Link to="/newbook">Subir producto</Link></li>
-                <li><a className="dropdown-item" href="#">Carrito</a></li>
+                <li><Link to="/mi-perfil">Perfil</Link></li>
+                <li><Link to="/new-book">Subir producto</Link></li>
+                <li><Link to="/mis-transacciones">Carrito</Link></li>
                 <li><a className="dropdown-item" onClick={handleLogout}>Cerrar sesión</a></li>
               </ul>
             </div>
