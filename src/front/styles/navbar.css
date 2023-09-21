@@ -117,7 +117,7 @@
     border-color: transparent;
   }
   
-  /* Estilos para dispositivos móviles (768px o menos de ancho) */
+  /* Estilos responsive */
   @media screen and (max-width: 1350px) {
     .title {
       display: none;
@@ -128,6 +128,14 @@
       display: inline-block;
       position: relative;
     }
+
+    /* Contenedor para la barra de búsqueda */
+  .searcher {
+    margin: auto;
+    width: 60%;
+    border: 2px solid #4f6367;
+    border-radius: 70px;
+  }
   
     .dropdown-toggle {
       background-color: transparent;

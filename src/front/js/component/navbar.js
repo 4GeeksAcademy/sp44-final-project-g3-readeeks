@@ -5,12 +5,31 @@ import "../../styles/navbar.css";
 
 export const Navbar = ({isAuthenticated, onLogout}) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isNavbarFixed, setIsNavbarFixed] = useState(false);
   const [loggedIn, setLoggedIn] = useState(isAuthenticated);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsNavbarFixed(true);
+      } else {
+        setIsNavbarFixed(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const navbarClassName = isNavbarFixed ? "navbar fixed" : "navbar";
+  
   const handleLogout = () => {
     localStorage.clear();
     setLoggedIn(false);
@@ -21,11 +40,11 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
   }, [isAuthenticated]);
 
   return (
-    <div className="navbar">
+    <div className={navbarClassName}>
       <div className="logo-title">
         <div className="logo">
-          <Link to="/">
-            <img className="Reedeeks-icon" alt="Reedeeks" src={bookIcon}></img>
+          <Link to="/" className="Readeeks">
+            <img className="Reedeeks-icon" alt="Reedeeks" src={bookIcon} />
           </Link>
         </div>
         <h1 className="title">Readeeks</h1>
@@ -42,7 +61,9 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
         {loggedIn ? (
           <>
             <button className="loggedin-buttons">Perfil</button>
-            <button className="loggedin-buttons">Subir producto</button>
+            <Link to="/newbook">
+              <button className="loggedin-buttons">Subir producto</button>
+            </Link>
             <button className="loggedin-buttons">Carrito</button>
             <button className="loggedin-buttons" onClick={handleLogout}>Cerrar sesión</button>
             <div className="dropdown">
@@ -52,7 +73,7 @@ export const Navbar = ({isAuthenticated, onLogout}) => {
               {/* Utilizamos clases de Bootstrap 5 para el menú */}
               <ul className={`dropdown-menu ${menuOpen ? "show" : ""}`} aria-labelledby="dropdownMenuButton">
                 <li><a className="dropdown-item" href="#">Perfil</a></li>
-                <li><a className="dropdown-item" href="#">Subir producto</a></li>
+                <li><Link to="/newbook">Subir producto</Link></li>
                 <li><a className="dropdown-item" href="#">Carrito</a></li>
                 <li><a className="dropdown-item" onClick={handleLogout}>Cerrar sesión</a></li>
               </ul>
