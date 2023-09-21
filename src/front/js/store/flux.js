@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token: null,
 			message: null,
 			demo: [
 				{
@@ -20,6 +21,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+
+			login: async (email, password) => {
+				const opts = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						"email": email,
+						"password": password
+					})
+				};
+
+				try {
+					const resp = await fetch('https://silver-pancake-r9j4jjqrj5xc9j5-3001.app.github.dev/api/login', opts)
+					if(resp.status !== 200){
+						alert("Email y/o contraseña errado");
+						return false;
+					} 
+
+					const data = await resp.json();
+					localStorage.setItem("token", data.access_token);
+					setStore({ token: data.access_token });
+					return true	
+				}
+				catch(error){
+					console.error("There has been an error");
+				}
+				
+			},
+
+			logout: () => {
+				localStorage.removeItem("token");
+				setStore({ token: null });
+			  },
 
 			getMessage: async () => {
 				try{
@@ -48,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			}
 		}
-	};
+	}
 };
 
 export default getState;

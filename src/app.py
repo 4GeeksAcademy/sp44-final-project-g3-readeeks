@@ -11,11 +11,11 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
-from flask_cors import CORS
-
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from flask_jwt_extended import JWTManager
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 CORS(app)
@@ -36,6 +36,11 @@ cloudinary.config(
 )
 
 # database configuration
+# Initialize and set up bcrypt
+bcrypt = Bcrypt(app)
+
+# database condiguration
+
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
@@ -55,7 +60,11 @@ setup_admin(app)
 # add the commands
 setup_commands(app)
 
-# Add all endpoints from the API with an "api" prefix
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_KEY")
+jwt = JWTManager(app)
+
+# Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object

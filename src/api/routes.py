@@ -7,10 +7,12 @@ from flask_cors import CORS, cross_origin
 from api.models import db, User, Address, FavoriteUser, FavoriteListings, Reviews, Listings, Album, Books, Transactions
 from api.utils import generate_sitemap, APIException
 from datetime import datetime
-from cloudinary.uploader import upload as cloudinary_upload
 
+from cloudinary.uploader import upload as cloudinary_upload
 from cloudinary.uploader import upload
 
+from flask_jwt_extended import create_access_token, get_jwt_identity
+from flask_bcrypt import generate_password_hash, check_password_hash
 
 
 api = Blueprint('api', __name__)
@@ -636,4 +638,81 @@ def delete_transactions(buyer_id, listing_id):
             }
 
         return response_body, 404
-   
+
+
+# @api.route("/login", methods=['POST'])
+# def login():
+#     email = request.json.get("email", None)
+#     password = request.json.get("password", None)
+#     if email != "test" or password != "test":
+#         return jsonify({"msg": "Bad email or password"}), 401
+
+#     access_token = create_access_token(identity=email)
+#     return jsonify(access_token=access_token)
+
+@api.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    email = data.get("email", None)
+    password = data.get("password", None)
+
+    # Check if the user with the provided email exists
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"msg": "User not found"}), 401
+
+    # Verify the hashed password
+    if check_password_hash(user.password, password):
+        # Password is correct, generate an access token
+        access_token = create_access_token(identity=email)
+        return jsonify(access_token=access_token), 200
+    else:
+        # Password is incorrect
+        return jsonify({"msg": "Incorrect password"}), 401
+
+
+@api.route("/signup", methods=['POST'])
+def signup():
+    data = request.get_json()
+    # Create a new user record and save it to the database
+    user_data = {
+        "name": data["name"],
+        "last_name": data["last_name"],
+        "document_type": data["document_type"],
+        "document_number": data["document_number"],
+        "phone": data["phone"],
+        "email": data["email"],
+        "password": generate_password_hash(data["password"]).decode('utf-8'),
+        "is_active": True, 
+    }
+
+    # Extract address data
+    address_data = {
+        "street": data["street"],
+        "number": data["number"],
+        "floor": data["floor"],
+        "flat_number": data["flat_number"],
+        "zip_code": data["zip_code"],
+        "state": data["state"],
+        "city": data["city"],
+    }
+
+    try:
+        # Create an Address object and add it to the session
+        address = Address(**address_data)
+        db.session.add(address)
+
+        # Create a User object with the associated Address and add it to the session
+        user = User(address=address, **user_data)
+        db.session.add(user)
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        return jsonify({"message": "User created successfully"}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+    api.run(debug=True)
