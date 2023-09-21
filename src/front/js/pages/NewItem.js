@@ -126,24 +126,26 @@ export const NewItem = () => {
 
 
   return (
-    <div>
+    <div className="upload-product-page">
       <div className="upload-product-card">
-        <h1>Nuevo libro a la venta</h1>
+        <h1 className="upload-product-title">Nuevo libro a la venta</h1>
         <div className="input-row">
           <div className="input-container">
-            <h3>Titulo</h3>
+            <label for="listing-title">Titulo</label>
             <input
               type="text"
-              placeholder="Ingrese un titulo"
+              id="listing-title"
+              placeholder="Ingrese un título"
               className="custom-input"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <div className="input-container">
-            <h3>Precio</h3>
+            <label for="listing-price">Precio</label>
             <input
               type="number"
+              id="listing-price"
               placeholder="Determine el precio de venta"
               className="custom-input"
               value={price}
@@ -154,9 +156,10 @@ export const NewItem = () => {
         </div>
         <div className="input-row">
           <div className="input-container">
-            <h3>Descripción</h3>
-            <input
+            <label for="listing-description">Descripción</label>
+            <textarea
               type="text"
+              id="listing-description"
               placeholder="Exponga una breve descripción del producto"
               className="custom-input"
               value={description}
@@ -164,14 +167,29 @@ export const NewItem = () => {
             />
           </div>
           <div className="input-container">
-            <h3>Estado</h3>
+            <label for="listing-condition">Condición del libro</label>
             <select
               className="custom-select"
               value={state}
               onChange={(e) => setState(e.target.value)}
             >
               <option value="" disabled hidden>Seleccione una opción</option>
-              <option value="Activo">Venta</option>
+              <option value="Activo">Nuevo</option>
+              <option value="Reservado">Usado - Como nuevo</option>
+              <option value="Vendido">Usado - Buen estado</option>
+              <option value="Cancelado">Usado - Regular</option>
+              <option value="Cancelado">Usado - Lo ha dado todo</option>
+            </select>
+          </div>
+          <div className="input-container">
+            <label for="listing-state">Estado de la venta</label>
+            <select
+              className="custom-select"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+            >
+              <option value="" disabled hidden>Seleccione una opción</option>
+              <option value="Activo">En Venta</option>
               <option value="Reservado">Reservado</option>
               <option value="Vendido">Vendido</option>
               <option value="Cancelado">Cancelado</option>
@@ -179,7 +197,9 @@ export const NewItem = () => {
           </div>
         </div>
 
-        <h1>Fotos</h1>
+        <div className="photo-upload-title">
+					<h5>Fotos</h5>
+				</div>
         <div className="image-uploads">
           {selectedFiles.map((file, index) => (
             <div key={index}>
@@ -210,7 +230,7 @@ export const NewItem = () => {
         </div>
         <div className="send-button-container">
           <button className="send-button" onClick={handleEnviarProducto}>
-            Enviar Producto
+            Crear
           </button>
         </div>
       </div>

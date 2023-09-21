@@ -1,67 +1,90 @@
+.upload-product-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 /* Estilos para .upload-product-card */
 .upload-product-card {
-  margin-top: 8rem; /* Margen superior en unidades rem */
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-bottom: 2rem; /* Margen inferior en unidades rem */
-  border-color: brown;
-  border: solid;
-  padding: 2rem; /* Espaciado interior en unidades rem */
+  margin-top: 140px;
+  width: 50%;
+  margin-bottom: 2rem;
+  padding: 2rem;
   background-color: white;
-  border-radius: 2rem; /* Radio de borde en unidades rem */
+  border-radius: 2rem;
+}
+
+.upload-product-title {
+  margin-bottom: 25px;
+  font-size: 30px;
+}
+
+.input-container label {
+  font-size: 15px;
 }
 
 .input-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem; /* Espacio entre las filas de input en unidades rem */
+  margin-bottom: 1rem;
 }
 
 /* Estilos para los inputs */
 .custom-input {
-  border: 0.05rem solid #afcbff; /* Borde personalizado en unidades rem */
-  padding: 0.5rem; /* Espaciado interior en unidades rem */
-  margin-bottom: 0.5rem; /* Margen inferior en unidades rem */
-  width: 100%; /* Ancho completo */
+  border: 0.05rem solid #afcbff; 
+  margin-bottom: 0.5rem; 
+  width: 100%; 
+  border-radius: 5px;
+}
+
+.custom-input::placeholder {
+  font-size: 14px;
 }
 
 /* Estilos para los input de archivos (personalizados) */
 .custom-file-input {
-  border: 0.05rem solid #afcbff; /* Borde personalizado en unidades rem */
-  padding: 0.5rem; /* Espaciado interior en unidades rem */
-  margin-bottom: 0.5rem; /* Margen inferior en unidades rem */
-  width: 10rem; /* Ancho del cuadro personalizado en unidades rem */
-  height: 6rem; /* Altura del cuadro personalizado en unidades rem */
+  border: 0.05rem dashed #afcbff; 
+  color: #afcbff;
+  padding: 0.5rem; 
+  margin-bottom: 0.5rem; 
+  width: 10rem;
+  height: 6rem;
   display: flex;
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-  border-radius: 0.5rem; /* Radio de borde en unidades rem */
+  border-radius: 0.5rem; 
   font-weight: 500;
   text-align: center;
   justify-content: center;
-  font-size: 2rem; /* Tamaño del icono en unidades rem */
+  font-size: 2rem;
 }
 
 .custom-file-input:hover {
-  background-color: #0e1c36;
-  color: #dea54b;
+  border: 0.05rem dashed #0F1C35;
+  background-color: transparent;
+  color: #0e1c35;
+}
+
+.photo-upload-title {
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
 /* Estilos para el botón "Subir Producto" */
 .submit-button {
-  border: 0.05rem solid #dea54b; /* Borde personalizado en unidades rem */
+  border: 0.05rem solid #dea54b; 
   background-color: #dea54b;
   color: #0e1c36;
-  padding: 0.5rem 1rem; /* Espaciado interior en unidades rem */
+  padding: 0.5rem 1rem; 
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-  border-radius: 0.5rem; /* Radio de borde en unidades rem */
+  border-radius: 0.5rem; 
   font-weight: 500;
-  width: 50%; /* Ancho completo */
+  width: 50%; 
 }
 
 .submit-button:hover {
@@ -71,86 +94,79 @@
 
 .input-container {
   flex: 1;
-  margin-right: 1rem; /* Margen derecho en unidades rem */
+  margin-right: 1rem; 
 }
 
 .custom-select {
-  border: 0.05rem solid #afcbff; /* Borde personalizado en unidades rem */
-  padding: 0.5rem; /* Espaciado interior en unidades rem */
-  margin-bottom: 0.5rem; /* Margen inferior en unidades rem */
-  width: 100%; /* Ancho completo */
-  /* Otros estilos que desees aplicar */
+  border: 0.05rem solid #afcbff; 
+  margin-bottom: 0.5rem; 
+  width: 100%; 
+  padding: 4px;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 .input-row:nth-child(2) .input-container {
   flex: 1;
-  margin-right: 1rem; /* Margen derecho en unidades rem */
+  margin-right: 1rem; 
 }
 
 .submit-button {
-  margin-top: 2rem; /* Margen superior en unidades rem */
+  margin-top: 2rem; 
 }
 
 .image-uploads {
   display: flex;
   flex-wrap: wrap;
   justify-content:space-around;
-  margin-top: 0.5rem; /*Espacio entre los elementos y el contenedor en unidades rem*/
+  margin-top: 0.5rem; 
   margin-bottom: 1rem;
 }
 
-
-
 .image-uploads label {
-  flex-basis: calc(20% - 1rem); /* Establece el ancho base para cada elemento (20% - margen) en unidades rem */
+  flex-basis: calc(20% - 1rem); 
   text-align: center;
-  margin-bottom: 0.2rem; /* Espacio entre los elementos y el contenedor en unidades rem */
+  margin-bottom: 0.2rem; 
   
 }
 
-
-
 /* Estilos para los inputs de archivo */
 .image-uploads input[type="file"] {
-  display: none; /* Oculta los inputs de archivo */
+  display: none; 
 }
 
 /* Estilos para el select */
 .input-row:nth-child(3) select {
-  width: 100%; /* Ocupa todo el ancho disponible dentro del contenedor */
+  width: 100%; 
 }
 .image-uploads img {
-  width: 450px; /* Ancho deseado para todas las imágenes */
-  height: 450px; /* Altura deseada para todas las imágenes */
-  object-fit: cover; /* Mantiene el aspecto de la imagen y la recorta si es necesario */
+  width: 450px; 
+  height: 450px; 
+  object-fit: cover;
 }
-
-
-
-
 
 /* Estilos para el botón "Cambiar Imagen" */
 
 .submit-button {
-  border: 1px solid #dea54b; /* Borde personalizado */
+  border: 1px solid #AFCBFF; 
   background-color: transparent;
-  color: #dea54b;
-  padding: 0.3rem 0.5rem; /* Ajusta el espaciado interior según tus preferencias */
+  color: #AFCBFF;
+  padding: 0.3rem 0.5rem; 
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-  border-radius: 0.5rem; /* Radio de borde */
+  border-radius: 0.5rem; 
   font-weight: 500;
-  margin-right: 1rem; /* Margen derecho para separar del borde de la imagen */
+  margin-right: 1rem; 
   margin-bottom: 1rem;
 }
 
 .submit-button:hover {
-  background-color: #dea54b;
-  color: #0e1c36;
-  border-color: #dea54b;
+  background-color: #0F1C35;
+  color: white;
+  border: #0F1C35;
 }
 
 .send-button-container {
@@ -159,72 +175,63 @@
 }
 
 .send-button {
-  border: 0.2rem solid #DEA54B; /* Borde personalizado en unidades rem */
-  background-color: #0E1C36;
-  color: #DEA54B;
-  padding: 0.5rem 0; /* Ajusta el espaciado vertical en unidades rem según tus preferencias */
+  background-color: #AFCBFF;
+  color: #0F1C35;
+  border: none;
+  padding: 0.5rem;
   text-align: center;
   text-decoration: none;
-  display: block; /* Cambia a bloque para ocupar el ancho completo */
+  display: block; 
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-  border-radius: 2rem; /* Radio de borde en unidades rem */
+  border-radius: 2rem; 
   font-weight: 500;
-  width: 50%; /* Ocupa todo el ancho disponible */
+  width: 30%;
   margin-top: 1rem;
   
 }
 
 .send-button:hover {
-  background-color: transparent;
-  color: #DEA54B;
-  border-color: #DEA54B;
+  background-color: #0F1C35;
+  color: white;
 }
 
 .modal-content {
-  width: 90%; /* Ancho del modal, puedes ajustar este valor */
-  max-width: 600px; /* Ancho máximo, puedes ajustar a lo que consideres similar a la tarjeta */
-  margin: 5rem auto; /* Centrar el modal */
+  width: 90%; 
+  max-width: 600px; 
+  margin: 5rem auto; 
   background-color: white;
   border-radius: 2rem;
   padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .modal-overlay {
-  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro semitransparente */
+  background-color: rgba(0, 0, 0, 0.4); 
 }
 
+@media screen and (max-width: 950px) {
 
+  .upload-product-card {
+      width: 80%;
+    }
 
-
+  }
 
 /* Establece un tamaño máximo para las imágenes en dispositivos móviles */
 @media screen and (max-width: 768px) {
   .image-uploads img {
-    max-width: 100%; /* Ajusta la imagen al ancho máximo del contenedor */
-    height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
-    /* Puedes ajustar estos valores según tus necesidades */
+    max-width: 100%;
+    height: auto; 
     margin-bottom: 1rem;
   
   }
 }
 
-
-/* @media screen and (max-width: 768px) {
-  .image-uploads img {
-    max-width: 100%; /* Ajusta la imagen al ancho máximo del contenedor */
-    /* height: auto; Ajusta la altura automáticamente para mantener la proporción */
-
-    /* Puedes ajustar estos valores según tus necesidades */
-  /* } */
-/* }  */
-
 /* Establece un tamaño máximo para las imágenes en cualquier tamaño de pantalla */
 @media screen {
   .image-uploads img {
-    max-width: 50%; /* Ajusta la imagen al ancho máximo del contenedor */
-    height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
-    /* Puedes ajustar estos valores según tus necesidades */
+    max-width: 50%; 
+    height: auto; 
   }
 }
