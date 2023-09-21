@@ -1,0 +1,165 @@
+.ProductViewproduct-card{
+  margin-top: 8rem; /* Margen superior en unidades rem */
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 2rem; /* Margen inferior en unidades rem */
+  border-color: brown;
+  border: solid;
+  padding: 2rem; /* Espaciado interior en unidades rem */
+  background-color: white;
+  border-radius: 2rem; 
+}
+
+
+.ProductViewVendedor-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;      
+}
+
+.contador_favoritos {
+  margin-right: 1rem;  /* Esto añade márgenes a los lados para que el label no esté pegado a los otros elementos */
+}
+
+.ProductViewFavoritos {
+  display: flex;
+  align-items: center; /* Esto alineará los elementos verticalmente al centro */
+  justify-content: start; /* Esto alineará los elementos desde el inicio del contenedor */
+}
+
+
+
+.ProductViewVendedor-title {
+  margin-left: 1rem;
+  font-size: 1.5rem;
+}
+
+.ProductViewVendedor-heart-icon {
+  position: absolute;
+  top: 1rem;
+  left: 50%; 
+  transform: translateX(-50%); 
+  color: grey;
+}
+
+.ProductViewVendedor-heart-count {
+  position: absolute;
+  left: 55%; /* Ajusta según necesites */
+  top: 1rem;
+}
+
+
+.ProductViewPrecio-containe{
+  margin-top: 1rem;
+}
+
+
+.ProductViewEstado-container{
+  margin-top: 1rem;
+}
+
+
+.ProductViewDescripcion-container{
+
+  margin-top: 1rem;
+
+}
+
+
+.ProductViewCompra-button {
+  border: 2px solid #DEA54B; /* Borde sólido con el color dado */
+  background-color: #DEA54B;
+  color: #0E1C36;
+  padding: 1rem 1.5rem; 
+  text-align: center;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  border-radius: 25px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Efecto de sombra suave */
+  margin-top: 2rem;
+}
+
+.ProductViewCompra-button:hover {
+  background-color: #0E1C36; /* Cambio a un color más brillante al hacer hover */
+  color: #DEA54B;
+  border-color: #FF4B4B;
+  box-shadow: 0 4px 20px rgba(255, 75, 75, 0.2); /* Sombra más pronunciada al hacer hover */
+}
+
+.ProductViewCompra-button:active {
+  transform: scale(0.95); /* Efecto de "press" para cuando se active el botón */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Sombra más sutil al presionar */
+}
+
+
+
+
+
+.ProductViewVendedor-main-image {
+  width: 100%;
+  max-height: 20rem; /* Ajustar según necesites */
+  margin-top: 2rem;
+  object-fit: cover;
+  cursor: pointer; /* Si deseas que el usuario sepa que puede hacer clic */
+}
+
+.ProductViewVendedor-sub-images {
+  display: flex;
+  gap: 1rem; /* Espaciado entre imágenes */
+  margin-top: 1rem;
+}
+
+
+
+
+.ProductViewVendedor-fav-button {
+  border: 0.2rem solid #DEA54B; /* Borde en unidades rem */
+  background-color: transparent;
+  color: #DEA54B;
+  padding: 1rem 1.5rem; /* Espaciado interior en unidades rem */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  border-radius: 2rem; /* Radio de borde en unidades rem */
+  margin-right: 0.5rem; /* Margen derecho en unidades rem */
+  font-weight: 500;
+  font-size: 1rem; /* Tamaño de fuente en unidades rem */
+  padding: 0.5rem 2rem;
+  
+}
+
+.ProductViewVendedor-fav-button:hover {
+  background-color: red;
+  color: white;
+  border-color: red;
+}
+
+/* Si quieres mantener el ícono de corazón en rojo cuando pases el ratón por encima */
+.ProductViewVendedor-fav-button:hover i.fa-heart {
+  color: white;
+}
+
+
+
+
+  
+  @media screen and (max-width: 768px) {
+    .image-uploads img {
+      max-width: 100%; /* Ajusta la imagen al ancho máximo del contenedor */
+        height: auto; /* Ajusta la altura automáticamente para mantener la proporción */ 
+    }
+  }
+
+  
+  /* Establece un tamaño máximo para las imágenes en cualquier tamaño de pantalla */
+  @media screen {
+    .image-uploads img {
+      max-width: 50%; /* Ajusta la imagen al ancho máximo del contenedor */
+      height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+      /* Puedes ajustar estos valores según tus necesidades */
+    }
+  }

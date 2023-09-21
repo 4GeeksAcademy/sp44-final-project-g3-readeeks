@@ -1,3 +1,11 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+
 .footer_Social__link__l6DYq{
     margin-right: 20px;
 }
@@ -44,4 +52,26 @@
 }
 
 
+.footer_Footer__NbyvZ{
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin-top: auto; /* Empuja el pie de página hacia abajo */
+  padding: 32px 0; /* Agrega espacio vertical al pie de página */
+  background-color: #0E1C36;
+  color: #DEA54B;
+  text-align: center;
   
+}
+
+
+
+@media screen and (max-width: 1700px) {
+  footer {
+    font-size: 14px; 
+  }
+  .footer_Footer__info__erf93 {
+    margin: 0 0 0 10px;
+  }
+}

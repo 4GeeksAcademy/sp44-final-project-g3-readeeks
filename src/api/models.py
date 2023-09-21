@@ -39,7 +39,7 @@ class Address(db.Model):
     street = db.Column(db.String(100), unique=False, nullable=False)
     number = db.Column(db.Integer, unique=False, nullable=False)
     floor = db.Column(db.Integer, unique=False, nullable=False)
-    flat_number = db.Column(db.String(5), unique=False, nullable=False)
+    flat_number = db.Column(db.String(5), unique=False, nullable=True)
     zip_code = db.Column(db.Integer, unique=False, nullable=False)
     state = db.Column(db.String(20), unique=False, nullable=False)
     city = db.Column(db.String(50), unique=False, nullable=False)
@@ -157,7 +157,7 @@ class Listings(db.Model):
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(200), unique=False, nullable=False)
+    url = db.Column(db.String(800), unique=False, nullable=False)
 
     def __repr__(self):
         return f'<Album {self.id}>'

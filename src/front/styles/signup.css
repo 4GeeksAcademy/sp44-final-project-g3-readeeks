@@ -1,0 +1,185 @@
+body {
+    background-color: #D7F9FF;
+}
+
+.signup-title {
+    margin-bottom: 25px;
+}
+
+.signup-page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.signup-container {
+    padding: 40px 40px 0px 40px;
+    margin-top: 140px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    border-radius: 2rem;
+  }
+
+.signup-input {
+    margin-top: 20px;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items:flex-end;
+    margin: auto;
+    margin-bottom: 10px;
+    /* background-color: red; */
+}
+
+.signup-input input {
+    background-color: white;
+    border: solid 1px #AFCBFF;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.signup-input input:focus {
+    border: solid 1px #0F1C35;
+}
+
+.signup-input input::placeholder {
+    font-size: 14px;
+}
+
+.spain input::placeholder {
+    color: black;
+    font-size: 16px;
+}
+
+.name-field {
+    width: 48%;
+}
+
+#doc-type {
+    width: 80%;
+    border: solid 1px #AFCBFF;
+    border-radius: 5px;
+}
+
+#doc-type:focus {
+    border: solid 1px #0F1C35;
+}
+
+.id-label {
+    font-size: 14px;
+}
+
+.id-field {
+    width: 60%;
+}
+
+.address-street {
+    width: 72%;
+}
+
+.address-input-num {
+    width: 25%;
+}
+
+.address-geo {
+    width: 32%;
+}
+
+.address-title {
+    /* background-color: red; */
+    width: 60%;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.address-title h5 {
+    font-size: 16px;
+}
+
+.signup-button {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    background-color: #AFCBFF;
+    color: #0F1C35;
+    border: none;
+    border-radius: 70px;
+    height: 40px;
+    width: 170px;
+}
+
+.signup-button:hover {
+    background-color: #0F1C35;
+    color: white;
+}
+
+.login-notice {
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+@media screen and (max-width: 975px) {
+
+    .signup-container {
+        width: 80%;
+      }
+
+    .signup-input {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 975px) {
+
+    .signup-input {
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .name-field {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .login-details-input {
+        margin-bottom: 10px;
+    }
+    
+    #doc-type {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .id-field {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .address-street {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .address-input-num {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .address-zip {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .address-geo {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+}
