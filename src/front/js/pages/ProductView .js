@@ -71,70 +71,72 @@ export const ProductView = () => {
 
 
 return (
-    <div className="ProductViewproduct-card">
-        {/* Datos del vendedor, favoritos y botón */}
-        <div className="ProductViewVendedor-container">
-            {product.seller && (
-                <div className="ProductViewVendedor">                    
-                    <h2>{product.seller.name}</h2>
-                </div>
-            )}
-            <div className="ProductViewFavoritos">
-                <h6 className='contador_favoritos'>Favoritos:FALTA REVISAR ESTO {product.favorite_counter} 
-                </h6>
-                
-                <button className="ProductViewVendedor-fav-button" onClick={() => postFavoriteItems(product.seller.id, product.id)}>
-                <i className="fa fa-heart"></i>
-            </button>
-            </div>
-            
-        </div>
-
-        {/* Álbum de imágenes */}
-        <div className="ProductViewAlbum-container">
-            {product.album && product.album.url && Array.isArray(product.album.url) && product.album.url.length > 0 && (
-                <div className="ProductViewAlbum">
-                    <img className="ProductViewVendedor-main-image" src={product.album.url[0]} alt="Imagen principal" onClick={() => setMainImage(product.album.url[0])} />
-                    <div className="ProductViewVendedor-sub-images">
-                        {product.album.url.slice(1).map((imgUrl, index) => (
-                            <img key={index} src={imgUrl} alt={`Imagen ${index + 1} del álbum`} onClick={() => setMainImage(imgUrl)} />
-                        ))}
+    <div className="product-view-page">
+        <div className="ProductViewproduct-card">
+            {/* Datos del vendedor, favoritos y botón */}
+            <div className="ProductViewVendedor-container">
+                {product.seller && (
+                    <div className="ProductViewVendedor">                    
+                        <h2>{product.seller.name}</h2>
                     </div>
+                )}
+                <div className="ProductViewFavoritos">
+                    <h6 className='contador_favoritos'>Favoritos:FALTA REVISAR ESTO {product.favorite_counter} 
+                    </h6>
+                    
+                    <button className="ProductViewVendedor-fav-button" onClick={() => postFavoriteItems(product.seller.id, product.id)}>
+                    <i className="fa fa-heart"></i>
+                </button>
                 </div>
-            )}
-        </div>
-
-        {/* Precio */}
-        <div className="ProductViewPrecio-container">
-            <h3>{product.sale_price}  €</h3>
-            
-        </div>
-
-        {/* Estado */}
-        <div className="ProductViewEstado-container">
-            <span>{product.status}</span>            
-        </div>
-
-        {/* Descripción */}
-        <div className="ProductViewDescripcion-container">
-            <h5>Descripción del articulo:</h5>
-            <div>{product.description}</div>
-        </div>
-
-        {/* Botón de compra */}
-        <div className="ProductViewCompra-container">
-            <button className="ProductViewCompra-button">
-                Comprar
-            </button>
-        </div>
-
-        {/* Libro */}
-        {/* {product.book && (
-            <div className="ProductViewLibro-container">
-                <label>Libro:</label>
-                <div>{product.book.title}</div>
+                
             </div>
-        )} */}
+
+            {/* Álbum de imágenes */}
+            <div className="ProductViewAlbum-container">
+                {product.album && product.album.url && Array.isArray(product.album.url) && product.album.url.length > 0 && (
+                    <div className="ProductViewAlbum">
+                        <img className="ProductViewVendedor-main-image" src={product.album.url[0]} alt="Imagen principal" onClick={() => setMainImage(product.album.url[0])} />
+                        <div className="ProductViewVendedor-sub-images">
+                            {product.album.url.slice(1).map((imgUrl, index) => (
+                                <img key={index} src={imgUrl} alt={`Imagen ${index + 1} del álbum`} onClick={() => setMainImage(imgUrl)} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Precio */}
+            <div className="ProductViewPrecio-container">
+                <h3>{product.sale_price}  €</h3>
+                
+            </div>
+
+            {/* Estado */}
+            <div className="ProductViewEstado-container">
+                <span>{product.status}</span>            
+            </div>
+
+            {/* Descripción */}
+            <div className="ProductViewDescripcion-container">
+                <h5>Descripción del articulo:</h5>
+                <div>{product.description}</div>
+            </div>
+
+            {/* Botón de compra */}
+            <div className="ProductViewCompra-container">
+                <button className="ProductViewCompra-button">
+                    Comprar
+                </button>
+            </div>
+
+            {/* Libro */}
+            {/* {product.book && (
+                <div className="ProductViewLibro-container">
+                    <label>Libro:</label>
+                    <div>{product.book.title}</div>
+                </div>
+            )} */}
+        </div>
     </div>
 );
 }

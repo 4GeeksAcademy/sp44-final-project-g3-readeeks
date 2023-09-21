@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				try {
-					const resp = await fetch('https://silver-pancake-r9j4jjqrj5xc9j5-3001.app.github.dev/api/login', opts)
+					const resp = await fetch(`${process.env.BACKEND_URL}/login`, opts)
 					if(resp.status !== 200){
 						alert("Email y/o contraseña errado");
 						return false;

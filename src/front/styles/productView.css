@@ -1,13 +1,23 @@
+.product-view-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .ProductViewproduct-card{
-  margin-top: 8rem; /* Margen superior en unidades rem */
+  /* margin-top: 8rem;
   margin-left: 5%;
   margin-right: 5%;
-  margin-bottom: 2rem; /* Margen inferior en unidades rem */
-  border-color: brown;
-  border: solid;
-  padding: 2rem; /* Espaciado interior en unidades rem */
+  margin-bottom: 2rem;
+  padding: 2rem;
   background-color: white;
-  border-radius: 2rem; 
+  border-radius: 2rem;  */
+  margin-top: 140px;
+  width: 50%;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 2rem;
 }
 
 
@@ -18,13 +28,13 @@
 }
 
 .contador_favoritos {
-  margin-right: 1rem;  /* Esto añade márgenes a los lados para que el label no esté pegado a los otros elementos */
+  margin-right: 1rem; 
 }
 
 .ProductViewFavoritos {
   display: flex;
-  align-items: center; /* Esto alineará los elementos verticalmente al centro */
-  justify-content: start; /* Esto alineará los elementos desde el inicio del contenedor */
+  align-items: center;
+  justify-content: start;
 }
 
 

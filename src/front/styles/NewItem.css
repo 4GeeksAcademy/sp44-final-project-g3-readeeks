@@ -197,18 +197,19 @@
 }
 
 .modal-content {
-  width: 90%; 
+  width: 50%; 
   max-width: 600px; 
   margin: 5rem auto; 
   background-color: white;
+  border: none;
   border-radius: 2rem;
   padding: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
-.modal-overlay {
+/* .modal-overlay {
   background-color: rgba(0, 0, 0, 0.4); 
-}
+} */
 
 @media screen and (max-width: 950px) {
 
