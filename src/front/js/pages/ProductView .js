@@ -6,10 +6,8 @@ import { Context } from '../store/appContext';
 export const ProductView = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-    // Added by VF:
-    const [isInFavorites, setIsInFavorites] = useState(false); // Added state for tracking favorites
+    const [isInFavorites, setIsInFavorites] = useState(false);
     const { user } = useContext(Context);
-    //
 
     function parseAlbumUrls(str) {
         return str.replace(/{|}/g, '').split(',');

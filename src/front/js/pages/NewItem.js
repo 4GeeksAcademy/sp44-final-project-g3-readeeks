@@ -146,17 +146,20 @@ export const NewItem = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <div className="input-container">
+          <div className="price-container-complete">
             <label htmlFor="listing-price">Precio</label>
-            <input
-              type="number"
-              id="listing-price"
-              placeholder="Determine el precio de venta"
-              className="custom-input"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              onKeyDown={handleKeyPress}
-            />
+            <div className="input-group input-group-sm input-container custom-input custom-price-input">
+                <span className="input-group-text">€</span>
+                <input 
+                  type="number" 
+                  id="listing-price"
+                  placeholder="Precio de venta"
+                  className="form-control" 
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                />
+            </div>
           </div>
         </div>
         <div className="input-row">
@@ -213,7 +216,7 @@ export const NewItem = () => {
                     src={URL.createObjectURL(file)}
                     alt={`Imagen ${index + 1}`}
                   />
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center"}}>
                     <button className="submit-button" onClick={() => removeImage(index)}>Cambiar Imagen</button>
                   </div>
                 </div>
@@ -246,10 +249,7 @@ export const NewItem = () => {
       >
 
     <ProductDetail product={selectedProduct} onClose={handleModalClose} />
-
-
-
-        
+       
       </Modal>
 
       {/* Aquí está la lista de productos (si aún deseas mostrarla fuera del modal) */}
@@ -263,5 +263,4 @@ export const NewItem = () => {
       </div>
     </div>
   );
-
 }

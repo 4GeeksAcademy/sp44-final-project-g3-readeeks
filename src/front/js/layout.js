@@ -4,7 +4,6 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Single } from "./pages/single";
@@ -20,6 +19,8 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
+import { ProductPreview } from "./component/ProductDetail";
+
 import { login, logout } from "./store/flux";
 
 import "/workspaces/sp44-final-project-g3-readeeks/src/front/styles/layout.css"
@@ -30,15 +31,12 @@ const Layout = () => {
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    // commented out by VF:
-    // if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
-    //
-
-    // being added by VF:
-    // State to track authentication status
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Check for token in localStorage when the app loads
+    useEffect(() => {
+        document.title = 'Readeeks - Libros de segunda mano';
+      }, []);
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
@@ -48,11 +46,9 @@ const Layout = () => {
         }
     }, []);
 
-    // Handle logout
     const handleLogout = () => {
         state.actions.logout();
     };
-    //
 
     return (
         <div className="main-container">
@@ -63,7 +59,6 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<NewItem />} path="/new-book" />
                         <Route element={<ProductView />} path="/product-view/:id" />
-                        <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Single />} path="/single/:theid" />
