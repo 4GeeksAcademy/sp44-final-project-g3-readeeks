@@ -1,77 +1,33 @@
-body {
+.footer-container {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  flex-direction: row;
+  justify-content: space-evenly;
   margin: 0;
-}
-
-
-.footer_Social__link__l6DYq{
-    margin-right: 20px;
-}
-
-.footer-section_FooterSection__links__31JPp li {
-    list-style-type: none;
-}
-
-.footer-section_FooterSection__links__31JPp a {
-    text-decoration: none;
-    color: #4F6367; 
-}
-
-.footer-navbar-color {
-    background-color: #0E1C36; 
-    color: #DEA54B; 
-}
-
-
-.footer_Column__apps__Fjj70 a,
-.footer_Column__social__WTs_C a {
-  color: #4F6367; 
-  text-decoration: none; 
-}
-
-.footer_Column__apps__Fjj70 a:hover,
-.footer_Column__social__WTs_C a:hover {
-  text-decoration: underline; 
-}
-
-.footerExtraContainer {
-    margin-top: 32px;
-    padding: 0 44px;
-  }
-
-
-.footer_Footer__NbyvZ {
-    margin: 60px 0 0; 
-    padding: 0 0 32px; 
-  }
-
-.footer_Footer__info__erf93  {
-    padding: 32px 0 0;
-}
-
-
-.footer_Footer__NbyvZ{
-  position: relative;
+  background-color: #0E1C36;
+  color: #DEA54B;
   bottom: 0;
   left: 0;
   width: 100%;
-  margin-top: auto; /* Empuja el pie de página hacia abajo */
-  padding: 32px 0; /* Agrega espacio vertical al pie de página */
+  height: 100px;
+  margin-top: auto;
   background-color: #0E1C36;
   color: #DEA54B;
   text-align: center;
-  
+  bottom: 0;
+  z-index: 9999;
+  align-items: flex-end;
 }
 
+.footer-logo {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
 
+.footer-copyright {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
-@media screen and (max-width: 1700px) {
-  footer {
-    font-size: 14px; 
-  }
-  .footer_Footer__info__erf93 {
-    margin: 0 0 0 10px;
-  }
+.footer-socials-container {
+  margin-bottom: 30px;
 }

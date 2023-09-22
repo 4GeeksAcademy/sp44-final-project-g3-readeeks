@@ -4,11 +4,11 @@ import photo from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2.pn
 import { MyBooksList } from "../component/MyBooksList.jsx"
 import { MyFavoritesList } from "../component/MyFavoritesList.jsx"
 import { MyFollowingList } from "../component/MyFollowingList.jsx";
+import { Link } from "react-router-dom";
 
 export const MyProfile = () => {
 
   const [user, setUser] = useState('');
-
   const [activeTab, setActiveTab] = useState('books');
 
   const handleBooksTabClick = () => { 
@@ -41,7 +41,7 @@ export const MyProfile = () => {
     }
   }
 
-  const userId = 1; //cambiar este id por la variable del ID del usuario logueado
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     fetchGetUsers(userId);
@@ -59,7 +59,11 @@ export const MyProfile = () => {
         </div>
 
         <div className="MyProfile-User">
-          <h4>{user.results.name} {user.results.last_name}</h4>
+          <h4>{user.results.name} {user.results.last_name}
+          <Link to="/editar-perfil">
+           <i className="fa-solid fa-user-gear"></i>
+           </Link>
+           </h4>
 
           <h6 className="MyProfile-LocationIcon">
             <i className="fa-solid fa-location-dot">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
   const [books, setBooks] = useState([]);
@@ -31,18 +32,25 @@ export const Home = () => {
   return (
     <div className="Home-wrapper">
       <div className="HomeList-main">
-        <h5>Encuentra el libro perfecto para tu nueva aventura</h5>
+        <h1>Encuentra el libro perfecto para tu nueva aventura</h1>
 
         <div className="HomeList-Component">
           {books.length > 0 ? (
-            books.map((item, index) => (
-              <div key={index} className="HomeList-BookImg">
-                <img src={item.imageSrc} alt={item.listing_title} className="" />
-                <p>
-                  {item.listing_title}: <b>{item.sale_price}€</b>
-                </p>
-              </div>
-            ))
+            books.map((item, index) => {
+              const urls = item.album.url.slice(1, -1).split(','); 
+              const firstUrl = urls[0].trim();
+
+              return (
+                <div key={index} className="HomeList-BookImg">
+                  <Link to={"/product-view/" + item.id}>
+                  <img src={firstUrl} alt={item.listing_title} className="" />
+                  <p>
+                    {item.listing_title}: <b>{item.sale_price}€</b>
+                  </p>
+                  </Link>
+                </div>
+              );
+            })
           ) : (
             <div className="spinner-border" role="status">
               <span className="visually-hidden">Loading...</span>

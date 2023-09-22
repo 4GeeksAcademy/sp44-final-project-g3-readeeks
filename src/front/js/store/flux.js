@@ -24,6 +24,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			// login: async (email, password) => {
+			// 	const opts = {
+			// 		method: 'POST',
+			// 		headers: {
+			// 			"Content-Type": "application/json"
+			// 		},
+			// 		body: JSON.stringify({
+			// 			"email": email,
+			// 			"password": password
+			// 		})
+			// 	};
+			
+			// 	try {
+			// 		const resp = await fetch(`${process.env.BACKEND_URL}/login`, opts)
+			// 		if(resp.status !== 200){
+			// 			alert("Email y/o contraseña errado");
+			// 			return false;
+			// 		} 
+			
+			// 		const data = await resp.json();
+			// 		localStorage.setItem("token", data.access_token);
+
+			// 		setStore({ 
+			// 			token: data.access_token
+			// 		});
+			// 		return true;	
+			// 	}
+			// 	catch(error){
+			// 		console.error("There has been an error");
+			// 	}
+			// },
+
 			login: async (email, password) => {
 				const opts = {
 					method: 'POST',
@@ -35,24 +67,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 						"password": password
 					})
 				};
-
-				try {
-					const resp = await fetch('https://silver-pancake-r9j4jjqrj5xc9j5-3001.app.github.dev/api/login', opts)
-					if(resp.status !== 200){
-						alert("Email y/o contraseña errado");
-						return false;
-					} 
-
-					const data = await resp.json();
-					localStorage.setItem("token", data.access_token);
-					setStore({ token: data.access_token });
-					return true	
-				}
-				catch(error){
-					console.error("There has been an error");
-				}
 				
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/login`, opts);
+					const data = await resp.json();
+			
+					if (resp.status === 200) {
+						localStorage.setItem("token", data.access_token);
+						localStorage.setItem("user_id", data.user_id); // Save the user ID here
+					}
+			
+					return data; // Return the complete response
+				} catch (error) {
+					console.error("There has been an error", error);
+					return null;
+				}
 			},
+			
 
 			logout: () => {
 				localStorage.removeItem("token");
@@ -105,32 +136,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				};
 				fetchGetUsers();
-			}
-			// getUsersId: (id) => {
-    
-			// 	id = 1; // Cambiar por la variable del usuario logueado
-				
-			// 	const url = `${process.env.BACKEND_URL}/users/${id}`;
-			
-			// 	const fetchGetUsersId = async () => {
-					
-			// 		const request = {
-			// 	 		method: "GET",
-			// 		};
-			
-			// 		const response = await fetch(url, request);
-			
-			// 		if (response.ok) {
-			// 	  		const data = await response.json();
-			// 	  		localStorage.setItem('getUsersId', JSON.stringify(data))
-			// 		} else {
-			// 	  		console.log("Error", response.status, response.statusText);
-			// 		}
-			//   	};
-			// 	fetchGetUsersId()
-			// }
+			},
+
+			getUserId: async () => {
+        try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            console.error("Token not found in local storage");
+            return null; // Return null or handle the absence of a token as needed
+          }
+
+          const opts = {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          };
+
+          const resp = await fetch(`${process.env.BACKEND_URL}/get-user-id`, opts);
+
+          if (resp.status !== 200) {
+            console.error("Error fetching user ID", resp.status, resp.statusText);
+            return null; // Handle the error condition as needed
+          }
+
+          const data = await resp.json();
+          return data.user_id;
+        } catch (error) {
+          console.error("Error fetching user ID", error);
+          return null; // Handle the error condition as needed
+        }
+      },
 		}
-	}
+	};
 };
 
 export default getState;

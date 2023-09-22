@@ -699,16 +699,6 @@ def delete_transactions(buyer_id, listing_id):
         return response_body, 404
 
 
-# @api.route("/login", methods=['POST'])
-# def login():
-#     email = request.json.get("email", None)
-#     password = request.json.get("password", None)
-#     if email != "test" or password != "test":
-#         return jsonify({"msg": "Bad email or password"}), 401
-
-#     access_token = create_access_token(identity=email)
-#     return jsonify(access_token=access_token)
-
 @api.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
@@ -724,7 +714,8 @@ def login():
     if check_password_hash(user.password, password):
         # Password is correct, generate an access token
         access_token = create_access_token(identity=email)
-        return jsonify(access_token=access_token), 200
+        user_id = user.id
+        return jsonify(access_token=access_token, user_id=user_id), 200
     else:
         # Password is incorrect
         return jsonify({"msg": "Incorrect password"}), 401
@@ -772,6 +763,13 @@ def signup():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+    
+    
+@api.route('/get-user-id', methods=['GET'])
+def get_user_id():
+    current_user_id = get_jwt_identity()
+    return jsonify(user_id=current_user_id), 200
+
 
 if __name__ == '__main__':
     api.run(debug=True)

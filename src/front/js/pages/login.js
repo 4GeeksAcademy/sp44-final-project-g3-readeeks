@@ -10,8 +10,13 @@ export const Login = () => {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		actions.login(email, password).then(() => {
-		 	navigate("/")
+		actions.login(email, password).then((response) => {
+			 if (response && response.access_token && response.user_id) {
+				// Aquí puedes guardar el token y el user_id en el localStorage
+				localStorage.setItem("token", response.access_token);
+				localStorage.setItem("userId", response.user_id);
+			}
+			 navigate("/")
 			window.location.reload();
 		})
 	}

@@ -1,6 +1,7 @@
 .MyProfile-main {
     margin: auto;
     margin-top: 150px;
+    margin-bottom: 50px;
     background-color: white;
     width: 85vw;
     border-radius: 25px;
@@ -82,6 +83,43 @@
 .MyProfile-ThreeElements-Following.active i {
     color: #AFCBFF; 
 }
+
+
+.MyProfile-User a {
+    color: black;
+    margin-left: 0.5rem;
+}
+
+.MyProfile-User a:hover {
+    color: #AFCBFF;
+    
+}
+.SingleProfile-fav-button {
+    border: 0.2rem solid #DEA54B; /* Borde en unidades rem */
+    background-color: transparent;
+    color: #DEA54B;
+    padding: 1rem 1.5rem; /* Espaciado interior en unidades rem */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    border-radius: 2rem; /* Radio de borde en unidades rem */
+    margin-right: 0.5rem; /* Margen derecho en unidades rem */
+    font-weight: 500;
+    font-size: 1rem; /* Tamaño de fuente en unidades rem */
+    padding: 0.5rem 2rem;
+    
+  }
+  
+  .SingleProfile-fav-button:hover {
+    background-color: red;
+    color: white;
+    border-color: red;
+  }
+
+
+
 
 /* MyBooksList Component //////////////////////////////////// */
 

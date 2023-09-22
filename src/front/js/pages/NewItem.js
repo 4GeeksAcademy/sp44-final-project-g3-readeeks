@@ -10,7 +10,8 @@ export const NewItem = () => {
   const [albumUrl, setAlbumUrl] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [state, setState] = useState("");
+  const [state1, setState1] = useState("");
+  const [state2, setState2] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -59,7 +60,8 @@ export const NewItem = () => {
     setAlbumUrl("");
     setPrice("");
     setDescription("");
-    setState("");
+    setState1("");
+    setState2("");
   };
 
   const handleEnviarProducto = async () => {
@@ -74,18 +76,20 @@ export const NewItem = () => {
       }
     }
 
+    const userId = localStorage.getItem("userId");
+
     const product = {
       "Titulo del item": title,
       "Precio de venta": price,
       "Descripcion": description,
-      "Status": state,
+      "Status": state2,
       "album": {
         "La url": imageUrls
       }
     };
 
     try {
-      const response = await fetch(`${process.env.BACKEND_URL}/users/1/listings`, {
+      const response = await fetch(`${process.env.BACKEND_URL}/users/${userId}/listings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -120,7 +124,8 @@ export const NewItem = () => {
     setTitle("");
     setPrice("");
     setDescription("");
-    setState("");
+    setState1("");
+    setState2("");
     setSelectedFiles(Array(4).fill(null));
   };
 
@@ -131,7 +136,7 @@ export const NewItem = () => {
         <h1 className="upload-product-title">Nuevo libro a la venta</h1>
         <div className="input-row">
           <div className="input-container">
-            <label for="listing-title">Titulo</label>
+            <label htmlFor="listing-title">Titulo</label>
             <input
               type="text"
               id="listing-title"
@@ -141,22 +146,25 @@ export const NewItem = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <div className="input-container">
-            <label for="listing-price">Precio</label>
-            <input
-              type="number"
-              id="listing-price"
-              placeholder="Determine el precio de venta"
-              className="custom-input"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              onKeyDown={handleKeyPress}
-            />
+          <div className="price-container-complete">
+            <label htmlFor="listing-price">Precio</label>
+            <div className="input-group input-group-sm input-container custom-input custom-price-input">
+                <span className="input-group-text">€</span>
+                <input 
+                  type="number" 
+                  id="listing-price"
+                  placeholder="Precio de venta"
+                  className="form-control" 
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                />
+            </div>
           </div>
         </div>
         <div className="input-row">
           <div className="input-container">
-            <label for="listing-description">Descripción</label>
+            <label htmlFor="listing-description">Descripción</label>
             <textarea
               type="text"
               id="listing-description"
@@ -167,26 +175,25 @@ export const NewItem = () => {
             />
           </div>
           <div className="input-container">
-            <label for="listing-condition">Condición del libro</label>
+            <label htmlFor="listing-condition">Condición del libro</label>
             <select
               className="custom-select"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              value={state1}
+              onChange={(e) => setState1(e.target.value)}
             >
               <option value="" disabled hidden>Seleccione una opción</option>
               <option value="Activo">Nuevo</option>
               <option value="Reservado">Usado - Como nuevo</option>
               <option value="Vendido">Usado - Buen estado</option>
               <option value="Cancelado">Usado - Regular</option>
-              <option value="Cancelado">Usado - Lo ha dado todo</option>
             </select>
           </div>
           <div className="input-container">
-            <label for="listing-state">Estado de la venta</label>
+            <label htmlFor="listing-state">Estado de la venta</label>
             <select
               className="custom-select"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              value={state2}
+              onChange={(e) => setState2(e.target.value)}
             >
               <option value="" disabled hidden>Seleccione una opción</option>
               <option value="Activo">En Venta</option>
@@ -209,7 +216,7 @@ export const NewItem = () => {
                     src={URL.createObjectURL(file)}
                     alt={`Imagen ${index + 1}`}
                   />
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center"}}>
                     <button className="submit-button" onClick={() => removeImage(index)}>Cambiar Imagen</button>
                   </div>
                 </div>
@@ -242,10 +249,7 @@ export const NewItem = () => {
       >
 
     <ProductDetail product={selectedProduct} onClose={handleModalClose} />
-
-
-
-        
+       
       </Modal>
 
       {/* Aquí está la lista de productos (si aún deseas mostrarla fuera del modal) */}
@@ -259,5 +263,4 @@ export const NewItem = () => {
       </div>
     </div>
   );
-
 }
