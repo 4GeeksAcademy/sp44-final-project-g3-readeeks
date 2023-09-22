@@ -45,13 +45,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 					const data = await resp.json();
 					localStorage.setItem("token", data.access_token);
-					localSlocalStorage.setItem("user_id", data.user_id); // Asegúrate de que `data.user_id` tenga el ID correcto.
-					// setStore({ token: data.access_token });
-
 
 					setStore({ 
-						token: data.access_token,
-						userId: data.user_id  // Suponiendo que recibes el userId en la respuesta
+						token: data.access_token
 					});
 					return true;	
 				}
@@ -112,32 +108,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				};
 				fetchGetUsers();
-			}
-			// getUsersId: (id) => {
-    
-			// 	id = 1; // Cambiar por la variable del usuario logueado
-				
-			// 	const url = `${process.env.BACKEND_URL}/users/${id}`;
-			
-			// 	const fetchGetUsersId = async () => {
-					
-			// 		const request = {
-			// 	 		method: "GET",
-			// 		};
-			
-			// 		const response = await fetch(url, request);
-			
-			// 		if (response.ok) {
-			// 	  		const data = await response.json();
-			// 	  		localStorage.setItem('getUsersId', JSON.stringify(data))
-			// 		} else {
-			// 	  		console.log("Error", response.status, response.statusText);
-			// 		}
-			//   	};
-			// 	fetchGetUsersId()
-			// }
+			},
+
+			getUserId: async () => {
+        try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            console.error("Token not found in local storage");
+            return null; // Return null or handle the absence of a token as needed
+          }
+
+          const opts = {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          };
+
+          const resp = await fetch(`${process.env.BACKEND_URL}/get-user-id`, opts);
+
+          if (resp.status !== 200) {
+            console.error("Error fetching user ID", resp.status, resp.statusText);
+            return null; // Handle the error condition as needed
+          }
+
+          const data = await resp.json();
+          return data.user_id;
+        } catch (error) {
+          console.error("Error fetching user ID", error);
+          return null; // Handle the error condition as needed
+        }
+      },
 		}
-	}
+	};
 };
 
 export default getState;

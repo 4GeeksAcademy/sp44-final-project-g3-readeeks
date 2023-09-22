@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import "/workspaces/sp44-final-project-g3-readeeks/src/front/styles/productView.css"
+import { Context } from '../store/appContext';
 
 export const ProductView = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-
+    // Added by VF:
+    const [isInFavorites, setIsInFavorites] = useState(false); // Added state for tracking favorites
+    const { user } = useContext(Context);
+    //
 
     function parseAlbumUrls(str) {
         return str.replace(/{|}/g, '').split(',');
     }
     
-
     useEffect(() => {
         console.log("Iniciando petición al servidor...");
         fetch(`${process.env.BACKEND_URL}/listings/${id}`)
@@ -32,12 +35,40 @@ export const ProductView = () => {
     .catch(error => {
         console.error("Hubo un error obteniendo el producto:", error);
     });
-
     }, [id]);
 
+    // Added by VF:
+    const toggleFavorites = async () => {
+        try {
+            if (isInFavorites) {
+                // Remove the product from favorites
+                const response = await fetch(`/users/${user.id}/favoritelistings/${id}`, {
+                    method: 'DELETE',
+                });
+
+                if (response.ok) {
+                    setIsInFavorites(false);
+                }
+            } else {
+                // Add the product to favorites
+                const response = await fetch(`/users/${user.id}/favoritelistings/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    setIsInFavorites(true);
+                }
+            }
+        } catch (error) {
+            console.error('Error toggling favorites:', error.message);
+        }
+    };
+    //
+
     if (!product) return <div>Cargando...</div>;
-
-
 
     function setMainImage(imagePath) {
         const mainImage = document.querySelector('.ProductViewVendedor-main-image');
@@ -67,9 +98,6 @@ export const ProductView = () => {
     }
 }
 
-
-
-
 return (
     <div className="product-view-page">
         <div className="ProductViewproduct-card">
@@ -81,51 +109,52 @@ return (
                     </div>
                 )}
                 <div className="ProductViewFavoritos">
-                    <h6 className='contador_favoritos'>Favoritos:FALTA REVISAR ESTO {product.favorite_counter} 
-                    </h6>
-                    
-                    <button className="ProductViewVendedor-fav-button" onClick={() => postFavoriteItems(product.seller.id, product.id)}>
+                    {/* <h6 className='contador_favoritos'>Favoritos: {product.favorite_counter}</h6> */}
+                    {/* <button className="ProductViewVendedor-fav-button" onClick={() => postFavoriteItems(product.seller.id, product.id)}> */}
+                    <button
+                            className={`ProductViewVendedor-fav-button ${
+                                isInFavorites ? 'added-to-favorites' : ''
+                            }`}
+                            onClick={toggleFavorites}
+                            disabled={user && user.id === product.seller.id} // Disable the button if the user is the seller
+                        >
                     <i className="fa fa-heart"></i>
                 </button>
                 </div>
-                
             </div>
 
             {/* Álbum de imágenes */}
             <div className="ProductViewAlbum-container">
                 {product.album && product.album.url && Array.isArray(product.album.url) && product.album.url.length > 0 && (
                     <div className="ProductViewAlbum">
-                        <img className="ProductViewVendedor-main-image" src={product.album.url[0]} alt="Imagen principal" onClick={() => setMainImage(product.album.url[0])} />
-                        <div className="ProductViewVendedor-sub-images">
-                            {product.album.url.slice(1).map((imgUrl, index) => (
+                        <img className="ProductViewVendedor-main-image" src={product.album.url[0]} alt="Imagen principal" />
+                        <div className={`ProductViewVendedor-sub-images ${product.album.url.length <= 1 ? 'hide-sub-images' : ''}`}>
+                            {product.album.url.map((imgUrl, index) => (
                                 <img key={index} src={imgUrl} alt={`Imagen ${index + 1} del álbum`} onClick={() => setMainImage(imgUrl)} />
                             ))}
                         </div>
                     </div>
                 )}
             </div>
-
+            <div className='precio-estado'>
             {/* Precio */}
             <div className="ProductViewPrecio-container">
-                <h3>{product.sale_price}  €</h3>
-                
+                <h5>Precio: {product.sale_price}  €</h5>
             </div>
-
             {/* Estado */}
             <div className="ProductViewEstado-container">
-                <span>{product.status}</span>            
+                <span>Disponibilidad: {product.status}</span>            
             </div>
-
+            </div>
             {/* Descripción */}
             <div className="ProductViewDescripcion-container">
-                <h5>Descripción del articulo:</h5>
                 <div>{product.description}</div>
             </div>
 
             {/* Botón de compra */}
             <div className="ProductViewCompra-container">
                 <button className="ProductViewCompra-button">
-                    Añadir a tus Transacciones
+                    Comprar
                 </button>
             </div>
 

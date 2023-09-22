@@ -181,7 +181,6 @@ export const NewItem = () => {
               <option value="Reservado">Usado - Como nuevo</option>
               <option value="Vendido">Usado - Buen estado</option>
               <option value="Cancelado">Usado - Regular</option>
-              <option value="Cancelado">Usado - Lo ha dado todo</option>
             </select>
           </div>
           <div className="input-container">

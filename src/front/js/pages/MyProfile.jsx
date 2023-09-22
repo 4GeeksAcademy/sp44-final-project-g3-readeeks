@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 export const MyProfile = () => {
 
   const [user, setUser] = useState('');
-
   const [activeTab, setActiveTab] = useState('books');
 
   const handleBooksTabClick = () => { 

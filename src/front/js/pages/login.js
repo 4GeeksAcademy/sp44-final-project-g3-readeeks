@@ -14,13 +14,12 @@ export const Login = () => {
 			 if (response && response.access_token && response.user_id) {
 				// Aquí puedes guardar el token y el user_id en el localStorage
 				localStorage.setItem("token", response.access_token);
-				localStorage.setItem("user_id", response.user_id);
+				localStorage.setItem("userId", response.user_id);
 			}
 			 navigate("/")
 			window.location.reload();
 		})
 	}
-	
 
 	return (
 		<div className="login-page">
