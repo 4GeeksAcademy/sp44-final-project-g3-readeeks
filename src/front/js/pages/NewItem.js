@@ -76,6 +76,8 @@ export const NewItem = () => {
       }
     }
 
+    const userId = localStorage.getItem("userId");
+
     const product = {
       "Titulo del item": title,
       "Precio de venta": price,
@@ -87,7 +89,7 @@ export const NewItem = () => {
     };
 
     try {
-      const response = await fetch(`${process.env.BACKEND_URL}/users/1/listings`, {
+      const response = await fetch(`${process.env.BACKEND_URL}/users/${userId}/listings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

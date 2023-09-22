@@ -37,8 +37,8 @@ export const Home = () => {
         <div className="HomeList-Component">
           {books.length > 0 ? (
             books.map((item, index) => {
-              const urls = item.album.url.slice(1, -1).split(','); // Extracción de URLs
-              const firstUrl = urls[0].trim(); // Tomando la primera URL y eliminando espacios adicionales
+              const urls = item.album.url.slice(1, -1).split(','); 
+              const firstUrl = urls[0].trim();
 
               return (
                 <div key={index} className="HomeList-BookImg">

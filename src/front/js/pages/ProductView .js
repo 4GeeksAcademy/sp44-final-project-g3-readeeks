@@ -116,7 +116,7 @@ return (
                                 isInFavorites ? 'added-to-favorites' : ''
                             }`}
                             onClick={toggleFavorites}
-                            disabled={user && user.id === product.seller.id} // Disable the button if the user is the seller
+                            disabled={user && user.id === product.seller.id}
                         >
                     <i className="fa fa-heart"></i>
                 </button>
