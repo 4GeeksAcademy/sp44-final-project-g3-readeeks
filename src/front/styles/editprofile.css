@@ -1,0 +1,300 @@
+.editprofile {
+    margin: 150px auto;
+    background-color: white;
+    width: 85vw;
+    border-radius: 50px;
+    padding: 30px 50px 30px 50px;
+}
+
+.myProfileNmyAddress {
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid grey;
+    border: 1px solid red;
+}
+
+.myProfile {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    border: 1px solid green;
+}
+
+.myAddress {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    border: 1px solid yellow;
+}
+
+.myAddressLeft {
+    width: 50%;
+}
+
+.myAddressRight {
+    width: 50%;
+}
+
+.editProfileFormNeditAddressForm {
+    display: flex;
+}
+
+.editProfileForm {
+    width: 50%;
+    padding-right: 50px;
+}
+
+.editProfileForm h2 {
+    border-bottom: grey 1px solid;
+    padding-bottom: 20px;
+}
+
+.editProfileDivInputImg {
+    padding-top: 20px;
+}
+
+.editProfileDivInputImg label {
+    margin-right: 10px;
+}
+
+.editProfileDivPhone {
+    margin-top: 30px;
+}
+
+.editProfileDivPhone label {
+    margin-right: 10px;
+}
+
+.editProfileDivPhone input {
+    padding-left: 10px;
+}
+
+.editProfileDivEmail {
+    margin-top: 30px;
+}
+
+.editProfileDivEmail label {
+    margin-right: 10px;
+}
+
+.editProfileDivEmail input {
+    padding-left: 10px;
+}
+
+.editProfileDivPassword {
+    margin-top: 30px;
+}
+
+.editProfileDivPassword label {
+    margin-right: 10px;
+}
+
+.editProfileDivPassword input {
+    padding-left: 10px;
+}
+
+.editProfileDivPassword p {
+    margin-top: 5px;
+    font-size: 15px;
+    font-style: italic;
+}
+
+.editProfileForm button {
+    margin-top: 20px;
+    font-weight: 500;
+    padding: 8px;
+    background-color: #AFCBFF;
+}
+
+.editProfileForm button:hover {
+    background-color: #DEA54B;
+}
+
+/* EDIT ADDRESS ////////////////////////////////////// */
+
+.editAddressForm {
+    width: 50%;
+}
+
+.editAddressForm h2 {
+    padding-bottom: 20px;
+    border-bottom: grey 1px solid;
+}
+
+.editAddressFormStreet {
+    padding-top: 20px;
+}
+
+.editAddressFormStreet label {
+    margin-right: 10px;
+}
+
+.editAddressFormStreet input {
+    padding-left: 10px;
+}
+
+.editAddressFormNum {
+    padding-top: 20px;
+}
+
+.editAddressFormNum label {
+    margin-right: 10px;
+}
+
+.editAddressFormNum input {
+    padding-left: 10px;
+}
+
+.editAddressFormFloor {
+    padding-top: 20px;
+}
+
+.editAddressFormFloor label {
+    margin-right: 10px;
+}
+
+.editAddressFormFloor input {
+    padding-left: 10px;
+}
+
+.editAddressFormLetter {
+    padding-top: 20px;
+}
+
+.editAddressFormLetter label {
+    margin-right: 10px;
+}
+
+.editAddressFormLetter input {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.editAddressFormZipCode {
+    padding-top: 20px;
+}
+
+.editAddressFormZipCode label {
+    margin-right: 10px;
+}
+
+.editAddressFormZipCode input {
+    padding-left: 10px;
+}
+
+.editAddressFormState {
+    padding-top: 20px;
+}
+
+.editAddressFormState label {
+    margin-right: 10px;
+}
+
+.editAddressFormState input {
+    padding-left: 10px;
+}
+
+.editAddressFormCity {
+    padding-top: 20px;
+}
+
+.editAddressFormCity label {
+    margin-right: 10px;
+}
+
+.editAddressFormCity input {
+    padding-left: 10px;
+}
+
+.editAddressForm button {
+    margin-top: 30px;
+    font-weight: 500;
+    padding: 8px;
+    background-color: #AFCBFF;
+}
+
+.editAddressForm button:hover {
+    background-color: #DEA54B;
+}
+
+
+@media (max-width: 768px) {
+
+    /* Ajusta los contenedores principales */
+    .myProfileNmyAddress, .editProfileFormNeditAddress {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .myProfileNmyAddress div {
+        width: 100%;
+    }
+
+    .myProfile {
+        display: flex;
+        width: 50%;
+        border: 1px solid green;
+        flex-direction: column;
+    }
+
+    /* Ajusta la imagen del perfil para que tome todo el ancho de la pantalla */
+    .myProfileImg {
+        width: 100%;
+    }
+
+    .myProfileImg img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    /* Hace que el nombre, número de teléfono y email ocupen todo el ancho de la pantalla */
+    .myProfileD h6 {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Ajusta la dirección para que se muestre en bloques separados */
+    .myAddress {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .myAddressLeft, .myAddressRight {
+        width: 100%;
+    }
+
+    .myAddress h6 {
+        text-align: center;
+    }
+
+    /* Ajusta los formularios para que se muestren adecuadamente en móviles */
+    .editProfileForm, .editAddressForm {
+        width: 100%;
+    }
+
+    .editProfileForm div, .editAddressForm div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .editProfileForm label, .editAddressForm label {
+        margin-bottom: 5px;
+    }
+
+    .editProfileForm input, .editAddressForm input {
+        width: 100%;
+    }
+
+    .editProfileForm button, .editAddressForm button {
+        margin-top: 15px;
+        width: 100%;
+        padding: 10px;
+        background-color: #007BFF; /* Color del botón */
+        color: white; /* Color del texto del botón */
+        border: none;
+        cursor: pointer;
+    }
+
+}

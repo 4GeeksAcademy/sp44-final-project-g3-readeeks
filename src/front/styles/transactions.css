@@ -1,0 +1,103 @@
+.Transactions-wrapper {
+    margin: auto;
+    margin-top: 150px;
+    margin-bottom: 50px;
+    background-color: white;
+    width: 85vw;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.Transactions-Option {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 5%;
+}
+
+.Transactions-Option1 {
+    width: 50%;
+    justify-content: center;
+    text-align: center;  
+    border-right: 1px grey solid; 
+}
+
+.Transactions-Option2 {
+    width: 50%;  
+}
+
+.Transactions-Option1:hover {
+    color:#AFCBFF;
+}
+
+.Transactions-Option2:hover {
+    color:#AFCBFF;  
+}
+
+.Transactions-transaction {
+    border-top: 1px solid grey;
+    padding-bottom: 5%;
+    padding-top: 5%;  
+    justify-content: center;   
+}
+
+.Transactions-transaction button {
+    background-color: #AFCBFF;
+    font-weight: 600;
+}
+
+.Transactions-transaction button:hover {
+    background-color: #dea54b; 
+}
+
+.Transactions-Option1.active  {
+    color: #AFCBFF; 
+}
+
+.Transactions-Option2.active  {
+    color: #AFCBFF; 
+}
+
+@media (min-width: 1200px) {
+
+    .Transactions-wrapper {
+        padding: 50px;
+    }
+
+    .Transactions-wrapper h5 {
+        padding-bottom: 1%;
+    }
+
+    .Transactions-Option {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        padding: 2%;
+        border-top: 1px grey solid;  
+    }
+    
+    .Transactions-Option1 { 
+        font-size: 2vw; 
+    }
+    
+    .Transactions-Option2 {
+        font-size: 2vw;
+    }
+
+    .TransactionsSell-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .Transactions-transaction {
+        border: 1px solid grey;
+        padding: 1%;
+        justify-content: center;
+        width: 24%; 
+        margin: 0.2%;   
+    }
+
+    
+       
+}

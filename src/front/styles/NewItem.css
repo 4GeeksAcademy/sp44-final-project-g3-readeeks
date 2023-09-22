@@ -1,0 +1,261 @@
+.upload-product-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Estilos para .upload-product-card */
+.upload-product-card {
+  margin-top: 140px;
+  width: 50%;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 2rem;
+}
+
+.upload-product-title {
+  margin-bottom: 25px;
+  font-size: 30px;
+}
+
+.input-container label {
+  font-size: 15px;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.uploaded-img-preview {
+  width: 9rem;
+  height: 9rem;
+  object-fit: cover;
+  margin: 0;
+}
+
+/* Estilos para los inputs */
+.custom-input {
+  border: 0.05rem solid #afcbff; 
+  margin-bottom: 0.5rem; 
+  width: 100%; 
+  border-radius: 5px;
+}
+
+.custom-input::placeholder {
+  font-size: 14px;
+}
+
+/* Estilos para los input de archivos (personalizados) */
+.custom-file-input {
+  border: 0.05rem dashed #afcbff; 
+  color: #afcbff;
+  padding: 0.5rem; 
+  margin-bottom: 0.5rem; 
+  width: 10rem;
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 0.5rem; 
+  font-weight: 500;
+  text-align: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.custom-file-input:hover {
+  border: 0.05rem dashed #0F1C35;
+  background-color: transparent;
+  color: #0e1c35;
+}
+
+.photo-upload-title {
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Estilos para el botón "Subir Producto" */
+.submit-button {
+  border: 0.05rem solid #dea54b; 
+  background-color: #dea54b;
+  color: #0e1c36;
+  padding: 0.5rem 1rem; 
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 0.5rem; 
+  font-weight: 500;
+  width: 50%; 
+}
+
+.submit-button:hover {
+  background-color: #0e1c36;
+  color: #dea54b;
+}
+
+.input-container {
+  flex: 1;
+  margin-right: 1rem; 
+}
+
+.price-input-container {
+  display: flex;
+  align-items: center;
+  height: 1rem;
+}
+
+.custom-select {
+  border: 0.05rem solid #afcbff; 
+  margin-bottom: 0.5rem; 
+  width: 100%; 
+  padding: 4px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.custom-price-input {
+  width: 100%;
+}
+
+
+.custom-price-input input::placeholder {
+  font-size: 14px;
+}
+
+.input-row:nth-child(2) .input-container {
+  flex: 1;
+  margin-right: 1rem; 
+}
+
+.submit-button {
+  margin-top: 2rem; 
+}
+
+.image-uploads {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:space-around;
+  margin-top: 0.5rem; 
+  margin-bottom: 1rem;
+}
+
+.image-uploads label {
+  flex-basis: calc(20% - 1rem); 
+  text-align: center;
+  margin-bottom: 0.2rem; 
+  
+}
+
+/* Estilos para los inputs de archivo */
+.image-uploads input[type="file"] {
+  display: none; 
+}
+
+/* Estilos para el select */
+.input-row:nth-child(3) select {
+  width: 100%; 
+}
+
+.image-uploads img {
+  width: 9rem; 
+  height: 9rem; 
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Estilos para el botón "Cambiar Imagen" */
+
+.submit-button {
+  border: 1px solid #AFCBFF; 
+  background-color: transparent;
+  color: #AFCBFF;
+  padding: 0.3rem 0.5rem; 
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 0.5rem; 
+  font-weight: 500;
+  margin-right: 1rem; 
+  margin-bottom: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #0F1C35;
+  color: white;
+  border: #0F1C35;
+}
+
+.send-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.send-button {
+  background-color: #AFCBFF;
+  color: #0F1C35;
+  border: none;
+  padding: 0.5rem;
+  text-align: center;
+  text-decoration: none;
+  display: block; 
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 2rem; 
+  font-weight: 500;
+  width: 30%;
+  margin-top: 1rem;
+}
+
+.send-button:hover {
+  background-color: #0F1C35;
+  color: white;
+}
+
+.modal-content {
+  width: 50%; 
+  max-width: 600px; 
+  margin: 5rem auto; 
+  background-color: white;
+  border: none;
+  border-radius: 2rem;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+/* .modal-overlay {
+  background-color: rgba(0, 0, 0, 0.4); 
+} */
+
+@media screen and (max-width: 950px) {
+
+  .upload-product-card {
+      width: 80%;
+    }
+
+  }
+
+/* Establece un tamaño máximo para las imágenes en dispositivos móviles */
+@media screen and (max-width: 768px) {
+  .image-uploads img {
+    max-width: 100%;
+    height: auto; 
+    margin-bottom: 1rem;
+  
+  }
+}
+
+/* Establece un tamaño máximo para las imágenes en cualquier tamaño de pantalla */
+@media screen {
+  .image-uploads img {
+    max-width: 50%; 
+    height: auto; 
+  }
+}

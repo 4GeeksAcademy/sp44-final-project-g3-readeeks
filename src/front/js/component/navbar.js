@@ -1,19 +1,108 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import bookIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2-removebg-preview.png";
+import "../../styles/navbar.css";
 
-export const Navbar = () => {
-	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
-			</div>
-		</nav>
-	);
+export const Navbar = ({isAuthenticated, onLogout}) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isNavbarFixed, setIsNavbarFixed] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(isAuthenticated);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsNavbarFixed(true);
+      } else {
+        setIsNavbarFixed(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const navbarClassName = isNavbarFixed ? "navbar fixed" : "navbar";
+  
+  const handleLogout = () => {
+    localStorage.clear();
+    setLoggedIn(false);
+  };
+
+  useEffect(() => {
+    setLoggedIn(isAuthenticated);
+  }, [isAuthenticated]);
+
+  return (
+    <div className={navbarClassName}>
+      <div className="logo-title">
+        <div className="logo">
+          <Link to="/" className="Readeeks">
+            <img className="Reedeeks-icon" alt="Reedeeks" src={bookIcon} />
+          </Link>
+        </div>
+        <h1 className="title">Readeeks</h1>
+      </div>
+      <div className="searcher">
+        <input
+          className="buscador"
+          type="text"
+          placeholder="Buscar"
+          aria-label="Buscar"
+        />
+      </div>
+      <div className="navbar-buttons">
+        {loggedIn ? (
+          <>
+            <Link to="/mi-perfil">
+              <button className="loggedin-buttons">Perfil</button>
+            </Link>
+            <Link to="/new-book">
+              <button className="loggedin-buttons">Subir producto</button>
+            </Link>
+            <Link to="/mis-transacciones">
+              <button className="loggedin-buttons">Carrito</button>
+            </Link>
+            <Link to="/">
+              <button className="loggedin-buttons" onClick={handleLogout}>Cerrar sesión</button>
+            </Link>
+            <div className="dropdown">
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" onClick={toggleMenu}>
+                <i className="fas fa-bars"></i>
+              </button>
+              {/* Utilizamos clases de Bootstrap 5 para el menú */}
+              <ul className={`dropdown-menu ${menuOpen ? "show" : ""}`} aria-labelledby="dropdownMenuButton">
+                <li><Link to="/mi-perfil">Perfil</Link></li>
+                <li><Link to="/new-book">Subir producto</Link></li>
+                <li><Link to="/mis-transacciones">Carrito</Link></li>
+                <li><a className="dropdown-item" onClick={handleLogout}>Cerrar sesión</a></li>
+              </ul>
+            </div>
+        </>
+        ) : (
+          <>
+            <Link to="/login">
+                <button className="login">Regístrate o inicia sesión</button>
+            </Link>
+            <div className="dropdown">
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" onClick={toggleMenu}>
+                <i className="fas fa-bars"></i>
+              </button>
+              {/* Utilizamos clases de Bootstrap 5 para el menú */}
+              <ul className={`dropdown-menu ${menuOpen ? "show" : ""}`} aria-labelledby="dropdownMenuButton">
+                <li><Link to="/login" className="dropdown-item">Iniciar sesión</Link></li>
+                <li><Link to="/signup" className="dropdown-item">Crear cuenta</Link></li>
+              </ul>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
 };

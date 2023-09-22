@@ -1,7 +1,94 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.Home-wrapper {
+    margin: auto;
+    margin-top: 150px;
+    margin-bottom: 50px;
+    background-color: white;
+    width: 85vw;
+    border-radius: 25px;
+    padding: 20px 100px;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.HomeList-main {
+  text-align: center;
+}
+
+.HomeList-main h1 {
+  /* font-size: 40px; */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.HomeList-BookImg img {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+    border-radius: 5px; 
+}
+
+.HomeList-BookImg {
+    text-align: center;
+    padding: 2vw;
+}
+
+.HomeList-BookImg a{
+    color: black;
+    text-decoration: none;
+}
+
+
+.HomeList-Component-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.HomeList-Component-group p {
+    align-self: center; 
+    
+    margin-top: 5%;
+}
+
+.HomeList-Component-group button {
+    color: black;
+    background-color: transparent;
+    border: none;
+}
+
+.HomeList-Component-group button:hover {
+    color: red;
+}
+
+@media (min-width: 600px) {
+
+  .HomeList-main h5 {
+    font-size: 1.5vw;
+  }
+
+.HomeList-Component {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+      
+.HomeList-BookImg {
+    text-align: center;
+    width: 25%;
+}
+      
+.HomeList-BookImg img {
+    width: 100%;
+    border-radius: 5px;   
+}
+
+.HomeList-BookImg p {
+    padding-top: 15px;
+}
+
+.HomeList-Component-group p {
+    align-self: center; 
+   
+    margin-top: 0%;
+}
+
+}

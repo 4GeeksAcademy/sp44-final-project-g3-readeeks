@@ -13,6 +13,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    url = db.Column(db.String(200), unique=False, nullable=True, default='valor_por_defecto')
     # Relacion con tabla Address:
     address_id = db.Column(db.Integer, db.ForeignKey('address.id'), nullable=False)
     address = db.relationship('Address', primaryjoin='User.address_id == Address.id', uselist=False)
@@ -29,7 +30,8 @@ class User(db.Model):
             "document_number": self.document_number,
             "address": self.address.serialize() if self.address else None,
             "phone": self.phone,
-            "email": self.email
+            "email": self.email,
+            "url": self.url
         }
     
 class Address(db.Model):
@@ -37,7 +39,7 @@ class Address(db.Model):
     street = db.Column(db.String(100), unique=False, nullable=False)
     number = db.Column(db.Integer, unique=False, nullable=False)
     floor = db.Column(db.Integer, unique=False, nullable=False)
-    flat_number = db.Column(db.String(5), unique=False, nullable=False)
+    flat_number = db.Column(db.String(5), unique=False, nullable=True)
     zip_code = db.Column(db.Integer, unique=False, nullable=False)
     state = db.Column(db.String(20), unique=False, nullable=False)
     city = db.Column(db.String(50), unique=False, nullable=False)
@@ -155,7 +157,7 @@ class Listings(db.Model):
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(200), unique=False, nullable=False)
+    url = db.Column(db.String(800), unique=False, nullable=False)
 
     def __repr__(self):
         return f'<Album {self.id}>'

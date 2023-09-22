@@ -2,11 +2,21 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
+from flask_cors import CORS, cross_origin
+
 from api.models import db, User, Address, FavoriteUser, FavoriteListings, Reviews, Listings, Album, Books, Transactions
 from api.utils import generate_sitemap, APIException
 from datetime import datetime
 
+from cloudinary.uploader import upload as cloudinary_upload
+from cloudinary.uploader import upload
+
+from flask_jwt_extended import create_access_token, get_jwt_identity
+from flask_bcrypt import generate_password_hash, check_password_hash
+
+
 api = Blueprint('api', __name__)
+CORS(api)
 
 # Users methods /////////////////////////////////////////////////////////////
 
@@ -35,7 +45,7 @@ def post_users():
 
     address_data = request_body.get("Direccion", {})
     address = Address(
-        city=address_data.get("Ciudad"),
+        city=address_data.get("Ciudad", city),
         flat_number=address_data.get("Piso"),
         floor=address_data.get("Planta"),
         number=address_data.get("Numero"),
@@ -53,7 +63,8 @@ def post_users():
         phone = request_body["Telefono"],
         email = request_body["Email"],
         password = request_body["Contraseña"],
-        is_active = request_body["Activo"]
+        is_active = request_body["Activo"],
+        url = request_body["Url"]
         )
 
     db.session.add(new_user)
@@ -88,31 +99,32 @@ def get_users_id(id):
 
 @api.route('/users/<int:id>', methods=['PUT']) # Ok
 def put_users_id(id):
-
+    
+    user = User.query.get_or_404(id)
+    
     request_body = request.get_json()
-
-    user = db.get_or_404(User, id)
 
     address_data = request_body.get("Direccion", {})
     address = Address(
-        city=address_data.get("Ciudad"),
-        flat_number=address_data.get("Piso"),
-        floor=address_data.get("Planta"),
-        number=address_data.get("Numero"),
-        state=address_data.get("Provincia"),
-        street=address_data.get("Calle"),
-        zip_code=address_data.get("Codigo Postal")
+        city=address_data.get("Ciudad", user.address.city),
+        flat_number=address_data.get("Piso", user.address.flat_number),
+        floor=address_data.get("Planta", user.address.floor),
+        number=address_data.get("Numero", user.address.number),
+        state=address_data.get("Provincia", user.address.state),
+        street=address_data.get("Calle", user.address.street),
+        zip_code=address_data.get("Codigo Postal", user.address.zip_code)
         )
 
-    user.name = request_body["Nombre"]
-    user.last_name = request_body["Apellidos"]
-    user.document_type = request_body["Tipo de documento"]
-    user.document_number = request_body["Numero de identificacion"]
+    user.name = request_body.get("Nombre", user.name)
+    user.last_name = request_body.get("Apellidos", user.last_name)
+    user.document_type = request_body.get("Tipo de documento", user.document_type)
+    user.document_number = request_body.get("Numero de identificacion", user.document_number)
     user.address = address
-    user.phone = request_body["Telefono"]
-    user.email = request_body["Email"]
-    user.password = request_body["Contraseña"]
-    user.is_active = request_body["Activo"]
+    user.phone = request_body.get("Telefono", user.phone)
+    user.email = request_body.get("Email", user.email)
+    user.password = request_body.get("Contraseña", user.password)
+    user.is_active = request_body.get("Activo", user.is_active)
+    user.url = request_body.get("Url", user.url)
        
     db.session.commit()
 
@@ -161,11 +173,12 @@ def get_favorite_users(id):
     favorite_users = db.session.execute(db.select(FavoriteUser).where(FavoriteUser.follower_id == id)).scalars()
 
     results = [item.serialize() for item in favorite_users]
-    followeds = [followed["followed"]["id"] for followed in results]
+    followeds = [followed["followed"] for followed in results]
 
     response_body = {
         "message": "Following",
-        "user_id": followeds
+        "user_id": followeds,
+        "status": "ok"
     }
 
     return response_body, 200
@@ -199,30 +212,25 @@ def post_favorite_users(id):
     return response_body, 200
 
 
-@api.route('/users/<int:id>/favoriteusers', methods=['DELETE']) # Ok
-def delete_favorite_users(id):
-
-    user = User.query.get_or_404(id) 
+@api.route('/users/<int:id>/favoriteusers/<int:followed_id>', methods=['DELETE'])
+def delete_favorite_user(id, followed_id):
+    user = User.query.get_or_404(id)
     follower = user
-
-    request_body = request.get_json()
-
-    followed_id = request_body["Seguido"]
     followed = User.query.get_or_404(followed_id)
 
-    favorite_user_id = FavoriteUser.query.filter_by(follower=follower, followed=followed).first()
+    favorite_user = FavoriteUser.query.filter_by(follower=follower, followed=followed).first()
 
-    if favorite_user_id:
-        db.session.delete(favorite_user_id)
+    if favorite_user:
+        db.session.delete(favorite_user)
         db.session.commit()
-        
+
         response_body = {
             "message": "Follow relationship deleted",
             "status": "ok"
         }
 
         return response_body, 200
-    
+
     else:
         response_body = {
             "message": "Follow relationship not found",
@@ -240,24 +248,56 @@ def get_listings():
     items = db.session.execute(db.select(Listings).order_by(Listings.listing_title)).scalars()
     results = [item.serialize() for item in items]
 
+    if results:
+        response_body = {
+            "message": "All items",
+            "results": results,
+            "status": "ok"
+        }
+        return response_body, 200
+    else:
+        return {"message": "nada que mostrasr", "status": "error"}, 404
+    
+
+@api.route('/listings/<int:id>', methods=['GET']) # Ok
+def get_listings_id(id):
+
+    listing = db.get_or_404(Listings, id)
+
     response_body = {
-        "message": "All items",
+        "status": "ok",
+        "results": listing.serialize()
+    }
+
+    return response_body, 200
+
+
+@api.route('/users/<int:id>/listings', methods=['GET'])
+def get_id_listings(id):
+
+    # user = User.query.get_or_404(id)
+    listings = db.session.execute(db.select(Listings).where(Listings.seller_id == id)).scalars()
+
+    results = [item.serialize() for item in listings]
+
+    response_body = {
+        "message": "Listings",
         "results": results,
         "status": "ok"
-        }
+    }
 
     if response_body:
         return response_body, 200
     else:
         return "Not found", 404
 
-
+      
 @api.route('/users/<int:id>/listings', methods=['POST']) # Ok
 def post_listings(id):
-    
+
     user = User.query.get_or_404(id)
     seller_id = user.id
-    
+
     request_body = request.get_json()
 
     listing_title = request_body.get("Titulo del item")
@@ -265,11 +305,11 @@ def post_listings(id):
     description = request_body.get("Descripcion")
     status = request_body.get("Status")
 
-    album_data = request_body.get("album", {})  
+    album_data = request_body.get("album", {})
     album = Album(
         url=album_data.get("La url")
-    )   
-    
+    )
+
     db.session.add(album)
     db.session.commit()
 
@@ -313,6 +353,9 @@ def post_listings(id):
     }
 
     return response_body, 200
+# ----------------
+
+
 
 @api.route('/users/<int:user_id>/listings/<int:listing_id>', methods=['PUT']) # Ok
 def put_listings(user_id, listing_id):
@@ -328,7 +371,7 @@ def put_listings(user_id, listing_id):
 
         album_data = request_body.get("Album", {})
         album_url = album_data.get("La url")
-        
+
         if album_url:
             put_listing.album.url = album_url
 
@@ -336,8 +379,8 @@ def put_listings(user_id, listing_id):
         put_listing.sale_price = request_body.get("Precio venta", put_listing.sale_price)
         put_listing.description = request_body.get("Descripcion", put_listing.description)
         put_listing.status = request_body.get("Estado", put_listing.status)
-        
-       
+
+
         db.session.commit()
 
         response_body = {
@@ -353,38 +396,6 @@ def put_listings(user_id, listing_id):
         response_body = {
             "message": "Listing not found",
             "status": "ok",
-        }
-
-        return response_body, 404
-
-
-@api.route('/listings/<int:id_listing>', methods=['DELETE']) # Ok
-def delete_listings(id_listing):
-
-    # user = User.query.get_or_404(id)
-    # user_id = user.id
-
-    listing = Listings.query.get_or_404(id_listing)
-    
-    album_id = listing.album_id
-    album_id_in_album = Album.query.get_or_404(album_id)
-    
-    if listing and album_id_in_album:
-        db.session.delete(listing)
-        db.session.delete(album_id_in_album)
-        db.session.commit()
-        
-        response_body = {
-            "message": "Listing deleted",
-            "status": "ok"
-        }
-
-        return response_body, 200
-    
-    else:
-        response_body = {
-            "message": "Listing not found",
-            "status": "error"
         }
 
         return response_body, 404
@@ -454,14 +465,18 @@ def get_favorite_items(id):
 
     favorite_items = db.session.execute(db.select(FavoriteListings).where(FavoriteListings.user_id == id)).scalars()
 
-    items = [item.listing_id for item in favorite_items]
+    items = [item.serialize() for item in favorite_items]
 
     response_body = {
         "message": "Estos son tus articulos favoritos",
-        "articulos": items  
+        "articulos": items,
+        "status": "ok"
     }
 
-    return response_body
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not found", 404
 
 
 @api.route('/users/<int:user_id>/favoritelistings/<int:listing_id>', methods=['POST']) #Ok
@@ -549,6 +564,8 @@ def get_books():
         return "Not found", 404
 
 
+# Transactions methods //////////////////////////////////////////////////////////////////
+
 @api.route('/transactions', methods=['GET']) # Ok
 def get_transactions():
 
@@ -558,6 +575,42 @@ def get_transactions():
     response_body = {
                     "message": "All users",
                     "results": results,
+                    "status": "ok"
+                    }
+
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not Found", 404
+    
+@api.route('/<int:user_id>/transactions', methods=['GET']) # Ok
+def get_transactionsId(user_id):
+
+    transaction_items = db.session.execute(db.select(Transactions).where(Transactions.buyer_id == user_id)).scalars()
+    items = [item.serialize() for item in transaction_items]
+
+
+    response_body = {
+                    "message": "All users",
+                    "results": items,
+                    "status": "ok"
+                    }
+
+    if response_body:
+        return response_body, 200
+    else:
+        return "Not Found", 404
+
+@api.route('/<int:user_id>/transactionssell', methods=['GET']) # Ok
+def get_transactionssellId(user_id):
+
+    transaction_items = db.session.execute(db.select(Transactions).where(Transactions.seller_id == user_id)).scalars()
+    items = [item.serialize() for item in transaction_items]
+
+
+    response_body = {
+                    "message": "All users",
+                    "results": items,
                     "status": "ok"
                     }
 
@@ -644,4 +697,79 @@ def delete_transactions(buyer_id, listing_id):
             }
 
         return response_body, 404
-   
+
+
+@api.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    email = data.get("email", None)
+    password = data.get("password", None)
+
+    # Check if the user with the provided email exists
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"msg": "User not found"}), 401
+
+    # Verify the hashed password
+    if check_password_hash(user.password, password):
+        # Password is correct, generate an access token
+        access_token = create_access_token(identity=email)
+        user_id = user.id
+        return jsonify(access_token=access_token, user_id=user_id), 200
+    else:
+        # Password is incorrect
+        return jsonify({"msg": "Incorrect password"}), 401
+
+
+@api.route("/signup", methods=['POST'])
+def signup():
+    data = request.get_json()
+    # Create a new user record and save it to the database
+    user_data = {
+        "name": data["name"],
+        "last_name": data["last_name"],
+        "document_type": data["document_type"],
+        "document_number": data["document_number"],
+        "phone": data["phone"],
+        "email": data["email"],
+        "password": generate_password_hash(data["password"]).decode('utf-8'),
+        "is_active": True, 
+    }
+
+    # Extract address data
+    address_data = {
+        "street": data["street"],
+        "number": data["number"],
+        "floor": data["floor"],
+        "flat_number": data["flat_number"],
+        "zip_code": data["zip_code"],
+        "state": data["state"],
+        "city": data["city"],
+    }
+
+    try:
+        # Create an Address object and add it to the session
+        address = Address(**address_data)
+        db.session.add(address)
+
+        # Create a User object with the associated Address and add it to the session
+        user = User(address=address, **user_data)
+        db.session.add(user)
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        return jsonify({"message": "User created successfully"}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
+    
+@api.route('/get-user-id', methods=['GET'])
+def get_user_id():
+    current_user_id = get_jwt_identity()
+    return jsonify(user_id=current_user_id), 200
+
+
+if __name__ == '__main__':
+    api.run(debug=True)
