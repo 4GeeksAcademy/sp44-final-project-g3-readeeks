@@ -41,7 +41,7 @@ export const MyProfile = () => {
     }
   }
 
-  const userId = 1; //cambiar este id por la variable del ID del usuario logueado
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     fetchGetUsers(userId);
