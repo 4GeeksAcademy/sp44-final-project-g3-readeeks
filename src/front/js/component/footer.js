@@ -1,224 +1,45 @@
 import React from "react";
 import bookIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/2-removebg-preview.png";
-import androidIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/icono-de-android.png";
-import huaweiIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/huawei.png";
-import appleIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/apple.png";
-import facebookIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/facebook icono.png";
-import twitterIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/x.png";
-import instagramIcon from "/workspaces/sp44-final-project-g3-readeeks/src/front/img/instagram.png";
 import "../../styles/footer.css";
 
 export const Footer = () => {
 
-    return (
-      
-  <footer className="footer_Footer__NbyvZ w-100 footer-navbar-color">
-    <div className="d-flex flex-column flex-md-row container footer_Footer__info__erf93">
-      <section className="col-6 col-md-2 p-0 undefined">
-        <img
-          className="footer_Footer__image__rHNbP mb-1"
-          alt="Wallapop"
-          src={bookIcon}
-          height="70"
-          width="70"
-          loading="lazy"
-        />
-        <span className="NombreLogo">Reedeeks</span>
-        <p className="footer_Footer__copyright__Kj9AS">
-          Copyright © 2023 Reedeeks © de sus respectivos propietarios
-        </p>
-      </section>
-      <section className="col-6 col-md-2 p-0 px-md-3">
-        <p className="footer-section_FooterSection__title__Ddqb5 mb-0">
-          <strong>Reedeeks</strong>
-        </p>
-        <ul className="d-flex flex-column p-0 footer-section_FooterSection__links__31JPp">
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Quiénes somos" rel="nofollow" target="_blank">
-              Quiénes somos
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Cómo funciona" rel="nofollow" target="_blank">
-              Cómo funciona
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Brand Book" rel="nofollow" target="_blank">
-              Brand Book
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Prensa" rel="nofollow" target="_blank">
-              Prensa
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Empleo" rel="nofollow" target="_blank">
-              Empleo
-            </a>
-          </li>
-        </ul>
-      </section>
-      <section className="col-6 col-md-2 p-0 px-md-3">
-        <p className="footer-section_FooterSection__title__Ddqb5 mb-0">
-          <strong>Soporte</strong>
-        </p>
-        <ul className="d-flex flex-column p-0 footer-section_FooterSection__links__31JPp">
-          <li className="footer-link_FooterLink__p_Cca">
-            <a
-              href=""
-              title="Centro de ayuda"
-              rel="nofollow"
-              target="_blank"
-            >
-              Centro de ayuda
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a
-              href=""
-              title="Reglas de publicación"
-              rel="nofollow"
-              target="_blank"
-            >
-              Reglas de publicación
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a
-              href=""
-              title="Consejos de seguridad"
-              rel="nofollow"
-              target="_blank"
-            >
-              Consejos de seguridad
-            </a>
-          </li>
-        </ul>
-      </section>
-      <section className="col-6 col-md-2 p-0 px-md-3">
-        <p className="footer-section_FooterSection__title__Ddqb5 mb-0">
-          <strong>Legal</strong>
-        </p>
-        <ul className="d-flex flex-column p-0 footer-section_FooterSection__links__31JPp">
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Aviso legal" rel="nofollow" target="_blank">
-              Aviso legal
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Condiciones de uso" rel="nofollow" target="_blank">
-              Condiciones de uso
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a
-              href=""
-              title="Política de privacidad"
-              rel="nofollow"
-              target="_blank"
-            >
-              Política de privacidad
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Cookies" rel="nofollow" target="_blank">
-              Cookies
-            </a>
-          </li>
-        </ul>
-      </section>
-      <section className="col-6 col-md-2 p-0 px-md-3">
-        <p className="footer-section_FooterSection__title__Ddqb5 mb-0">
-          <strong>Motor</strong>
-        </p>
-        <ul className="d-flex flex-column p-0 footer-section_FooterSection__links__31JPp">
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Particular" rel="nofollow" target="_blank">
-              Particular
-            </a>
-          </li>
-          <li className="footer-link_FooterLink__p_Cca">
-            <a href="" title="Profesional" rel="nofollow" target="_blank">
-              Profesional
-            </a>
-          </li>
-        </ul>
-      </section>
-    </div>
-    <div className="d-flex flex-column flex-md-row footer_Footer__extra__KWJqT footerExtraContainer">
-      <section className="footer_Column__apps__Fjj70 d-flex flex-wrap col-12 col-md-8 p-md-0">
-        <article className="d-flex align-items-center col-6 col-md-3 p-0">
-          <a
-            href=""
-            target="_blank"
-            rel="nofollow noopener"
-            title="Apple Store"
-            className="footer_Apps__links__d2lcx d-flex align-items-center"
-          >
-            <img
-              src={appleIcon}
-              width="29"
-              height="28"
-              alt="Apple Store"
-              loading="lazy"
-            />
-            <span className="mb-0 ml-2">Apple Store</span>
-          </a>
-        </article>
-        <article className="d-flex align-items-center col-6 col-md-3 p-0">
-          <a
-            href=""
-            target="_blank"
-            rel="nofollow noopener"
-            title="AppGallery"
-            className="footer_Apps__links__d2lcx d-flex align-items-center"
-          >
-            <img
-              src={huaweiIcon}
-              width="30"
-              height="30"
-              alt="AppGallery"
-              loading="lazy"
-            />
-            <span className="mb-0 ml-2">AppGallery</span>
-          </a>
-        </article>
-        <article className="d-flex align-items-center col-6 col-md-3 p-0">
-          <a
-            href=""
-            target="_blank"
-            rel="nofollow noopener"
-            title="Google Play"
-            className="footer_Apps__links__d2lcx d-flex align-items-center"
-          >
-            <img
-              src={androidIcon}
-              width="29"
-              height="28"
-              alt="Google Play"
-              loading="lazy"
-            />
-            <span className="mb-0 ml-2">Google Play</span>
-          </a>
-        </article>
-      </section>
-      <section className="col-12 col-md-4 p-md-0 d-flex align-items-center justify-content-start justify-content-md-end footer_Column__social__WTs_C">
-		<a
-					href="https://facebook.com/"
-					rel="nofollow noopener"
-					target="_blank"
-					title="Facebook"
-					className="footer_Social__link__l6DYq"
-				>
-					<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-						width="20pt" height="20pt" viewBox="0 0 512.000000 512.000000"
-						preserveAspectRatio="xMidYMid meet">
+  return (
 
-						<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-							fill="#DEA54B" stroke="none">
-							<path d="M2331 5099 c-316 -28 -644 -123 -929 -268 -259 -133 -429 -258 -647
+    <div className="footer-container">
+        <div className="footer-logo">
+          <img
+            className="footer_Footer__image__rHNbP mb-1"
+            alt="Readeeks"
+            src={bookIcon}
+            height="70"
+            width="70"
+            loading="lazy"
+          />
+          <span className="NombreLogo">Readeeks</span>
+        </div>
+        <div className="footer-copyright">
+          <p className="copyright-text">
+            Copyright ©
+            <br />
+            2023 Reedeeks © de sus respectivos propietarios
+          </p>
+        </div>
+      <div className="footer-socials-container">
+          <a
+            href="https://facebook.com/"
+            rel="nofollow noopener"
+            target="_blank"
+            title="Facebook"
+            className="footer_Social__link__l6DYq"
+          >
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+              width="20pt" height="20pt" viewBox="0 0 512.000000 512.000000"
+              preserveAspectRatio="xMidYMid meet">
+
+              <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                fill="#DEA54B" stroke="none">
+                <path d="M2331 5099 c-316 -28 -644 -123 -929 -268 -259 -133 -429 -258 -647
 								-476 -230 -229 -352 -399 -490 -680 -88 -180 -136 -305 -181 -481 -182 -702
 								-57 -1458 339 -2049 199 -297 463 -558 757 -746 273 -176 612 -311 913 -363
 								l37 -7 0 996 0 995 -305 0 -305 0 0 355 0 355 305 0 305 0 0 268 c0 147 5 317
@@ -228,24 +49,24 @@ export const Footer = () => {
 								-307 -12 l-308 -3 -3 -1003 -2 -1002 42 6 c460 66 899 258 1263 551 125 101
 								328 309 421 434 587 779 688 1801 264 2664 -142 291 -263 458 -495 690 -218
 								218 -388 343 -647 476 -424 216 -911 310 -1387 268z"/>
-						</g>
-					</svg>
-		</a>
+              </g>
+            </svg>
+          </a>
 
-        <a
-          href="https://twitter.com"
-          rel="nofollow noopener"
-          target="_blank"
-          title=" Twitter"
-          className="footer_Social__link__l6DYq"
-        >
-					<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-						width="25pt" height="25pt" viewBox="0 0 499.000000 499.000000"
-						preserveAspectRatio="xMidYMid meet">
+          <a
+            href="https://twitter.com"
+            rel="nofollow noopener"
+            target="_blank"
+            title=" Twitter"
+            className="footer_Social__link__l6DYq"
+          >
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+              width="25pt" height="25pt" viewBox="0 0 499.000000 499.000000"
+              preserveAspectRatio="xMidYMid meet">
 
-						<g transform="translate(0.000000,499.000000) scale(0.100000,-0.100000)"
-							fill="#DEA54B" stroke="none">
-							<path d="M2405 4525 c-11 -2 -72 -8 -135 -15 -157 -15 -409 -76 -490 -117 -14
+              <g transform="translate(0.000000,499.000000) scale(0.100000,-0.100000)"
+                fill="#DEA54B" stroke="none">
+                <path d="M2405 4525 c-11 -2 -72 -8 -135 -15 -157 -15 -409 -76 -490 -117 -14
 									-7 -31 -13 -39 -13 -7 0 -30 -8 -50 -18 -20 -11 -61 -31 -91 -46 -117 -57
 									-320 -183 -320 -198 0 -4 -5 -8 -12 -8 -6 0 -18 -7 -27 -15 -9 -8 -38 -34 -66
 									-57 -64 -54 -169 -159 -223 -223 -23 -27 -49 -57 -57 -66 -8 -9 -15 -21 -15
@@ -296,7 +117,7 @@ export const Footer = () => {
 									-75 93 -5 2 -9 8 -9 12 0 8 -95 139 -109 150 -3 3 -10 12 -16 21 -5 9 -37 53
 									-70 99 -33 45 -64 89 -70 98 -5 8 -17 23 -25 33 -40 46 -60 71 -60 76 0 2 -15
 									23 -33 46 -19 23 -37 48 -41 55 -6 9 73 12 381 12 l388 -1 25 -35z"/>
-							<path d="M1510 3585 c0 -6 17 -28 217 -293 26 -35 64 -85 83 -112 84 -116 136
+                <path d="M1510 3585 c0 -6 17 -28 217 -293 26 -35 64 -85 83 -112 84 -116 136
 									-184 153 -201 9 -11 17 -22 17 -27 0 -4 8 -15 18 -24 9 -8 33 -38 52 -66 19
 									-28 38 -51 43 -52 4 0 7 -6 7 -13 0 -7 8 -20 18 -29 9 -8 33 -38 52 -66 19
 									-28 38 -51 43 -52 4 0 7 -6 7 -13 0 -7 8 -20 18 -29 9 -8 33 -38 52 -66 19
@@ -314,24 +135,24 @@ export const Footer = () => {
 									150 0 4 -4 10 -9 12 -5 2 -46 53 -91 113 -45 61 -86 112 -91 113 -5 2 -9 7 -9
 									12 0 5 -43 66 -95 137 -53 70 -115 154 -138 185 l-42 58 -177 0 c-98 0 -178
 									-2 -178 -5z"/>
-						</g>
-					</svg>
+              </g>
+            </svg>
 
-        </a>
-		<a
-		href="https://instagram.com"
-		rel="nofollow noopener"
-		target="_blank"
-		title="Instagram"
-		className="footer_Social__link__l6DYq"
-		>
-					<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-						width="22pt" height="22pt" viewBox="0 0 500.000000 500.000000"
-						preserveAspectRatio="xMidYMid meet">
+          </a>
+          <a
+            href="https://instagram.com"
+            rel="nofollow noopener"
+            target="_blank"
+            title="Instagram"
+            className="footer_Social__link__l6DYq"
+          >
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+              width="22pt" height="22pt" viewBox="0 0 500.000000 500.000000"
+              preserveAspectRatio="xMidYMid meet">
 
-						<g transform="translate(0.000000,500.000000) scale(0.100000,-0.100000)"
-							fill="#DEA54B" stroke="none">
-							<path d="M2340 4989 c-176 -11 -258 -24 -454 -74 -471 -119 -868 -353 -1207
+              <g transform="translate(0.000000,500.000000) scale(0.100000,-0.100000)"
+                fill="#DEA54B" stroke="none">
+                <path d="M2340 4989 c-176 -11 -258 -24 -454 -74 -471 -119 -868 -353 -1207
 								-710 -316 -334 -535 -767 -629 -1243 -29 -150 -40 -275 -40 -472 0 -214 11
 								-326 51 -515 136 -645 543 -1226 1114 -1589 264 -168 665 -316 960 -355 516
 								-68 980 1 1425 211 174 82 375 208 516 323 91 74 275 260 353 355 260 319 425
@@ -342,7 +163,7 @@ export const Footer = () => {
 								-77 -593 6 -688 13 -837 65 -197 67 -362 207 -465 392 -36 64 -78 190 -92 275
 								-21 119 -31 398 -31 820 0 653 17 872 79 1028 47 118 99 197 190 288 168 168
 								330 234 635 259 152 12 1344 5 1441 -9z"/>
-							<path d="M1949 3770 c-215 -11 -300 -28 -406 -80 -181 -89 -271 -239 -305
+                <path d="M1949 3770 c-215 -11 -300 -28 -406 -80 -181 -89 -271 -239 -305
 								-505 -17 -134 -16 -1225 2 -1370 46 -383 203 -537 590 -577 163 -17 1218 -16
 								1364 0 253 30 411 124 493 294 73 151 82 257 82 1048 1 610 -2 661 -49 813
 								-22 71 -80 166 -131 214 -88 82 -216 132 -394 153 -118 14 -1021 21 -1246 10z
@@ -352,16 +173,14 @@ export const Footer = () => {
 								28 -79 31 -102 35 -235 3 -112 0 -165 -12 -221 -57 -254 -274 -487 -536 -577
 								-90 -31 -312 -39 -422 -17 -250 52 -469 233 -574 476 -64 150 -73 407 -19 569
 								81 242 274 430 530 516 119 41 312 43 445 6z"/>
-							<path d="M2415 3010 c-155 -32 -296 -135 -369 -270 -31 -57 -66 -186 -66 -244
+                <path d="M2415 3010 c-155 -32 -296 -135 -369 -270 -31 -57 -66 -186 -66 -244
 								0 -110 69 -271 152 -356 97 -99 223 -150 371 -150 208 0 369 104 464 298 155
 								321 -74 697 -442 725 -38 3 -88 2 -110 -3z"/>
-							</g>
-						</svg>		
-		</a>
-      </section>
+              </g>
+            </svg>
+          </a>
+      </div>
     </div>
-  </footer>
-);
+  );
 
 }
-

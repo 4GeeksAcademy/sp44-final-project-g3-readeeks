@@ -71,7 +71,6 @@
   transition: background-color 0.3s, border-color 0.3s;
   border-radius: 2rem;
   font-weight: 500;
-  /* width: 100%; */
   margin: 1.5rem;
   margin-right: 5px;
 }

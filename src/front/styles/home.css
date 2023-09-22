@@ -1,18 +1,21 @@
 .Home-wrapper {
     margin: auto;
     margin-top: 150px;
+    margin-bottom: 50px;
     background-color: white;
     width: 85vw;
     border-radius: 25px;
-    padding: 20px;
+    padding: 20px 100px;
 }
 
 .HomeList-main {
   text-align: center;
 }
 
-.HomeList-main h5 {
-  font-size: 5vw;
+.HomeList-main h1 {
+  /* font-size: 40px; */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .HomeList-BookImg img {

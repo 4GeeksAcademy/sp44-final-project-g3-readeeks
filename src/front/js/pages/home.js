@@ -32,7 +32,7 @@ export const Home = () => {
   return (
     <div className="Home-wrapper">
       <div className="HomeList-main">
-        <h5>Encuentra el libro perfecto para tu nueva aventura</h5>
+        <h1>Encuentra el libro perfecto para tu nueva aventura</h1>
 
         <div className="HomeList-Component">
           {books.length > 0 ? (
