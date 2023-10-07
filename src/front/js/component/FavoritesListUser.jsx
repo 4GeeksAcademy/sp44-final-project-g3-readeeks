@@ -26,7 +26,7 @@ export const FavoritesListUser = () => {
       }
     }
   
-    const favoriteId = id; //cambiar este id por la variable del ID del usuario logueado
+    const favoriteId = localStorage.getItem("user_id");; //cambiar este id por la variable del ID del usuario logueado
   
     useEffect(() => {
       fetchGetFavorites(favoriteId);

@@ -27,7 +27,7 @@ export const BooksListUser = () => {
       }
     }
   
-    const bookId = id; //cambiar este id por la variable del ID del usuario logueado
+    const bookId = localStorage.getItem("user_id");; //cambiar este id por la variable del ID del usuario logueado
   
     useEffect(() => {
       fetchGetBooks(bookId);

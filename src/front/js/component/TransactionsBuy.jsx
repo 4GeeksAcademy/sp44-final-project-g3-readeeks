@@ -24,7 +24,7 @@ export const TransactionsBuy = () => {
     }
   }
 
-  const userId = 2; // Cambiar este id por la variable del ID del usuario logueado
+  const userId = localStorage.getItem("user_id");; // Cambiar este id por la variable del ID del usuario logueado
 
   useEffect(() => {
     fetchGetTransactions(userId);

@@ -50,7 +50,7 @@ export const MyFollowingList = () => {
         }
     }
 
-    const followingId = localStorage.getItem("userId");
+    const followingId = localStorage.getItem("user_id");;
 
     useEffect(() => {
         fetchGetFollowings(followingId);

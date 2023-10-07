@@ -45,6 +45,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 					const data = await resp.json();
 					localStorage.setItem("token", data.access_token);
+					localStorage.setItem("user_id", data.user_id);
 
 					setStore({ 
 						token: data.access_token
