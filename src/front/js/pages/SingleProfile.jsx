@@ -10,6 +10,7 @@ export const SingleProfile = () => {
   const { id } = useParams();
   const [user, setUser] = useState('');
   const [activeTab, setActiveTab] = useState('books');
+ 
   const userId = localStorage.getItem("user_id");  // Aquí cambiamos token por user_id
 
   console.log(`UserID from localStorage: ${userId}`);
