@@ -96,6 +96,39 @@ export const ProductView = () => {
     }
 }
 
+
+// AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+
+const handleCompraButtonClick = async () => {
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/${userId}/transactions/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                date: "2023-10-02", // ajustar la fecha según tus necesidades
+                total: 15, // ajustar el TOTAL según tus necesidades
+                status: 'Procesando', // ajustar el estado según tus necesidades
+            }),
+        });
+
+        if (response.ok) {
+            alert('Añadido a transacciones');
+        } else {
+            throw new Error('Error en la transacción');
+        }
+    } catch (error) {
+        console.error('Error al realizar la compra:', error.message);
+        alert('Error al añadir a transacciones');
+    }
+};
+
+
+
+const userId = localStorage.getItem("user_id");
+
+
 return (
     <div className="product-view-page">
         <div className="ProductViewproduct-card">
@@ -151,7 +184,7 @@ return (
 
             {/* Botón de compra */}
             <div className="ProductViewCompra-container">
-                <button className="ProductViewCompra-button">
+                <button className="ProductViewCompra-button" onClick={handleCompraButtonClick}>
                     Lo quiero
                 </button>
             </div>
