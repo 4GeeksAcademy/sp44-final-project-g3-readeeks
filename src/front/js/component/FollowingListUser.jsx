@@ -54,7 +54,7 @@ export const FollowingListUser = () => {
     const followingId = localStorage.getItem("user_id");; // Cambiar este id por la variable del ID del usuario logueado
 
     useEffect(() => {
-        fetchGetFollowings(followingId);
+        fetchGetFollowings(id);
     }, []);
 
     return (

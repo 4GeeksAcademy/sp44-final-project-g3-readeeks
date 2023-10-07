@@ -152,7 +152,7 @@ return (
             {/* Botón de compra */}
             <div className="ProductViewCompra-container">
                 <button className="ProductViewCompra-button">
-                    Comprar
+                    Lo quiero
                 </button>
             </div>
 

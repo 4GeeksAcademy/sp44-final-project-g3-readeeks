@@ -4,8 +4,8 @@ import "../../styles/transactions.css";
 export const TransactionsBuy = () => {
   const [user, setUser] = useState('');
 
-  const fetchGetTransactions = async (id) => {
-    const url = `${process.env.BACKEND_URL}/${id}/transactions`;
+  const fetchGetTransactions = async (userId) => {
+    const url = `${process.env.BACKEND_URL}/${userId}/transactions`;
     const request = {
       method: "GET",
     };
