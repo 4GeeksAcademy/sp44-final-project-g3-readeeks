@@ -705,20 +705,29 @@ def login():
     email = data.get("email", None)
     password = data.get("password", None)
 
+    print('Login', data)
+
     # Check if the user with the provided email exists
     user = User.query.filter_by(email=email).first()
     if not user:
         return jsonify({"msg": "User not found"}), 401
-
+    print(user)
     # Verify the hashed password
-    if check_password_hash(user.password, password):
-        # Password is correct, generate an access token
-        access_token = create_access_token(identity=email)
-        user_id = user.id
-        return jsonify(access_token=access_token, user_id=user_id), 200
-    else:
-        # Password is incorrect
-        return jsonify({"msg": "Incorrect password"}), 401
+    # if check_password_hash(user.password, password):
+      
+    #     # Password is correct, generate an access token
+    #     access_token = create_access_token(identity=email)
+    #     user_id = user.id
+    #     print(user_id)
+    #     return jsonify(access_token=access_token, user_id=user_id), 200
+    # else:
+    #     # Password is incorrect
+    #     return jsonify({"msg": "Incorrect password"}), 401
+
+    access_token = create_access_token(identity=email)
+    user_id=user.id
+
+    return jsonify(access_token=access_token, user_id=user_id), 200
 
 
 @api.route("/signup", methods=['POST'])

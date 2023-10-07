@@ -9,6 +9,7 @@ export const Home = () => {
   const fetchGetBooks = async () => {
     try {
       const url = `${process.env.BACKEND_URL}/listings`;
+      console.log(url)
       const response = await fetch(url);
 
       if (!response.ok) {
