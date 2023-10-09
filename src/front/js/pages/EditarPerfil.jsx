@@ -582,7 +582,7 @@ export const EditarPerfil = () => {
 
     //useEffect////////////////////////////////////////////////////////////////////
 
-      const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("user_id");;
     
       useEffect(() => {
         fetchGetUsers(userId);

@@ -76,7 +76,7 @@ export const NewItem = () => {
       }
     }
 
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("user_id");
 
     const product = {
       "Titulo del item": title,

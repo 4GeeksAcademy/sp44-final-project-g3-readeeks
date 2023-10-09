@@ -15,6 +15,15 @@ from flask_jwt_extended import create_access_token, get_jwt_identity
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 
+from sqlalchemy import select
+from sqlalchemy import or_
+from flask import request
+import traceback
+
+
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 api = Blueprint('api', __name__)
 CORS(api)
 
@@ -242,11 +251,45 @@ def delete_favorite_user(id, followed_id):
 
 # Listings methods //////////////////////////////////////////////////////////////
 
-@api.route('/listings', methods=['GET']) # Ok
+from sqlalchemy.orm import aliased
+
+# ... Resto del código ...
+
+@api.route('/listings', methods=['GET'])
 def get_listings():
-      
-    items = db.session.execute(db.select(Listings).order_by(Listings.listing_title)).scalars()
-    results = [item.serialize() for item in items]
+    search_query = request.args.get('title')
+
+    # Crear alias para la tabla Album para la unión
+    album_alias = aliased(Album)
+
+    columns_to_select = [
+        Listings.id,
+        Listings.listing_title,
+        Listings.favorite_counter,
+        album_alias.url.label('url'),
+        Listings.sale_price  # Agrega la URL del álbum utilizando el alias
+        # Agrega aquí todas las columnas que necesitas
+    ]
+
+    # Si hay un query de búsqueda, filtra los resultados
+    if search_query:
+        stmt = (
+            select(columns_to_select)
+            .where(Listings.listing_title.ilike(f"%{search_query}%"))
+            .order_by(Listings.listing_title)
+        ).join(album_alias, Listings.album_id == album_alias.id)
+    else:
+        # Crea una consulta seleccionando las columnas especificadas y ordenándolas por título
+        stmt = (
+            select(columns_to_select)
+            .order_by(Listings.listing_title)
+        ).join(album_alias, Listings.album_id == album_alias.id)
+
+    # Ejecuta la consulta y obtén los resultados
+    items = db.session.execute(stmt).fetchall()
+
+    # Convierte los resultados en un formato JSON
+    results = [dict(item) for item in items]
 
     if results:
         response_body = {
@@ -254,9 +297,10 @@ def get_listings():
             "results": results,
             "status": "ok"
         }
-        return response_body, 200
+        return jsonify(response_body), 200
     else:
-        return {"message": "nada que mostrasr", "status": "error"}, 404
+        return jsonify({"message": "nada que mostrar", "status": "error"}), 404
+
     
 
 @api.route('/listings/<int:id>', methods=['GET']) # Ok
@@ -705,20 +749,29 @@ def login():
     email = data.get("email", None)
     password = data.get("password", None)
 
+    print('Login', data)
+
     # Check if the user with the provided email exists
     user = User.query.filter_by(email=email).first()
     if not user:
         return jsonify({"msg": "User not found"}), 401
-
+    print(user)
     # Verify the hashed password
-    if check_password_hash(user.password, password):
-        # Password is correct, generate an access token
-        access_token = create_access_token(identity=email)
-        user_id = user.id
-        return jsonify(access_token=access_token, user_id=user_id), 200
-    else:
-        # Password is incorrect
-        return jsonify({"msg": "Incorrect password"}), 401
+    # if check_password_hash(user.password, password):
+      
+    #     # Password is correct, generate an access token
+    #     access_token = create_access_token(identity=email)
+    #     user_id = user.id
+    #     print(user_id)
+    #     return jsonify(access_token=access_token, user_id=user_id), 200
+    # else:
+    #     # Password is incorrect
+    #     return jsonify({"msg": "Incorrect password"}), 401
+
+    access_token = create_access_token(identity=email)
+    user_id=user.id
+
+    return jsonify(access_token=access_token, user_id=user_id), 200
 
 
 @api.route("/signup", methods=['POST'])

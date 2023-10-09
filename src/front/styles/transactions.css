@@ -87,7 +87,7 @@
     .TransactionsSell-wrapper {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     .Transactions-transaction {
@@ -96,6 +96,7 @@
         justify-content: center;
         width: 24%; 
         margin: 0.2%;   
+        
     }
 
     

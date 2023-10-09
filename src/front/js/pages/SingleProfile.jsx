@@ -10,7 +10,8 @@ export const SingleProfile = () => {
   const { id } = useParams();
   const [user, setUser] = useState('');
   const [activeTab, setActiveTab] = useState('books');
-  const userId = localStorage.getItem('user_id');  // Aquí cambiamos token por user_id
+ 
+  const userId = localStorage.getItem("user_id");  // Aquí cambiamos token por user_id
 
   console.log(`UserID from localStorage: ${userId}`);
   console.log(`ID from URL: ${id}`); // Agregado para verificar el ID desde la URL
@@ -91,14 +92,7 @@ export const SingleProfile = () => {
             <h6 className="MyProfile-LocationIcon">
               <i className="fa-solid fa-location-dot"></i> {user.results.address.city}, {user.results.address.zip_code}
             </h6>
-            <h6 className="MyProfile-StarIcon">
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star-half-stroke"></i>
-              <i className="fa-regular fa-star"></i>
-              <span>(6)</span>   {/* EN VEZ DE UN 6 UNA VARIABLE */}
-            </h6>
+            
           </div>
           <div className="MyProfile-ThreeElements">
             <div className={`MyProfile-ThreeElements-Books ${activeTab === 'books' ? 'active' : ''}`} onClick={() => setActiveTab('books')}>

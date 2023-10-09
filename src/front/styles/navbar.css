@@ -1,217 +1,264 @@
 /* Reset de márgenes para todos los elementos */
 * {
-    margin: 0;
-  }
-  
-  /* Estilos para el icono del libro en la barra de navegación */
-  .Reedeeks-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-left: 10px;
-    overflow: hidden;
-  }
-  
-  /* Estilos para la barra de navegación */
-  .navbar {
-    background-color: #0E1C36;
-    padding: 1em;
-    display: flex;
-    color: #DEA54B;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    width: 100%;
-    padding: 1em;
-  }
-  
-  /* Contenedor para el logotipo y el título */
-  .logo-title {
-    display: flex;
-    align-items: center;
-    width: 15%;
-    justify-content: center;
-  }
-  
-  /* Estilos para el título */
+  margin: 0;
+  box-sizing: border-box; /* Añadir box-sizing para mantener dimensiones consistentes */
+}
+
+/* Estilos para el icono del libro en la barra de navegación */
+.Reedeeks-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-left: 10px;
+  overflow: hidden;
+}
+
+/* Estilos para la barra de navegación */
+.navbar {
+  background-color: #0E1C36;
+  padding: 1em;
+  display: flex;
+  color: #DEA54B;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+/* Contenedor para el logotipo y el título */
+.logo-title {
+  display: flex;
+  align-items: center;
+  width: 15%;
+  justify-content: center;
+}
+
+/* Estilos para el título */
+.title {
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+/* Contenedor para la barra de búsqueda */
+.searcher {
+  position: relative; /* Añadido para el posicionamiento absoluto de los resultados de búsqueda */
+  margin: auto;
+  width: 60%;
+  border: 2px solid #4f6367;
+  border-radius: 70px;
+}
+
+/* Estilos para el campo de búsqueda */
+.buscador {
+  width: 100%;
+  height: 50px;
+  background-color: transparent;
+  border: none;
+  color: #DEA54B;
+  padding-left: 20px;
+}
+
+/* Elimina el contorno del campo de búsqueda al enfocarlo */
+input:focus {
+  outline: none;
+}
+
+/* Contenedor para los botones */
+.navbar-buttons {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos para el botón "Regístrate o inicia sesión" */
+.login {
+  background-color: #DEA54B;
+  color: white;
+  border-color: transparent;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  border-radius: 50px;
+  margin-right: 15px;
+  font-weight: 500;
+}
+
+.login:hover {
+  background-color: #AFCBFF;
+  color: #0E1C36;
+  border-color: transparent;
+}
+
+/* Estilos para el botón "Subir producto" */
+.loggedin-buttons {
+  background-color: #DEA54B;
+  color: white;
+  border-color: transparent;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 50px;
+  font-weight: 500;
+  margin-right: 3px;
+  font-size: 13px;
+  height: 3rem;
+  width: 5rem;
+}
+
+.loggedin-buttons:hover {
+  background-color: #AFCBFF;
+  color: #0E1C36;
+  border-color: transparent;
+}
+
+.search-results a {
+  display: block;
+  color: #DEA54B !important; /* Cambio importante para sobrescribir el color */
+  text-decoration: none !important; /* Cambio importante para sobrescribir la decoración */
+  padding-left: 25px; /* Aumento del espacio a la izquierda */
+  margin-top: 2%;
+}
+
+.goItem{
+  font-size: 100%;
+  width: 50%;
+}
+
+.search-results {
+  position: absolute;
+  left: 0; /* Asegurándonos de que comienza en el borde izquierdo del contenedor .searcher */
+  width: 100%; /* Debe tener el mismo ancho que .searcher */
+  max-height: 200px;
+  overflow-y: auto;
+  border: 2px solid #4f6367;
+  border-top: none;
+  border-radius: 0 0 50px 50px;
+  background-color: #0E1C36;
+  z-index: 1;
+  margin-top: 4px;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Centra verticalmente los elementos hijos */
+
+}
+
+.more-results-link {
+  text-decoration: none;
+  color: #DEA54B;
+  padding: 0 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.large-dots {
+  font-size: 120%;
+  text-decoration: none;
+  color: #DEA54B;
+  padding-right: 3%;
+  /* margin-top: 18px; */
+}
+
+.IsearchBook{
+  padding-right: 4%;
+}
+
+/* Estilos responsive */
+@media screen and (max-width: 1350px) {
   .title {
-    margin-left: 5px;
-    margin-right: 10px;
+    display: none;
   }
-  
-  /* Contenedor para la barra de búsqueda */
+
+  .dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
   .searcher {
     margin: auto;
     width: 60%;
     border: 2px solid #4f6367;
     border-radius: 70px;
   }
-  
-  /* Estilos para el campo de búsqueda */
-  .buscador {
-    width: 100%;
-    height: 50px;
+
+  .dropdown-toggle {
     background-color: transparent;
     border: none;
     color: #DEA54B;
-    padding-left: 20px;
+    cursor: pointer;
   }
-  
-  /* Elimina el contorno del campo de búsqueda al enfocarlo */
-  input:focus {
-    outline: none;
+
+  .dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    display: none;
+    background-color: #0E1C36;
+    color: #DEA54B;
+    border: 2px solid #DEA54B;
+    border-radius: 5px;
+    min-width: 150px;
   }
-  
-  /* Contenedor para los botones */
-  .navbar-buttons {
-    width: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  .dropdown-menu.show {
+    display: block;
   }
-  
-  /* Estilos para el botón "Regístrate o inicia sesión" */
-  .login {
-    background-color: #DEA54B;
-    color: white;
-    border-color: transparent;
-    padding: 10px 20px;
+
+  .dropdown-item {
+    display: block;
+    padding: 10px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    border-radius: 50px;
-    margin-right: 15px;
-    font-weight: 500;
+    color: #DEA54B;
   }
-  
-  .login:hover {
-    background-color: #AFCBFF;
+
+  .dropdown-item:hover {
+    background-color: #DEA54B;
     color: #0E1C36;
-    border-color: transparent;
   }
+
   
-  /* Estilos para el botón "Subir producto" */
+
   .loggedin-buttons {
-    background-color: #DEA54B;
-    color: white;
-    border-color: transparent;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-    border-radius: 50px;
-    font-weight: 500;
-    margin-right: 3px;
-    font-size: 13px;
-    height: 3rem;
-    width: 5rem;
+    display: none;
   }
 
-  .loggedin-buttons:hover {
-    background-color: #AFCBFF;
-    color: #0E1C36;
-    border-color: transparent;
+  .login {
+    display: none;
   }
-  
-  /* Estilos responsive */
-  @media screen and (max-width: 1350px) {
-    .title {
-      display: none;
-    }
-  
-    /* Estilos para el menú desplegable */
-    .dropdown {
-      display: inline-block;
-      position: relative;
-    }
+}
 
-    /* Contenedor para la barra de búsqueda */
+@media (max-width: 375px) {
+  .Reedeeks-icon {
+    width: 60px;
+    height: 60px;
+    margin-left: 5px;
+  }
+
+  .title {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .searcher {
-    margin: auto;
-    width: 60%;
-    border: 2px solid #4f6367;
-    border-radius: 70px;
+    width: 55%;
+    margin-left: 25px;
   }
-  
-    .dropdown-toggle {
-      background-color: transparent;
-      border: none;
-      color: #DEA54B;
-      cursor: pointer;
-    }
-  
-    .dropdown-menu {
-      position: absolute;
-      right: 0;
-      top: 100%;
-      display: none;
-      background-color: #0E1C36;
-      color: #DEA54B;
-      border: 2px solid #DEA54B;
-      border-radius: 5px;
-      min-width: 150px;
-    }
-  
-    .dropdown-menu.show {
-      display: block;
-    }
-  
-    .dropdown-item {
-      display: block;
-      padding: 10px;
-      text-align: center;
-      text-decoration: none;
-      color: #DEA54B;
-    }
-  
-    .dropdown-item:hover {
-      background-color: #DEA54B;
-      color: #0E1C36;
-
-    }
-
-    .loggedin-buttons {
-        display: none;
-    }
-
-    .login{
-        display: none;
-    }
-
-  }
-  
-
-  @media (max-width: 375px) {
-    /* Reduce el tamaño del logo y ajusta los márgenes */
-    .Reedeeks-icon {
-      width: 60px; /* Cambia el tamaño del logo según tus necesidades */
-      height: 60px;
-      margin-left: 5px; /* Ajusta los márgenes según tus necesidades */
-    }
-  
-    /* Estilos adicionales para evitar que el título se superponga con el logo */
-    .title {
-      margin-left: 0; /* Puedes ajustar los márgenes según tus necesidades */
-      margin-right: 0;
-    }
-    .searcher{
-        width: 55%;
-        margin-left: 25px;
-    }
-  }
-
-
+}
 
 @media screen and (min-width: 1351px) {
   .dropdown {
-    display: none; /* Oculta el menú desplegable */
+    display: none;
   }
 
   .loggedin-buttons,
   .login {
-    display: inline-block; 
+    display: inline-block;
   }
 }

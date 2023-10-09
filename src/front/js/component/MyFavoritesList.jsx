@@ -6,9 +6,9 @@ export const MyFavoritesList = () => {
     
     const [favorite, setFavorite] = useState('');
   
-    const fetchGetFavorites = async (id) => {
+    const fetchGetFavorites = async (favoriteId) => {
       
-      const url = `${process.env.BACKEND_URL}/users/${id}/favoritelistings/`;
+      const url = `${process.env.BACKEND_URL}/users/${favoriteId}/favoritelistings/`;
   
       const request = {
         method: "GET",
@@ -24,7 +24,7 @@ export const MyFavoritesList = () => {
       }
     }
   
-    const favoriteId = localStorage.getItem("userId");
+    const favoriteId = localStorage.getItem("user_id");;
   
     useEffect(() => {
       fetchGetFavorites(favoriteId);

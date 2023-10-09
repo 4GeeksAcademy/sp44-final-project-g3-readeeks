@@ -6,40 +6,40 @@
 
 // export const MyBooksList = () => {
 
-//   // The below was here
+  // The below was here
 
-//     // const [book, setBook] = useState([]);
+    // const [book, setBook] = useState([]);
   
-//     // const fetchGetBooks = async (id) => {
+    // const fetchGetBooks = async (id) => {
       
-//     //   const url = `${process.env.BACKEND_URL}/users/${id}/listings`;
+    //   const url = `${process.env.BACKEND_URL}/users/${id}/listings`;
   
-//     //   const request = {
-//     //     method: "GET",
-//     //   };
+    //   const request = {
+    //     method: "GET",
+    //   };
   
-//     //   const response = await fetch(url, request);
+    //   const response = await fetch(url, request);
   
-//     //   if (response.ok) {
-//     //     const data = await response.json();
-//     //     setBook(data);
-//     //   } else {
-//     //     console.log("Error", response.status, response.statusText);
-//     //   }
-//     // }
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     setBook(data);
+    //   } else {
+    //     console.log("Error", response.status, response.statusText);
+    //   }
+    // }
   
-//     // const bookId = localStorage.getItem("userId");
+    // const bookId = localStorage.getItem("userId");
   
-//     // useEffect(() => {
-//     //   fetchGetBooks(bookId);
-//     // }, []);
+    // useEffect(() => {
+    //   fetchGetBooks(bookId);
+    // }, []);
 
-//     // The above was here 
+    // The above was here 
 
 //     const [books, setBooks] = useState([]);
 
-//     const fetchGetBooks = async (id) => {
-//         const url = `${process.env.BACKEND_URL}/users/${id}/listings`;
+//     const fetchGetBooks = async (bookId) => {
+//         const url = `${process.env.BACKEND_URL}/users/${bookId}/listings`;
 
 //         try {
 //             const response = await fetch(url);
@@ -54,11 +54,11 @@
 //         }
 //     }
 
-//     const bookId = localStorage.getItem("userId");
+//     const bookId = localStorage.getItem("user_id");
 
-//     useEffect(() => {
-//         fetchGetBooks(bookId);
-//     }, []);
+//   useEffect(() => {
+//     fetchGetBooks(bookId);
+//   }, [bookId]);
 
 //     return (
 
@@ -66,8 +66,8 @@
 //           <h5>Libros en venta</h5>
 
 //           <div className="MyBooksList-Component">
-//             {book.status !== undefined && book.status !== "" ? (
-//               book.results.map((item, index) => (
+//             {books.status !== undefined && books.status !== "" ? (
+//               books.results.map((item, index) => (
 //                 <div className="MyBooksList-BookImg">
 //                   <Link to={"/product-view/" + item.id}>
 //                   <img  key={index} src={item.album.url} alt="" className="" />
@@ -93,8 +93,8 @@ import { Link } from "react-router-dom";
 export const MyBooksList = () => {
   const [books, setBooks] = useState([]);
 
-  const fetchGetBooks = async (userId) => {
-    const url = `${process.env.BACKEND_URL}/users/${userId}/listings`;
+  const fetchGetBooks = async (bookId) => {
+    const url = `${process.env.BACKEND_URL}/users/${bookId}/listings`;
 
     try {
       const response = await fetch(url);
@@ -109,7 +109,7 @@ export const MyBooksList = () => {
     }
   }
 
-  const bookId = localStorage.getItem("userId");
+  const bookId = localStorage.getItem("user_id");
 
   useEffect(() => {
     fetchGetBooks(bookId);

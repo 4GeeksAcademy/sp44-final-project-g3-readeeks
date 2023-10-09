@@ -9,21 +9,30 @@ export const Login = () => {
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
 
-	const handleClick = () => {
+
+
+	const handleClick = (event) => {
+
+		// event.preventDefault;
+
 		actions.login(email, password).then((response) => {
 			 if (response && response.access_token && response.user_id) {
 				// Aquí puedes guardar el token y el user_id en el localStorage
 				localStorage.setItem("token", response.access_token);
 				localStorage.setItem("userId", response.user_id);
 			}
-			 navigate("/")
+			navigate("/")
 			window.location.reload();
-		})
+		}
+		)
+	
 	}
 
 	return (
 		<div className="login-page">
 				<div className="login-container">
+					
+					{/* <form onSubmit={handleClick}> */}
 					<h1 className="login-title">Inicia Sesión</h1>
 					<div className="login-input">
 						<input type="text" placeholder="Dirección de email" value={email} onChange={(e) => setEmail(e.target.value)}/>
@@ -32,6 +41,8 @@ export const Login = () => {
 						<input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)}/>
 					</div>
 					<button className="login-button" onClick={handleClick}>Entrar</button>
+					{/* </form> */}
+
 					<p className="signup-notice">
 						¿Aún no tienes una cuenta? <br/>
 						<Link to="/signup">Regístrate</Link>

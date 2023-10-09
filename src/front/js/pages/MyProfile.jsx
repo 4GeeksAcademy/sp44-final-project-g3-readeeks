@@ -41,7 +41,7 @@ export const MyProfile = () => {
     }
   }
 
-  const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("user_id");
 
   useEffect(() => {
     fetchGetUsers(userId);
@@ -68,15 +68,6 @@ export const MyProfile = () => {
           <h6 className="MyProfile-LocationIcon">
             <i className="fa-solid fa-location-dot">
             </i> {user.results.address.city}, {user.results.address.zip_code}
-          </h6>
-
-          <h6 className="MyProfile-StarIcon">
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star-half-stroke"></i>
-            <i className="fa-regular fa-star"></i>
-            <span>(6)</span>   {/* EN VEZ DE UN 6 UNA VARIABLE */}
           </h6>
 
         </div>

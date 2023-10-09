@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom";
 export const BooksListUser = () => {
 
     const [book, setBook] = useState('');
-    const {id} = useParams();
+    const { id } = useParams();
   
     const fetchGetBooks = async (id) => {
       
@@ -27,10 +27,10 @@ export const BooksListUser = () => {
       }
     }
   
-    const bookId = id; //cambiar este id por la variable del ID del usuario logueado
+    const bookId = localStorage.getItem("user_id");; //cambiar este id por la variable del ID del usuario logueado
   
     useEffect(() => {
-      fetchGetBooks(bookId);
+      fetchGetBooks(id);
     }, []);
 
     return (
