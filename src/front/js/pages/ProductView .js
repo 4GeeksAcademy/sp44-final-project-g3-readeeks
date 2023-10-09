@@ -35,37 +35,7 @@ export const ProductView = () => {
     });
     }, [id]);
 
-    // Added by VF:
-    const toggleFavorites = async () => {
-        try {
-            if (isInFavorites) {
-                // Remove the product from favorites
-                const response = await fetch(`/users/${user.id}/favoritelistings/${id}`, {
-                    method: 'DELETE',
-                });
-
-                if (response.ok) {
-                    setIsInFavorites(false);
-                }
-            } else {
-                // Add the product to favorites
-                const response = await fetch(`/users/${user.id}/favoritelistings/${id}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                if (response.ok) {
-                    setIsInFavorites(true);
-                }
-            }
-        } catch (error) {
-            console.error('Error toggling favorites:', error.message);
-        }
-    };
-    //
-
+    
     if (!product) return <div>Cargando...</div>;
 
     function setMainImage(imagePath) {
@@ -73,28 +43,7 @@ export const ProductView = () => {
         mainImage.src = imagePath;
     }
     
-    async function postFavoriteItems(userId, listingId) {
-    try {
-        const response = await fetch(`/users/${userId}/favoritelistings/${listingId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || "Error al añadir a favoritos");
-        }
-
-        alert(data.message);
-
-    } catch (error) {
-        console.error('Error al añadir a favoritos:', error.message);
-        alert(error.message);
-    }
-}
+   
 
 
 // AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
@@ -129,10 +78,32 @@ const handleCompraButtonClick = async () => {
 const userId = localStorage.getItem("user_id");
 
 
+const handleFavoriteButtonClick = async () => {
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/users/${userId}/favoritelistings/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            alert('Añadido a favoritos');
+            setIsInFavorites(true);
+        } else {
+            throw new Error('Error al añadir a favoritos');
+        }
+    } catch (error) {
+        console.error('Error al añadir a favoritos:', error.message);
+        alert('Error al añadir a favoritos');
+    }
+};
+
+
 return (
     <div className="product-view-page">
         <div className="ProductViewproduct-card">
-            {/* Datos del vendedor, favoritos y botón */}
+            
             <div className="product-title-container">
                 {product.listing_title && (
                     <div className="product-title">                    
@@ -140,21 +111,16 @@ return (
                     </div>
                 )}
                 <div className="ProductViewFavoritos">
-                    {/* <h6 className='contador_favoritos'>Favoritos: {product.favorite_counter}</h6> */}
-                    {/* <button className="ProductViewVendedor-fav-button" onClick={() => postFavoriteItems(product.seller.id, product.id)}> */}
+                    
                     <button
-                            className={`ProductViewVendedor-fav-button ${
-                                isInFavorites ? 'added-to-favorites' : ''
-                            }`}
-                            onClick={toggleFavorites}
-                            disabled={user && user.id === product.seller.id}
-                        >
-                    <i className="fa fa-heart"></i>
-                </button>
+                    className="ProductViewVendedor-fav-button"
+                    onClick={handleFavoriteButtonClick}>
+                        <i className="fa fa-heart"></i>
+                    </button>
                 </div>
             </div>
 
-            {/* Álbum de imágenes */}
+            
             <div className="ProductViewAlbum-container">
                 {product.album && product.album.url && Array.isArray(product.album.url) && product.album.url.length > 0 && (
                     <div className="ProductViewAlbum">
@@ -172,10 +138,6 @@ return (
             <div className="ProductViewPrecio-container">
                 <h5>Precio: {product.sale_price}  €</h5>
             </div>
-            {/* Estado */}
-            <div className="ProductViewEstado-container">
-                <span>Disponibilidad: {product.status}</span>            
-            </div>
             </div>
             {/* Descripción */}
             <div className="ProductViewDescripcion-container">
@@ -189,13 +151,6 @@ return (
                 </button>
             </div>
 
-            {/* Libro */}
-            {/* {product.book && (
-                <div className="ProductViewLibro-container">
-                    <label>Libro:</label>
-                    <div>{product.book.title}</div>
-                </div>
-            )} */}
         </div>
     </div>
 );
