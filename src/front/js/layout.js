@@ -13,6 +13,7 @@ import { SingleProfile } from "./pages/SingleProfile.jsx";
 import { Transactions } from "./pages/Transactions.jsx";
 import { NewItem } from "./pages/NewItem";
 import { ProductView } from "/workspaces/sp44-final-project-g3-readeeks/src/front/js/pages/ProductView .js"
+import { ResultsSearch } from "/workspaces/sp44-final-project-g3-readeeks/src/front/js/component/ResultsSearch.js";
 
 import injectContext from "./store/appContext";
 
@@ -62,6 +63,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<ResultsSearch />} path="/search/:term" />
 
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<MyProfile />} path="/mi-perfil" />

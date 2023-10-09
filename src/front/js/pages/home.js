@@ -17,6 +17,7 @@ export const Home = () => {
       }
 
       const data = await response.json();
+      console.log(data)
 
       // Reorganizar aleatoriamente los libros antes de seleccionar los primeros 12
       const shuffledBooks = data.results.sort(() => Math.random() - 0.5);
@@ -38,7 +39,7 @@ export const Home = () => {
         <div className="HomeList-Component">
           {books.length > 0 ? (
             books.map((item, index) => {
-              const urls = item.album.url.slice(1, -1).split(','); 
+              const urls = item.url.slice(1, -1).split(','); 
               const firstUrl = urls[0].trim();
 
               return (

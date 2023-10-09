@@ -15,6 +15,15 @@ from flask_jwt_extended import create_access_token, get_jwt_identity
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 
+from sqlalchemy import select
+from sqlalchemy import or_
+from flask import request
+import traceback
+
+
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 api = Blueprint('api', __name__)
 CORS(api)
 
@@ -242,11 +251,45 @@ def delete_favorite_user(id, followed_id):
 
 # Listings methods //////////////////////////////////////////////////////////////
 
-@api.route('/listings', methods=['GET']) # Ok
+from sqlalchemy.orm import aliased
+
+# ... Resto del código ...
+
+@api.route('/listings', methods=['GET'])
 def get_listings():
-      
-    items = db.session.execute(db.select(Listings).order_by(Listings.listing_title)).scalars()
-    results = [item.serialize() for item in items]
+    search_query = request.args.get('title')
+
+    # Crear alias para la tabla Album para la unión
+    album_alias = aliased(Album)
+
+    columns_to_select = [
+        Listings.id,
+        Listings.listing_title,
+        Listings.favorite_counter,
+        album_alias.url.label('url'),
+        Listings.sale_price  # Agrega la URL del álbum utilizando el alias
+        # Agrega aquí todas las columnas que necesitas
+    ]
+
+    # Si hay un query de búsqueda, filtra los resultados
+    if search_query:
+        stmt = (
+            select(columns_to_select)
+            .where(Listings.listing_title.ilike(f"%{search_query}%"))
+            .order_by(Listings.listing_title)
+        ).join(album_alias, Listings.album_id == album_alias.id)
+    else:
+        # Crea una consulta seleccionando las columnas especificadas y ordenándolas por título
+        stmt = (
+            select(columns_to_select)
+            .order_by(Listings.listing_title)
+        ).join(album_alias, Listings.album_id == album_alias.id)
+
+    # Ejecuta la consulta y obtén los resultados
+    items = db.session.execute(stmt).fetchall()
+
+    # Convierte los resultados en un formato JSON
+    results = [dict(item) for item in items]
 
     if results:
         response_body = {
@@ -254,9 +297,10 @@ def get_listings():
             "results": results,
             "status": "ok"
         }
-        return response_body, 200
+        return jsonify(response_body), 200
     else:
-        return {"message": "nada que mostrasr", "status": "error"}, 404
+        return jsonify({"message": "nada que mostrar", "status": "error"}), 404
+
     
 
 @api.route('/listings/<int:id>', methods=['GET']) # Ok
