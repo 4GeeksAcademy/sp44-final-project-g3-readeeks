@@ -13,6 +13,10 @@ from cloudinary.uploader import upload
 
 from flask_jwt_extended import create_access_token, get_jwt_identity
 from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_jwt_extended import jwt_required
+from sqlalchemy.orm import aliased
+
+
 
 
 from sqlalchemy import select
@@ -255,6 +259,7 @@ from sqlalchemy.orm import aliased
 
 # ... Resto del código ...
 
+
 @api.route('/listings', methods=['GET'])
 def get_listings():
     search_query = request.args.get('title')
@@ -286,6 +291,8 @@ def get_listings():
         ).join(album_alias, Listings.album_id == album_alias.id)
 
     # Ejecuta la consulta y obtén los resultados
+    print(stmt)  # Imprime la consulta SQL generada
+
     items = db.session.execute(stmt).fetchall()
 
     # Convierte los resultados en un formato JSON
@@ -293,13 +300,14 @@ def get_listings():
 
     if results:
         response_body = {
-            "message": "All items",
-            "results": results,
-            "status": "ok"
+        "message": "All items",
+        "results": results,
+        "status": "ok"
         }
         return jsonify(response_body), 200
     else:
-        return jsonify({"message": "nada que mostrar", "status": "error"}), 404
+    # Retorna una lista vacía con un código 200 en lugar de 404
+        return jsonify({"message": "No items found", "results": [], "status": "ok"}), 200
 
     
 
@@ -785,7 +793,7 @@ def signup():
         "document_number": data["document_number"],
         "phone": data["phone"],
         "email": data["email"],
-        "password": generate_password_hash(data["password"]).decode('utf-8'),
+        "password": generate_password_hash(data["password"]),
         "is_active": True, 
     }
 
@@ -819,6 +827,7 @@ def signup():
     
     
 @api.route('/get-user-id', methods=['GET'])
+@jwt_required()
 def get_user_id():
     current_user_id = get_jwt_identity()
     return jsonify(user_id=current_user_id), 200

@@ -34,7 +34,7 @@ export const Signup = () => {
 	const handleSignup = async () => {
 
 		const url = `${process.env.BACKEND_URL}/signup`;
-
+		console.log(url)
 		try {
 			const response = await fetch( url, {
 				method: 'POST',
